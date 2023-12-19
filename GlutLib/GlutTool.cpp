@@ -1,4 +1,4 @@
-/**
+﻿/**
 @brief    Tools for OpenGL/Glut
 @file     GlTool.cpp
 @author   Fumi.Iseki (C)

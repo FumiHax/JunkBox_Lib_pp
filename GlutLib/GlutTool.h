@@ -1,4 +1,4 @@
-#ifndef  __JBXL_CPP_OPENGL_TOOL_H_
+﻿#ifndef  __JBXL_CPP_OPENGL_TOOL_H_
 #define  __JBXL_CPP_OPENGL_TOOL_H_
 
 /**
