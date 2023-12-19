@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Brep.cpp">
+      <Filter>ソースコード</Filter>
+    </ClCompile>
+    <ClCompile Include="STL.cpp">
+      <Filter>ソースコード</Filter>
+    </ClCompile>
+    <ClCompile Include="TriBrep.cpp">
+      <Filter>ソースコード</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Brep.h">
+      <Filter>ヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TriBrep.h">
+      <Filter>ヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BrepLib.h">
+      <Filter>ヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="STL.h">
+      <Filter>ヘッダファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ソースコード">
+      <UniqueIdentifier>{1ea991b4-ab06-4516-8f0c-49f6f9ec2ba5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダファイル">
+      <UniqueIdentifier>{bbf9c05a-f409-4c2d-ab19-ce1d708cf610}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

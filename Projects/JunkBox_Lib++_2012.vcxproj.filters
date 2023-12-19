@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\BasicLib">
+      <UniqueIdentifier>{1fcc8a62-472e-4146-81a5-3f841b282844}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ExtendLib">
+      <UniqueIdentifier>{068ed56f-b41a-46da-9ef6-c8d7fd81848f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GraphLib">
+      <UniqueIdentifier>{727d0f4a-ee7d-41ef-822d-aa9c95e46720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\MathLib">
+      <UniqueIdentifier>{d5d20c30-539b-467c-b9f7-82ee0ed61442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BasicLib">
+      <UniqueIdentifier>{a04fe728-0c0a-40f6-8598-d84aa8b41dce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ExtendLib">
+      <UniqueIdentifier>{28c01a13-8c0b-4eec-9352-5532e2d110ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GraphLib">
+      <UniqueIdentifier>{7defb48a-e86a-427c-9f3c-de625c49bc84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\MathLib">
+      <UniqueIdentifier>{29b8085a-a070-4361-bb0d-27df6fa0ec24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\BasicLib\Lib">
+      <UniqueIdentifier>{e48faf5a-d599-44c5-a3e8-490c7eb7bc98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ExtendLib\xLib">
+      <UniqueIdentifier>{d897ee87-14c4-4b9e-8eaf-9422850ba5a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BasicLib\Lib">
+      <UniqueIdentifier>{83907732-830f-4452-a1ef-46295278755a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ExtendLib\xLib">
+      <UniqueIdentifier>{f949410f-2a36-4633-8231-11e6cbdb110e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\NiLib">
+      <UniqueIdentifier>{e24460cb-7a8f-4022-84c2-dda7de773852}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\NiLib">
+      <UniqueIdentifier>{21c6d602-2eb1-4b83-a459-5f8e6753c347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GlutLib">
+      <UniqueIdentifier>{69014f53-fd85-4ae1-ae90-c0074faf2fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GlutLib">
+      <UniqueIdentifier>{99a40f9b-1a5c-4d79-947d-a6b5d689b3fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\BREPLib">
+      <UniqueIdentifier>{f2b61705-b235-40ad-b700-e7a985db5ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\BREPLib">
+      <UniqueIdentifier>{57b6dafc-8127-40d1-a072-5955d1e6b670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\MeshLib">
+      <UniqueIdentifier>{aeca1b81-5d29-43ad-96f6-116a106f5812}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\MeshLib">
+      <UniqueIdentifier>{35081c7f-6dc2-4408-a799-9b2edc5468b9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BasicLib\ClassBox.cpp">
+      <Filter>ソース ファイル\BasicLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\LogRingBuffer.cpp">
+      <Filter>ソース ファイル\ExtendLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\ExGdata.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\Gdata.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\Gio.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\Gmt.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\Graph.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\JpegTool.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\Morph.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\Thinning.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MathLib\Tolerance.cpp">
+      <Filter>ソース ファイル\MathLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MathLib\TVector.cpp">
+      <Filter>ソース ファイル\MathLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MathLib\Vector.cpp">
+      <Filter>ソース ファイル\MathLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MathLib\Rotation.cpp">
+      <Filter>ソース ファイル\MathLib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\RingBuffer.cpp">
+      <Filter>ソース ファイル\BasicLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MathLib\Matrix++.cpp">
+      <Filter>ソース ファイル\MathLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\xLib\bvh_tool.cpp">
+      <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\xLib\http_tool.cpp">
+      <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\xLib\ipaddr_tool.cpp">
+      <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\xLib\protocol.cpp">
+      <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\buffer.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\matrix.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\mt.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\network.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\tlist.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\tools.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\ttree.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\txml.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\xtools.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLib\tools++.cpp">
+      <Filter>ソース ファイル\BasicLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\BVHTool.cpp">
+      <Filter>ソース ファイル\ExtendLib</Filter>
+    </ClCompile>
+    <ClCompile Include="NiLib\OpenNiDevice.cpp">
+      <Filter>ソース ファイル\NiLib</Filter>
+    </ClCompile>
+    <ClCompile Include="NiLib\OpenNiTool.cpp">
+      <Filter>ソース ファイル\NiLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\OpenCVTool.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\xLib\bdb_tool.cpp">
+      <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\xLib\gz_tool.cpp">
+      <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\xLib\https_tool.cpp">
+      <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\xLib\ssl_tool.cpp">
+      <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="NiLib\OpenNi2Device.cpp">
+      <Filter>ソース ファイル\NiLib</Filter>
+    </ClCompile>
+    <ClCompile Include="NiLib\OpenNi2Tool.cpp">
+      <Filter>ソース ファイル\NiLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GlutLib\GlutTool.cpp">
+      <Filter>ソース ファイル\GlutLib</Filter>
+    </ClCompile>
+    <ClCompile Include="BREPLib\Brep.cpp">
+      <Filter>ソース ファイル\BREPLib</Filter>
+    </ClCompile>
+    <ClCompile Include="BREPLib\STL.cpp">
+      <Filter>ソース ファイル\BREPLib</Filter>
+    </ClCompile>
+    <ClCompile Include="BREPLib\TriBrep.cpp">
+      <Filter>ソース ファイル\BREPLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLib\ColladaTool.cpp">
+      <Filter>ソース ファイル\MeshLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLib\FacetBaseData.cpp">
+      <Filter>ソース ファイル\MeshLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLib\MaterialParam.cpp">
+      <Filter>ソース ファイル\MeshLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLib\MeshObjectData.cpp">
+      <Filter>ソース ファイル\MeshLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\Jpeg2KTool.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\Jpeg2KTool2.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\TgaTool.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendLib\xLib\llsd_tool.cpp">
+      <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="BREPLib\BrepLib.cpp">
+      <Filter>ソース ファイル\BREPLib</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BasicLib\BasicLib.h">
+      <Filter>ヘッダー ファイル\BasicLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\common++.h">
+      <Filter>ヘッダー ファイル\BasicLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\LogRingBuffer.h">
+      <Filter>ヘッダー ファイル\ExtendLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\ExGdata.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\Gdata.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\gheader.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\Gio.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\Gmt.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\Graph.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\GraphLib.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\JpegTool.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\Morph.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\Thinning.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\Window.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MathLib\MathLib.h">
+      <Filter>ヘッダー ファイル\MathLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MathLib\Tolerance.h">
+      <Filter>ヘッダー ファイル\MathLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MathLib\TVector.h">
+      <Filter>ヘッダー ファイル\MathLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MathLib\Vector.h">
+      <Filter>ヘッダー ファイル\MathLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MathLib\Rotation.h">
+      <Filter>ヘッダー ファイル\MathLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\RingBuffer.h">
+      <Filter>ヘッダー ファイル\BasicLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MathLib\Matrix++.h">
+      <Filter>ヘッダー ファイル\MathLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\buffer.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\common.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\matrix.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\mt.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\network.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\tlist.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\tools.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\ttree.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\txml.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\xtools.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\tools++.h">
+      <Filter>ヘッダー ファイル\BasicLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\xLib\bvh_tool.h">
+      <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\xLib\http_tool.h">
+      <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\xLib\ipaddr_tool.h">
+      <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\xLib\protocol.h">
+      <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\BVHTool.h">
+      <Filter>ヘッダー ファイル\ExtendLib</Filter>
+    </ClInclude>
+    <ClInclude Include="NiLib\OpenNiDevice.h">
+      <Filter>ヘッダー ファイル\NiLib</Filter>
+    </ClInclude>
+    <ClInclude Include="NiLib\OpenNiTool.h">
+      <Filter>ヘッダー ファイル\NiLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\OpenCVTool.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\xLib\bdb_tool.h">
+      <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\xLib\gz_tool.h">
+      <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\xLib\https_tool.h">
+      <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\xLib\ssl_tool.h">
+      <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="NiLib\OpenNi2Device.h">
+      <Filter>ヘッダー ファイル\NiLib</Filter>
+    </ClInclude>
+    <ClInclude Include="NiLib\NiDevice.h">
+      <Filter>ヘッダー ファイル\NiLib</Filter>
+    </ClInclude>
+    <ClInclude Include="NiLib\OpenNi2Tool.h">
+      <Filter>ヘッダー ファイル\NiLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GlutLib\GlutTool.h">
+      <Filter>ヘッダー ファイル\GlutLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BREPLib\Brep.h">
+      <Filter>ヘッダー ファイル\BREPLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BREPLib\BrepLib.h">
+      <Filter>ヘッダー ファイル\BREPLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BREPLib\STL.h">
+      <Filter>ヘッダー ファイル\BREPLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BREPLib\TriBrep.h">
+      <Filter>ヘッダー ファイル\BREPLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLib\ColladaTool.h">
+      <Filter>ヘッダー ファイル\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLib\FacetBaseData.h">
+      <Filter>ヘッダー ファイル\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLib\MaterialParam.h">
+      <Filter>ヘッダー ファイル\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLib\MeshObjectData.h">
+      <Filter>ヘッダー ファイル\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\Jpeg2KTool.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\TgaTool.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendLib\xLib\llsd_tool.h">
+      <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\ClassBox.h">
+      <Filter>ヘッダー ファイル\BasicLib</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
