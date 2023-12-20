@@ -79,7 +79,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib;.\ExtendLib\xLib;..\jpeg-9c;..\opencv\build\include;C:\Program Files (x86)\OpenNI\Include;C:\Program Files (x86)\OpenNI2\Include;C:\Program Files (x86)\PrimeSense\NiTE2\Include;..\magdb142;.\BREPLib;.\MeshLib;..\zlib\include;..\openjpeg-1.2\libopenjpeg;..\openjpeg-2.1\include\openjpeg-2.1;..\openjpeg-2.5\include\openjpeg-2.5</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib;.\ExtendLib\xLib;..\jpeg-9c;..\opencv\build\include;C:\Program Files (x86)\OpenNI\Include;C:\Program Files (x86)\OpenNI2\Include;C:\Program Files (x86)\PrimeSense\NiTE2\Include;..\magdb142;.\BREPLib;.\MeshLib;..\zlib\include;..\openjpeg-1.2\libopenjpeg;..\openjpeg-2.1\include\openjpeg-2.1;..\openjpeg-v2.5.0-windows-x86\include\openjpeg-2.5</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_UNICODE;_DEBUG;DISABLE_BERKELEYDB;DISABLE_SSL;DISABLE_OPENNI2;DISABLE_OPENCV;ENABLE_ZLIB;HAVE_JPEGLIB_H;ENABLE_JPEGLIB;HAVE_OPENJPEG_H;ENABLE_OPENJPEG;OPENJPEG_VER=25;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -102,7 +102,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;..\jpeg-9c;.\ExtendLib;.\ExtendLib\xLib;C:\Program Files\OpenNI\Include;C:\Program Files\OpenNI2\Include;C:\Program Files\PrimeSense\NiTE2\Include;..\opencv\build\include;.\BREPLib;.\MeshLib;..\zlib\include;..\openjpeg-1.2\libopenjpeg;..\openjpeg-2.1\include\openjpeg-2.1;..\openjpeg-2.5\include\openjpeg-2.5</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib;.\ExtendLib\xLib;C:\Program Files\OpenNI\Include;C:\Program Files\OpenNI2\Include;C:\Program Files\PrimeSense\NiTE2\Include;..\opencv\build\include;.\BREPLib;.\MeshLib;..\zlib64\Include;..\jpeg-9c;..\openjpeg-2.1\include\openjpeg-2.1;..\openjpeg-v2.5.0-windows-x64\include\openjpeg-2.5</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_LIB;_UNICODE;_DEBUG;DISABLE_BERKELEYDB;DISABLE_SSL;DISABLE_OPENNI2;DISABLE_OPENCV;ENABLE_ZLIB;HAVE_JPEGLIB_H;ENABLE_JPEGLIB;HAVE_OPENJPEG_H;ENABLE_OPENJPEG;OPENJPEG_VER=25;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -125,7 +125,7 @@
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib\xLib;.\ExtendLib;..\jpeg-9c;C:\Program Files (x86)\OpenNI\Include;C:\Program Files (x86)\OpenNI2\Include;C:\Program Files (x86)\PrimeSense\NiTE2\Include;..\opencv\build\include;.\BREPLib;.\MeshLib;..\zlib\include;..\openjpeg-1.2\libopenjpeg;..\openjpeg-2.1\include\openjpeg-2.1;..\openjpeg-2.5\include\openjpeg-2.5</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib\xLib;.\ExtendLib;..\jpeg-9c;C:\Program Files (x86)\OpenNI\Include;C:\Program Files (x86)\OpenNI2\Include;C:\Program Files (x86)\PrimeSense\NiTE2\Include;..\opencv\build\include;.\BREPLib;.\MeshLib;..\zlib\include;..\openjpeg-1.2\libopenjpeg;..\openjpeg-2.1\include\openjpeg-2.1;..\openjpeg-v2.5.0-windows-x86\include\openjpeg-2.5</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_UNICODE;NDEBUG;DISABLE_BERKELEYDB;DISABLE_SSL;DISABLE_OPENNI2;DISABLE_OPENCV;ENABLE_ZLIB;HAVE_JPEGLIB_H;ENABLE_JPEGLIB;HAVE_OPENJPEG_H;ENABLE_OPENJPEG;OPENJPEG_VER=25;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -146,7 +146,7 @@
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib;.\ExtendLib\xLib;C:\Program Files\OpenNI\Include;C:\Program Files\OpenNI2\Include;C:\Program Files\PrimeSense\NiTE2\Include;..\jpeg-9c;..\opencv\build\include;.\BREPLib;.\MeshLib;..\zlib\include;..\openjpeg-1.2\libopenjpeg;..\openjpeg-2.1\include\openjpeg-2.1;..\openjpeg-2.5\include\openjpeg-2.5</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib;.\ExtendLib\xLib;C:\Program Files\OpenNI\Include;C:\Program Files\OpenNI2\Include;C:\Program Files\PrimeSense\NiTE2\Include;..\opencv\build\include;.\BREPLib;.\MeshLib;..\zlib64\Include;..\jpeg-9c;..\openjpeg-2.1\include\openjpeg-2.1;..\openjpeg-v2.5.0-windows-x64\include\openjpeg-2.5</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_LIB;_UNICODE;NDEBUG;DISABLE_BERKELEYDB;DISABLE_SSL;DISABLE_OPENNI2;DISABLE_OPENCV;ENABLE_ZLIB;HAVE_JPEGLIB_H;ENABLE_JPEGLIB;HAVE_OPENJPEG_H;ENABLE_OPENJPEG;OPENJPEG_VER=25;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
