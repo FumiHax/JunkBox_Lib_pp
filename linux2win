@@ -15,8 +15,6 @@ copy2win()
     if [ ! -f $WF ]; then
         return
     fi
-
-    #nkf -s $LF >| $WF
     cp -f  $LF $WF
     echo "update "$WF
 }
@@ -30,10 +28,7 @@ diffwin()
     if [ ! -f $WF ]; then
         return
     fi
-
-    #nkf -s $LF >| $LF.temp
     diff -q $LF $WF | awk -F" " '{print $4}'
-    #rm -rf  $LF.temp
 }
 
 
@@ -45,16 +40,11 @@ diffwin_c()
     if [ ! -f $WF ]; then
         return
     fi
-
-    #nkf -s $LF >| $LF.temp
     diff -q $LF $WF | awk -F" " '{print $4}' | sed s/\.cpp$/\.c/
-    #rm -rf  $LF.temp
 }
 
 
 
 LN=`echo $1 | sed s/\.cpp$/\.c/`
 copy2win $LN $1
-
-
 

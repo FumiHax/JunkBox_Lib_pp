@@ -1,4 +1,4 @@
-﻿// created by ./make_state_c shell script
+// created by ./make_state_c shell script
 
 #include "jbxl_state.h"
 

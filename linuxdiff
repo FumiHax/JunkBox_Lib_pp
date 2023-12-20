@@ -44,10 +44,7 @@ diffwin()
     if [ ! -f $WF ]; then
         return
     fi
-
-    #nkf -s $LF >| $LF.temp
     diff -q $LF $WF | awk -F" " '{print $4}'
-    #rm -rf  $LF.temp
 }
 
 
@@ -59,10 +56,7 @@ diffwin_c()
     if [ ! -f $WF ]; then
         return
     fi
-
-    #nkf -s $LF >| $LF.temp
     diff -q $LF $WF | awk -F" " '{print $4}'
-    #rm -rf  $LF.temp
 }
 
 
