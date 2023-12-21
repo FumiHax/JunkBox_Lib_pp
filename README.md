@@ -9,7 +9,7 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 ## Setup
 ### Needed External Tool/Library
 #### Visual Studio Comminity (C++, MFC)
-* MFC is needed for JunkBox_Win_Lib later.
+* MFC is needed for **JunkBox_Win_Lib** later.
    * https://visualstudio.microsoft.com/en-us/vs/community/
 #### DX9 SDK
 * **directx_Jun2010_redist.exe**
