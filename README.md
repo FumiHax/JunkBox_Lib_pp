@@ -1,5 +1,5 @@
 # JunkBox_Lib++
-C++ Library for VC++
+C++ Static Library for VC++
 
 ## DownLoad
 ```
