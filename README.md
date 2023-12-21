@@ -13,17 +13,15 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * directx_Jun2010_redist.exe
    * https://www.microsoft.com/en-us/download/details.aspx?id=8109
 ## Recommended External Library
-### x64
-* OpenJpeg: openjpeg-v2.5.0-windows-x64.zip
+### OpenJpeg
+* x64: **openjpeg-v2.5.0-windows-x64.zip**
   * https://github.com/uclouvain/openjpeg/releases/
-* Jpeg: jpegsr9e.zip
-  * https://www.ijg.org/files
-  * Here is how to compile
-  3 rename makejvcx.v17 to libjpeg.vcxproj
-  4
-* Zlib:
-### x86
-* OpenJpeg: openjpeg-v2.5.0-windows-x86.zip
+* x86: **openjpeg-v2.5.0-windows-x86.zip**
   * https://github.com/uclouvain/openjpeg/releases/
-* Jpeg: jpegsr9e.zip 
+
+### Jpeg
+* **jpegsr9e.zip**
   * https://www.ijg.org/files
+  * [how to compile](https://github.com/JunkBox-Library/JunkBox_Libpp/wiki/libjpeg)
+
+### * Zlib
