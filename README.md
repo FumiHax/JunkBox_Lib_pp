@@ -31,6 +31,12 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * **zlib-1.2.11-headers.zip**
    * https://freeswitch.org/bamboo/browse/SP-ZW-1/artifact/shared/zlib-windows-binaries-zip/
    * unzip the three zip files to create a folder named **zlib-1.2.11**
-     
+
+### Location of folders (default)
+* jpeg-9e
+* JunkBox_Lib++
+* openjpeg-v2.5.0-windows-x64
+* enjpeg-v2.5.0-windows-x86
+* zlib-1.2.11
 
 
