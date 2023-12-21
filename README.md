@@ -26,7 +26,7 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
   * binary is ...
 
 ### Zlib
-* **zlib-1.3.tar.gzp** (source code)
+* **zlib-1.3.tar.gz** (source code)
    * https://www.zlib.net/
    * compile using cmake-gui and VS Community
    * binary is ...
