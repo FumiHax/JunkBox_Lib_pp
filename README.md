@@ -36,7 +36,7 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * jpeg-9e
 * JunkBox_Lib++
 * openjpeg-v2.5.0-windows-x64
-* enjpeg-v2.5.0-windows-x86
+* oenjpeg-v2.5.0-windows-x86
 * zlib-1.2.11
 
 
