@@ -26,4 +26,9 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
   * https://www.ijg.org/files
   * [how to compile](https://github.com/JunkBox-Library/JunkBox_Libpp/wiki/libjpeg)
 
-#### * Zlib
+#### Zlib
+* x64: **.zip**
+   * https://
+* x86: **.zip**
+   * https://
+
