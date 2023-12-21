@@ -5,6 +5,8 @@ C++ Static Library for VC++
 ```
 git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 ```
+
+## Setup
 ### Needed External Tool/Library
 #### Visual Studio Comminity (C++, MFC)
 * MFC is needed for JunkBox_Win_Lib later.
