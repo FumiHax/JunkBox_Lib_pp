@@ -6,14 +6,15 @@ C++ Static Library for VC++
 git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 ```
 
-## Needed External Tool/Library
+## Needed External Tool/SDK
+* of course, you can use another libraries (requires JunkBox_Lib++_2022.vcxproj configuration change)
 ### Visual Studio Comminity (C++, MFC)
 * MFC is needed for **JunkBox_Win_Lib** later.
    * https://visualstudio.microsoft.com/en-us/vs/community/
 ### DX9 SDK
 * **directx_Jun2010_redist.exe**
    * https://www.microsoft.com/en-us/download/details.aspx?id=8109
-## Recommended External Library
+## Recommended External Libraries
 ### OpenJpeg
 * x64: **openjpeg-v2.5.0-windows-x64.zip**
   * https://github.com/uclouvain/openjpeg/releases/
@@ -32,11 +33,14 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
    * https://freeswitch.org/bamboo/browse/SP-ZW-1/artifact/shared/zlib-windows-binaries-zip/
    * unzip the three zip files to create a folder named **zlib-1.2.11**
 
-### Location of folders (default)
+### Location of the folders (default)
 * jpeg-9e
 * JunkBox_Lib++
 * openjpeg-v2.5.0-windows-x64
 * openjpeg-v2.5.0-windows-x86
 * zlib-1.2.11
 
+## Compile
+* double click **JunkBox_Lib++_2022.vcxproj**
+* build targets
 
