@@ -42,5 +42,5 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 
 ## Compile
 * double click **JunkBox_Lib++_2022.vcxproj**
-* build target
+* build targets
 
