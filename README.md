@@ -37,7 +37,7 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * openjpeg-v2.5.0-windows-x64
 * openjpeg-v2.5.0-windows-x86
 * zlib-1.3
-* 
+  
 ## Compile
 * double click **JunkBox_Lib++_2022.vcxproj**
 * build targets
