@@ -23,21 +23,21 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * **jpegsr9e.zip** (source code)
   * https://www.ijg.org/files
   * [how to compile](https://github.com/JunkBox-Library/JunkBox_Libpp/wiki/libjpeg)
+  * binary is ...
 
 ### Zlib
-* **zlib-1.2.11-binaries-win32-release.zip**
-* **zlib-1.2.11-binaries-x64-release.zip**
-* **zlib-1.2.11-headers.zip**
-   * https://freeswitch.org/bamboo/browse/SP-ZW-1/artifact/shared/zlib-windows-binaries-zip/
-   * unzip the three zip files to create a folder named **zlib-1.2.11**
+* **zlib-1.3.tar.gzp** (source code)
+   * https://www.zlib.net/
+   * compile using cmake-gui and VS Community
+   * binary is ...
 
 ### Location of the folders (default)
 * jpeg-9e
 * JunkBox_Lib++
 * openjpeg-v2.5.0-windows-x64
 * openjpeg-v2.5.0-windows-x86
-* zlib-1.2.11
-
+* zlib-1.3
+* 
 ## Compile
 * double click **JunkBox_Lib++_2022.vcxproj**
 * build targets
