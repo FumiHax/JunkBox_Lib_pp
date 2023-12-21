@@ -18,8 +18,7 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
   * https://github.com/uclouvain/openjpeg/releases/
 * Jpeg: jpegsr9e.zip
   * https://www.ijg.org/files
-  1 download and extract jpegsr9e.zip
-  2 rename jconfig.vc to jconfig.h
+  * Here is how to compile
   3 rename makejvcx.v17 to libjpeg.vcxproj
   4
 * Zlib:
