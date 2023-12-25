@@ -44,3 +44,19 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * double click **JunkBox_Lib++_2022.vcxproj**
 * build targets
 
+### Lib Pragma for VC++
+#### OpenJpeg (GraphLib/Jpeg2KTool.h)
+* < v2.0
+  * Release: **OpenJPEG.lib**
+  * Debug: **OpenJPEGd.lib**
+* \>=2.0
+  * **openjp2.lib**
+#### Jpeg (GraphLib/JpegTool.h)
+* **libjpeg.lib**
+#### Zlib (ExtendLib/xLib/gz_tool.h)
+* Release: **zlib.lib**
+* Debug: **zlibd.lib**
+#### OpenCV (GraphLib/OpenCVTool.h)
+* Release: **opencv_core242.libb**, **opencv_imgproc242.lib**, **opencv_objdetect242.lib**
+* Debug: **opencv_core242d.libb**, **opencv_imgproc242d.lib**, **opencv_objdetect242d.lib**
+    
