@@ -1,6 +1,8 @@
 # JunkBox_Lib++
 C++ Static Library for VC++
 
+if you want to use it on Linux, please use C++Lib in JunkBox_Lib
+
 ## DownLoad
 ```
 git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
