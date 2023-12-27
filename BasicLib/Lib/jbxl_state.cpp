@@ -1,3 +1,4 @@
+
 // created by ./make_state_c shell script
 
 #include "jbxl_state.h"
@@ -66,6 +67,7 @@ void  jbxl_add_all_states(void)
     jbxl_add_state(JBXL_JSON_NODE_OPENED, "JBXL_JSON_NODE_OPENED", "JSONノードは開いている");
     jbxl_add_state(JBXL_JSON_NODE_CLOSED, "JBXL_JSON_NODE_CLOSED", "JSONノードは閉じている");
     jbxl_add_state(JBXL_JSON_NODE_EMPTY, "JBXL_JSON_NODE_EMPTY", "JSONの空のノード");
+    jbxl_add_state(JBXL_JSON_ARRAY, "JBXL_JSON_ARRAY", "JSONの配列");
     jbxl_add_state(JBXL_JSON_NOT_CLOSED, "JBXL_JSON_NOT_CLOSED", "JSONデータが閉じていない．原因不明．パースアルゴリズムのミス？");
     jbxl_add_state(JBXL_JSON_PARSE_TERM, "JBXL_JSON_PARSE_TERM", "JSON のパースが途中で終了した．入力データが不完全．");
     jbxl_add_state(JBXL_JSON_IN_STR, "JBXL_JSON_IN_STR", "JSONデータの属性値処理で文字列を処理中．");
