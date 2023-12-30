@@ -61,6 +61,6 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * Debug: **opencv_core242d.libb**, **opencv_imgproc242d.lib**, **opencv_objdetect242d.lib**
 
 ## Documents
-* [Wiki](https://polaris.star-dust.jp/pukiwiki/?JunkBox_Lib++)
-* [Doxygen](https://polaris.star-dust.jp/doxygen/JunkBox_Lib++/)
+* [Wiki](https://polaris.star-dust.jp/pukiwiki/?JunkBox_Lib%2B%2B)
+* [Doxygen](https://polaris.star-dust.jp/doxygen/JunkBox_Lib%2B%2B/)
     
