@@ -17,7 +17,6 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * of course, you can use another libraries (requires JunkBox_Lib++_2022.vcxproj configuration change)
 ### OpenJpeg
 * x64: **openjpeg-v2.5.0-windows-x64.zip**
-  * https://github.com/uclouvain/openjpeg/releases/
 * x86: **openjpeg-v2.5.0-windows-x86.zip**
   * https://github.com/uclouvain/openjpeg/releases/
 
