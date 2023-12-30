@@ -59,4 +59,8 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 #### OpenCV (GraphLib/OpenCVTool.h)
 * Release: **opencv_core242.libb**, **opencv_imgproc242.lib**, **opencv_objdetect242.lib**
 * Debug: **opencv_core242d.libb**, **opencv_imgproc242d.lib**, **opencv_objdetect242d.lib**
+
+## Documents
+* [Wiki](https://polaris.star-dust.jp/pukiwiki/?JunkBox_Lib++)
+* [Doxygen](https://polaris.star-dust.jp/doxygen/JunkBox_Lib++/)
     
