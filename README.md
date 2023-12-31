@@ -32,16 +32,16 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
    * compile using cmake-gui and VS Community
    * binary is ...
 
-### Development Environment 
-* [JunkBox_Lib++_devel_env.zip](https://backjack.nsl.tuis.ac.jp/Download/Release/JunkBox_Lib++_devel_env.zip)
-
 ### Location of the folders (default)
 * jpeg-9e
 * JunkBox_Lib++
 * openjpeg-v2.5.0-windows-x64
 * openjpeg-v2.5.0-windows-x86
 * zlib-1.3
-  
+
+### Development Environment 
+* [JunkBox_Lib++_devel_env.zip](https://backjack.nsl.tuis.ac.jp/Download/Release/JunkBox_Lib++_devel_env.zip)
+
 ## Compile
 * double click **JunkBox_Lib++_2022.vcxproj**
 * build targets
@@ -53,11 +53,14 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
   * Debug: **OpenJPEGd.lib**
 * \>=2.0
   * **openjp2.lib**
+  * 
 #### Jpeg (GraphLib/JpegTool.h)
 * **libjpeg.lib**
+* 
 #### Zlib (ExtendLib/xLib/gz_tool.h)
 * Release: **zlib.lib**
 * Debug: **zlibd.lib**
+* 
 #### OpenCV (GraphLib/OpenCVTool.h)
 * Release: **opencv_core242.libb**, **opencv_imgproc242.lib**, **opencv_objdetect242.lib**
 * Debug: **opencv_core242d.libb**, **opencv_imgproc242d.lib**, **opencv_objdetect242d.lib**
