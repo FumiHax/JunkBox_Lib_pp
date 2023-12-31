@@ -38,7 +38,7 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * zlib-1.3
 
 ### Development Environment (OpenJpeg, Jpeg, Zlib, tar32/64)
-* [JunkBox_Lib++_devel_env.zip](https://backjack.nsl.tuis.ac.jp/Download/Release/JunkBox_Lib++_devel_env.zip)
+* [JunkBox_Lib++_devel_env.zip](https://blackjack.nsl.tuis.ac.jp/Download/Release/JunkBox_Lib++_devel_env.zip)
 
 ## Compile
 * double click **JunkBox_Lib++_2022.vcxproj**
