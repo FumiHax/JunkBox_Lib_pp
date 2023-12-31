@@ -37,7 +37,7 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * openjpeg-v2.5.0-windows-x86
 * zlib-1.3
 
-### Development Environment 
+### Development Environment (OpenJpeg, Jpeg, Zlib, tar32/64)
 * [JunkBox_Lib++_devel_env.zip](https://backjack.nsl.tuis.ac.jp/Download/Release/JunkBox_Lib++_devel_env.zip)
 
 ## Compile
