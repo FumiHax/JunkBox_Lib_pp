@@ -24,13 +24,11 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * **jpegsr9e.zip** (source code)
   * https://www.ijg.org/files
   * [how to compile](https://github.com/JunkBox-Library/JunkBox_Libpp/wiki/libjpeg)
-  * binary is ...
 
 ### Zlib
 * **zlib-1.3.tar.gz** (source code)
    * https://www.zlib.net/
    * compile using cmake-gui and VS Community
-   * binary is ...
 
 ### Location of the folders (default)
 * jpeg-9e
