@@ -310,6 +310,7 @@ MOON_DATA形式（16bit）のグラフィックファイルを読み込む．
 
 @return 読み込んだグラフィックデータの共通ヘッダ．@n
         エラー場合 kindメンバは HEADER_NONEとなる．またエラーの種類により xsizeが変化する．
+
 @retval JBXL_GRAPH_MEMORY_ERROR @b xsize メモリエラー．
 */
 CmnHead  jbxl::readMoonFile(const char* fn, bool no_ntoh)
@@ -652,14 +653,18 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
 
 @retval 読み込んだグラフィックデータを記述する共通ヘッダ（データ本体は無し）．@n
         エラーなら kind=HEADER_ERROR となる．
+
+@bug x86 と x64 では CmnHead のサイズが異なるので，データファイルには基本的に互換性がない．@n
+参考：sizeof(CmnHead) = x86: 32Byte, x64: 44Byte ただしパッティングで 48Byte @n
+現状は小手先でごまかしている．
 */
 CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
 {
     FILE    *fp;
-    int    fsz, hsz, csz;
+    int    fsz, csz;
     CmnHead hd;
 
-    hsz = sizeof(CmnHead);
+    int hsz = sizeof(CmnHead);
     memset(&hd, 0, hsz);
     hd.kind = HEADER_NONE;
 
@@ -710,7 +715,13 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
     // Common ヘッダ
     if (hd.kind > 0 && hd.kind <= NUM_KDATA) {
 #ifdef WIN64
-        if (fsz == (int)(hsz + hd.bsize + hd.lsize) - 12) hsz = 36;
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) - 12) hsz = 36;     // x64
+#elif WIN32
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) + 12) hsz = 48;     // x86
+#elif __code_model_32__
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) + 12) hsz = 48;     // x86
+#else 
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) - 12) hsz = 36;     // x64
 #endif
         if (fsz == (int)(hsz + hd.bsize + hd.lsize)) {  
             if (hd.zsize<=0) hd.zsize = 1;
@@ -742,7 +753,7 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
             return hd;
         }
     }
-    memset(&hd, 0, hsz);
+    memset(&hd, 0, sizeof(CmnHead));
 
     ///////////////////////////////////////////////////////////////////////
     // CT File (Moon)
@@ -783,7 +794,7 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
         fclose(fp);
         return hd;
     }
-    memset(&hd, 0, hsz);
+    memset(&hd, 0, sizeof(CmnHead));
 
     ///////////////////////////////////////////////////////////////////////
     // Dicom
@@ -861,7 +872,7 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
     // Another Unknown File Format
     //
     PRINT_MESG("readXHead: 未知のデータ形式\n");
-    memset(&hd, 0, hsz);
+    memset(&hd, 0, sizeof(CmnHead));
     hd.kind  = UN_KNOWN_DATA;
     hd.lsize = fsz;
 
@@ -898,12 +909,15 @@ USERSET_DATAの場合は chd を指定する．また chdの kind にはオプ�
 @retval JBXL_GRAPH_MEMORY_ERROR  @b xsize メモリエラー．
 @retval JBXL_GRAPH_CANCEL  @b xsize キャンセル by ユーザ
 
-@bug Common形式の画素深度が 24,32bitの場合のエンディアン処理が未実装
+@bug Common形式の画素深度が 24,32bitの場合のエンディアン処理が未実装 
+@bug x86 と x64 では CmnHead のサイズが異なるので，データファイルには基本的に互換性がない．@n
+参考：sizeof(CmnHead) = x86: 32Byte, x64: 44Byte ただしパッティングで 48Byte @n
+現状は小手先でごまかしている．
 */
 CmnHead  jbxl::readXHeadFile(const char* fn, CmnHead* chd, bool cnt)
 {
     FILE* fp;
-    int  fsz, hsz;
+    int   fsz;
     bool  no_ntoh = false;
     CmnHead hd;
     CVCounter* counter = NULL;
@@ -956,7 +970,7 @@ CmnHead  jbxl::readXHeadFile(const char* fn, CmnHead* chd, bool cnt)
     ///////////////////////////////////////////////////////////////////////
     // 共通ヘッダの読み込み
     //
-    hsz = sizeof(CmnHead);
+    int hsz = sizeof(CmnHead);
     fseek(fp, 0, 0);
     fread(&hd, hsz, 1, fp);
     ntoh_st(&hd, 4);
@@ -973,7 +987,13 @@ CmnHead  jbxl::readXHeadFile(const char* fn, CmnHead* chd, bool cnt)
     // データ読み取りでは hd.lsize==0 のファイルサイズ無効（CT_RGN_SL）はまだサポートされていない
     if (hd.kind>0 && hd.kind<=NUM_KDATA) {
 #ifdef WIN64
-        if (fsz == (int)(hsz + hd.bsize + hd.lsize) - 12) hsz = 36;
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) - 12) hsz = 36;     // x64
+#elif WIN32
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) + 12) hsz = 48;     // x86
+#elif __code_model_32__
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) + 12) hsz = 48;     // x86
+#else 
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) - 12) hsz = 36;     // x64
 #endif
         if (fsz == (int)(hsz + hd.bsize + hd.lsize)) {
             PRINT_MESG("readXHeadFile: Commonデータ形式\n");
@@ -1046,7 +1066,7 @@ CmnHead  jbxl::readXHeadFile(const char* fn, CmnHead* chd, bool cnt)
         if (counter!=NULL) counter->PutFill();
         return hd;
     }
-    memset(&hd, 0, hsz);
+    memset(&hd, 0, sizeof(CmnHead));
 
     ///////////////////////////////////////////////////////////////////////
     // Moon形式 16bit
@@ -1057,7 +1077,7 @@ CmnHead  jbxl::readXHeadFile(const char* fn, CmnHead* chd, bool cnt)
         fclose(fp);
         return hd;
     }
-    memset(&hd, 0, hsz);
+    memset(&hd, 0, sizeof(CmnHead));
 
     ///////////////////////////////////////////////////////////////////////
     // DICOMファイル
@@ -1151,7 +1171,7 @@ CmnHead  jbxl::readXHeadFile(const char* fn, CmnHead* chd, bool cnt)
     // 解析不能．データのまま読み込み　UN_KNOWN_DATA
     //
     PRINT_MESG("readXHeadFile: 未知のデータ形式\n");
-    memset(&hd, 0, hsz);
+    memset(&hd, 0, sizeof(CmnHead));
 
     hd.grptr = (uByte*)malloc(fsz);
     if (hd.grptr==NULL) {
@@ -1196,11 +1216,14 @@ CmnHead  jbxl::readCmnHeadFile(const char* fn, CmnHead* chd, bool cnt=false)
 @retval JBXL_GRAPH_CANCEL  @b xsize キャンセル by ユーザ
 
 @bug Common形式の画素深度が 24,32bitの場合のエンディアン処理が未実装
+@bug x86 と x64 では CmnHead のサイズが異なるので，データファイルには基本的に互換性がない．@n
+参考：sizeof(CmnHead) = x86: 32Byte, x64: 44Byte ただしパッティングで 48Byte @n
+現状は小手先でごまかしている．
 */
 CmnHead  jbxl::readCmnHeadFile(const char* fn, CmnHead* chd, bool cnt)
 {
     FILE* fp;
-    int  kind, fsz, hsz;
+    int   kind, fsz;
     bool  no_ntoh = false;
     CmnHead hd;
     CVCounter* counter = NULL;
@@ -1319,12 +1342,21 @@ CmnHead  jbxl::readCmnHeadFile(const char* fn, CmnHead* chd, bool cnt)
         // データ読み取りでは hd.lsize==0 のファイルサイズ無効（CT_RGN_SL）はまだサポートされていない
         PRINT_MESG("readCmnHeadFile: Commonデータ形式\n");
 
-        hsz = sizeof(CmnHead);
+        int hsz = sizeof(CmnHead);
         fseek(fp, 0, 0);
         fread(&hd, hsz, 1, fp);
         ntoh_st(&hd, 4);
         if (hd.zsize<=0) hd.zsize = 1;
 
+#ifdef WIN64
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) - 12) hsz = 36;     // x64
+#elif WIN32
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) + 12) hsz = 48;     // x86
+#elif __code_model_32__
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) + 12) hsz = 48;     // x86
+#else 
+        if (fsz == (int)(hsz + hd.bsize + hd.lsize) - 12) hsz = 36;     // x64
+#endif
         // カウンタ
         if (hd.zsize>=10 && cnt) {
             counter = GetUsableGlobalCounter();
@@ -1659,3 +1691,4 @@ int  jbxl::writeCmnHeadData(FILE* fp, CmnHead* hd, bool cnt)
 
     return  csize;
 }
+

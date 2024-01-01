@@ -76,6 +76,11 @@ CTHead の cthd.anydata[0]に画素間隔，cthd.anydata[1]に画像間隔が 1/
 
 @par CT_3D_VOL
 
+@bug Common形式の画素深度が 24,32bitの場合のエンディアン処理が未実装
+@bug x86 と x64 では CmnHead のサイズが異なるので，x86 と x64 でデータファイルには基本的に互換性がない．@n
+参考：sizeof(CmnHead) = x86: 32Byte, x64: 44Byte ただしパッティングで 48Byte @n
+現状は readXHead(), readXHeadFile() および readCmnHeadFile() については 小手先でごまかしている．
+
 */    
     
 
