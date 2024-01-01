@@ -1,10 +1,8 @@
-﻿
-/**
+﻿/**
 @brief    グラフィック用（含CT画像）ファイル入出力関数  
 @file     Gio.cpp
 @author   Fumi.Iseki (C)
 */
-
 
 #include "tools++.h"
 #include "Gio.h"
@@ -91,7 +89,6 @@ CmnHead  jbxl::readRasData(FILE* fp)
 
     return hd;
 }
-
 
 
 /**
@@ -194,7 +191,6 @@ int  jbxl::writeRasData(FILE* fp, CmnHead* hd, int obit)
     free(ptr);
     return  sizeof(RasHead)+lsize;
 }
-
 
 
 /**
@@ -300,7 +296,6 @@ CmnHead  jbxl::readUserSetData(FILE* fp, CmnHead* chd, bool cnt)
 
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CTファイルサポート
 //
@@ -339,7 +334,6 @@ CmnHead  jbxl::readMoonFile(const char* fn, bool no_ntoh)
     hd = readMoonData(fp, fsz, no_ntoh);
     return hd;
 }
-
 
 
 /**
@@ -403,7 +397,6 @@ CmnHead  jbxl::readMoonData(FILE* fp, unsigned int fsz, bool no_ntoh)
     }
     return hd;
 }
-
 
 
 
@@ -571,7 +564,6 @@ int  jbxl::dicomHeader(FILE* fp, int fsize, int* dsize, int* xsize, int* ysize, 
 }
 
 
-
 /**
 MSGraph<sWord>   jbxl::readDicomFile(const char* fn)
 
@@ -608,7 +600,6 @@ MSGraph<sWord>   jbxl::readDicomFile(const char* fn)
 }
 
 
-
 MSGraph<sWord>   jbxl::readDicomData(FILE* fp, int fsize)
 {
     int   sz, dsize;
@@ -641,7 +632,6 @@ MSGraph<sWord>   jbxl::readDicomData(FILE* fp, int fsize)
 
     return vp;
 }
-
 
 
 
@@ -829,7 +819,6 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
     fseek(fp, 0, 0);
     Buffer buf = read_Buffer_data(fp, 32);
 
-
     // TIFF
     /*
     if (head[0]=='I' && head[1]=='I') {
@@ -873,7 +862,6 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
     fclose(fp);
     return hd;
 }
-
 
 
 /**
@@ -1172,7 +1160,6 @@ CmnHead  jbxl::readXHeadFile(const char* fn, CmnHead* chd, bool cnt)
 }
 
 
-
 /**
 CmnHead  jbxl::readCmnHeadFile(const char* fn, CmnHead* chd, bool cnt=false)
 
@@ -1400,7 +1387,6 @@ CmnHead  jbxl::readCmnHeadFile(const char* fn, CmnHead* chd, bool cnt)
 }
 
 
-
 /**
 int  jbxl::writeCmnHeadFile(const char* fn, CmnHead* hd, bool cnt)
 
@@ -1488,7 +1474,6 @@ int  jbxl::writeCmnHeadFile(const char* fn, CmnHead* hd, bool cnt)
     fclose(fp);
     return  csize;
 }
-
 
 
 /**
@@ -1663,5 +1648,3 @@ int  jbxl::writeCmnHeadData(FILE* fp, CmnHead* hd, bool cnt)
 
     return  csize;
 }
-
-
