@@ -109,9 +109,9 @@ MSGraph<sWord> readDicomData(FILE* fp, int fsz);
 //template <typename T> MSGraph<T> readGraphicSlices(const char* frmt, int fst, int fnd, CmnHead* chd);
 //template <typename T> int writeGraphicFile(const char *fname, MSGraph<T> vp, int kd=0, int fn=0, int tn=-1, bool cnt=false);
 
-CmnHead readXHead      (const char* fn, CmnHead* ch=NULL);               ///< ヘッダ部分のみ読み込み 
+CmnHead readXHead      (const char* fn, CmnHead* ch=NULL);                 ///< ヘッダ部分のみ読み込み 
 CmnHead readXHeadFile  (const char* fn, CmnHead* ch=NULL, bool cnt=false); ///< 拡張read関数．ファイルを自動判別して読み込む．
-CmnHead readCmnHeadFile(const char* fn, CmnHead* ch, bool cnt=false);        ///< 拡張read関数．ファイル種別を指定して読み込む．
+CmnHead readCmnHeadFile(const char* fn, CmnHead* ch, bool cnt=false);      ///< 拡張read関数．ファイル種別を指定して読み込む．
 
 int     writeCmnHeadFile(const char* fn, CmnHead* hd, bool cnt=false);
 int     writeCmnHeadData(FILE* fp, CmnHead* hd, bool cnt=false);
