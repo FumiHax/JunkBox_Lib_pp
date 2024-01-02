@@ -735,7 +735,7 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
             PRINT_MESG("readXHead: Common ヘッダ\n");
             PRINT_MESG("readXHead: ヘッダ種別     kind  = %d\n", hd.kind);
             PRINT_MESG("readXHead: ファイルサイズ fsz   = %d\n", fsz);
-            PRINT_MESG("readXHead: ヘッダサイズ   hsz   = %d\n", sizeof(CmnHead));
+            PRINT_MESG("readXHead: ヘッダサイズ   hsz   = %d\n", sizeof(CmnHead_Entry));
             PRINT_MESG("readXHead: ヘッダバッファ bsize = %d\n", hd.bsize);
             PRINT_MESG("readXHead: データサイズ   lsize = %d\n", hd.lsize);
             PRINT_MESG("readXHead: サイズ         %dx%dx%d %d\n", hd.xsize, hd.ysize, hd.zsize, hd.depth);
@@ -777,7 +777,7 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
         PRINT_MESG("readXHead: CT ファイル\n");
         PRINT_MESG("readXHead: ヘッダ種別     kind  = %d\n", hd.kind);
         PRINT_MESG("readXHead: ファイルサイズ fsz   = %d\n", fsz);
-        PRINT_MESG("readXHead: ヘッダサイズ   hsz   = %d\n", sizeof(CmnHead));
+        PRINT_MESG("readXHead: ヘッダサイズ   hsz   = %d\n", sizeof(CmnHead_Entry));
         PRINT_MESG("readXHead: ヘッダバッファ bsize = %d\n", hd.bsize);
         PRINT_MESG("readXHead: データサイズ   lsize = %d\n", hd.lsize);
         PRINT_MESG("readXHead: サイズ         %dx%dx%d %d\n", hd.xsize, hd.ysize, hd.zsize, hd.depth);
@@ -901,9 +901,6 @@ USERSET_DATAの場合は chd を指定する．また chdの kind にはオプ�
 @retval JBXL_GRAPH_CANCEL  @b xsize キャンセル by ユーザ
 
 @bug Common形式の画素深度が 24,32bitの場合のエンディアン処理が未実装 
-@bug x86 と x64 では CmnHead のサイズが異なるので，データファイルには基本的に互換性がない．@n
-参考：sizeof(CmnHead) = x86: 32Byte, x64: 44Byte ただしパッティングで 48Byte @n
-現状は小手先でごまかしている．
 */
 CmnHead  jbxl::readXHeadFile(const char* fn, CmnHead* chd, bool cnt)
 {
@@ -1201,11 +1198,7 @@ CmnHead  jbxl::readCmnHeadFile(const char* fn, CmnHead* chd, bool cnt=false)
 @retval JBXL_GRAPH_OPFILE_ERROR  @b xsize ファイルオープンエラー．
 @retval JBXL_GRAPH_MEMORY_ERROR  @b xsize メモリエラー．
 @retval JBXL_GRAPH_CANCEL  @b xsize キャンセル by ユーザ
-
 @bug Common形式の画素深度が 24,32bitの場合のエンディアン処理が未実装
-@bug x86 と x64 では CmnHead のサイズが異なるので，データファイルには基本的に互換性がない．@n
-参考：sizeof(CmnHead) = x86: 32Byte, x64: 44Byte ただしパッティングで 48Byte @n
-現状は小手先でごまかしている．
 */
 CmnHead  jbxl::readCmnHeadFile(const char* fn, CmnHead* chd, bool cnt)
 {
@@ -1474,8 +1467,8 @@ int  jbxl::writeCmnHeadFile(const char* fn, CmnHead* hd, bool cnt)
 
     // 書き込みチェック
     int fsz = (int)file_size(fn);
-    if (kind==MOON_DATA) psize = hd->bsize+hd->lsize;
-    else psize = sizeof(CmnHead)+hd->bsize+hd->lsize;
+    if (kind==MOON_DATA) psize = hd->bsize + hd->lsize;
+    else psize = sizeof(CmnHead_Entry) + hd->bsize + hd->lsize;
 
     if (fsz!=psize) {
         PRINT_MESG("WRITECMNHEADFILE: エラー：書き込みファイルのサイズが合わない %d != %d\n", psize, fsz);
@@ -1488,9 +1481,9 @@ int  jbxl::writeCmnHeadFile(const char* fn, CmnHead* hd, bool cnt)
         return JBXL_GRAPH_RDFILE_ERROR;
     }
  
-    fread((sByte*)&cmd, sizeof(CmnHead), 1, fp);
+    fread((sByte*)&cmd.entry, sizeof(CmnHead_Entry), 1, fp);
     fclose(fp);
-    ntoh_st(&cmd, 4);
+    ntoh_st(&cmd.entry, 4);
     if (cmd.xsize!=hd->xsize || cmd.ysize!=hd->ysize || cmd.zsize!=hd->zsize ||
         cmd.bsize!=hd->bsize || cmd.lsize!=hd->lsize || cmd.depth!=hd->depth || cmd.kind!=hd->kind) {
         PRINT_MESG("WRITECMNHEADFILE: エラー：ファイルヘッダ検査：ヘッダ異常\n");
@@ -1638,8 +1631,8 @@ int  jbxl::writeCmnHeadData(FILE* fp, CmnHead* hd, bool cnt)
         cmd = *hd;
         cmd.grptr = NULL;
         hton_st(&cmd, 4);
-        csize = sizeof(CmnHead);
-        fwrite(&cmd, csize, 1, fp);
+        csize = sizeof(CmnHead_Entry);
+        fwrite(&cmd.entry, csize, 1, fp);
     }
 
     // CTヘッダ書き込み
