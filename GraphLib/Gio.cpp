@@ -661,8 +661,7 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
     int    fsz, csz;
     CmnHead hd;
 
-    int hsz = sizeof(CmnHead_Entry);
-    memset(&hd, 0, hsz);
+    memset(&hd, 0, sizeof(CmnHead));
     hd.kind = HEADER_NONE;
 
     fsz = (int)file_size(fn);
@@ -690,8 +689,10 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
     ///////////////////////////////////////////////////////////////////////
     // 共通ヘッダの読み込み
     //
+
+    int hsz = sizeof(CmnHead_Entry);
     fseek(fp, 0, 0);
-    fread(&hd, hsz, 1, fp);
+    fread(&hd.entry, hsz, 1, fp);
     hd.buf   = NULL;
     hd.grptr = NULL;
     ntoh_st(&hd, 4);
@@ -704,8 +705,6 @@ CmnHead  jbxl::readXHead(const char* fn, CmnHead* chd)
         hd.zsize = 1;
         hd.lsize = file_size(fn) - sizeof(RasHead);
         hd.bsize = 0;
-        hd.buf   = NULL;
-        hd.grptr = NULL;
         fclose(fp);
         return hd;
     }
@@ -962,9 +961,11 @@ CmnHead  jbxl::readXHeadFile(const char* fn, CmnHead* chd, bool cnt)
     ///////////////////////////////////////////////////////////////////////
     // 共通ヘッダの読み込み
     //
-    int hsz = sizeof(CmnHead);
+    int hsz = sizeof(CmnHead_Entry);
     fseek(fp, 0, 0);
-    fread(&hd, hsz, 1, fp);
+    fread(&hd.entry, hsz, 1, fp);
+    hd.buf = NULL;
+    hd.grptr = NULL;
     ntoh_st(&hd, 4);
 
     // Sun Raster
@@ -1328,9 +1329,11 @@ CmnHead  jbxl::readCmnHeadFile(const char* fn, CmnHead* chd, bool cnt)
         // データ読み取りでは hd.lsize==0 のファイルサイズ無効（CT_RGN_SL）はまだサポートされていない
         PRINT_MESG("readCmnHeadFile: Commonデータ形式\n");
 
-        int hsz = sizeof(CmnHead);
+        int hsz = sizeof(CmnHead_Entry);
         fseek(fp, 0, 0);
-        fread(&hd, hsz, 1, fp);
+        fread(&hd.entry, hsz, 1, fp);
+        hd.buf = NULL;
+        hd.grptr = NULL;
         ntoh_st(&hd, 4);
         if (hd.zsize<=0) hd.zsize = 1;
 
