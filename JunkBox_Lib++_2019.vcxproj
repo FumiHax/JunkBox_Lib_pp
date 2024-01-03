@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3BA38490-2DB2-4082-BA26-0D2AFC47C0D1}</ProjectGuid>
+    <RootNamespace>JunkBox_Lib++</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>JunkBox_Lib++</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Configuration)64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Configuration)64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Configuration)64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Configuration)64\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib;.\ExtendLib\xLib;..\opencv\build\include;C:\Program Files (x86)\OpenNI\Include;C:\Program Files (x86)\OpenNI2\Include;C:\Program Files (x86)\PrimeSense\NiTE2\Include;.\BREPLib;.\MeshLib;..\jpeg-9e\;..\openjpeg-v2.5.0-windows-x86\include\openjpeg-2.5;..\zlib-1.3\x86</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_DEBUG;DISABLE_BERKELEYDB;DISABLE_SSL;DISABLE_OPENNI2;DISABLE_OPENCV;ENABLE_ZLIB;HAVE_JPEGLIB_H;ENABLE_JPEGLIB;HAVE_OPENJPEG_H;ENABLE_OPENJPEG;OPENJPEG_VER=25;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Lib>
+      <TargetMachine>MachineX86</TargetMachine>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib;.\ExtendLib\xLib;C:\Program Files\OpenNI\Include;C:\Program Files\OpenNI2\Include;C:\Program Files\PrimeSense\NiTE2\Include;..\opencv\build\include;.\BREPLib;.\MeshLib;..\zlib-1.3\x64;..\openjpeg-v2.5.0-windows-x64\include\openjpeg-2.5\;..\jpeg-9e</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_LIB;_DEBUG;DISABLE_BERKELEYDB;DISABLE_SSL;DISABLE_OPENNI2;DISABLE_OPENCV;ENABLE_ZLIB;HAVE_JPEGLIB_H;ENABLE_JPEGLIB;HAVE_OPENJPEG_H;ENABLE_OPENJPEG;OPENJPEG_VER=25;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Lib>
+      <TargetMachine>MachineX64</TargetMachine>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib\xLib;.\ExtendLib;C:\Program Files (x86)\OpenNI\Include;C:\Program Files (x86)\OpenNI2\Include;C:\Program Files (x86)\PrimeSense\NiTE2\Include;..\opencv\build\include;.\BREPLib;.\MeshLib;..\zlib-1.3\x86;..\openjpeg-v2.5.0-windows-x86\include\openjpeg-2.5;..\jpeg-9e</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;NDEBUG;DISABLE_BERKELEYDB;DISABLE_SSL;DISABLE_OPENNI2;DISABLE_OPENCV;ENABLE_ZLIB;HAVE_JPEGLIB_H;ENABLE_JPEGLIB;HAVE_OPENJPEG_H;ENABLE_OPENJPEG;OPENJPEG_VER=25;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Lib>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>.\BasicLib\Lib;.\BasicLib;.\MathLib;.\GraphLib;.\ExtendLib;.\ExtendLib\xLib;C:\Program Files\OpenNI\Include;C:\Program Files\OpenNI2\Include;C:\Program Files\PrimeSense\NiTE2\Include;..\opencv\build\include;.\BREPLib;.\MeshLib;..\zlib-1.3\x64;..\openjpeg-v2.5.0-windows-x64\include\openjpeg-2.5;..\jpeg-9e</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_LIB;NDEBUG;DISABLE_BERKELEYDB;DISABLE_SSL;DISABLE_OPENNI2;DISABLE_OPENCV;ENABLE_ZLIB;HAVE_JPEGLIB_H;ENABLE_JPEGLIB;HAVE_OPENJPEG_H;ENABLE_OPENJPEG;OPENJPEG_VER=25;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Lib>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="BasicLib\Lib\buffer.cpp" />
+    <ClCompile Include="BasicLib\ClassBox.cpp" />
+    <ClCompile Include="BasicLib\Lib\jbxl_state.cpp" />
+    <ClCompile Include="BasicLib\Lib\jbxl_state_func.cpp" />
+    <ClCompile Include="BasicLib\Lib\matrix.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)2.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)2.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)2.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)2.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)2.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)2.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)2.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)2.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="BasicLib\Lib\mt.cpp" />
+    <ClCompile Include="BasicLib\Lib\network.cpp" />
+    <ClCompile Include="BasicLib\Lib\tlist.cpp" />
+    <ClCompile Include="BasicLib\Lib\ttree.cpp" />
+    <ClCompile Include="BasicLib\RingBuffer.cpp" />
+    <ClCompile Include="BasicLib\tools++.cpp" />
+    <ClCompile Include="BasicLib\Lib\tools.cpp" />
+    <ClCompile Include="BasicLib\Lib\txml.cpp" />
+    <ClCompile Include="BasicLib\Lib\xtools.cpp" />
+    <ClCompile Include="BREPLib\Brep.cpp" />
+    <ClCompile Include="BREPLib\BrepLib.cpp" />
+    <ClCompile Include="BREPLib\STL.cpp" />
+    <ClCompile Include="BREPLib\TriBrep.cpp" />
+    <ClCompile Include="ExtendLib\BVHTool.cpp" />
+    <ClCompile Include="ExtendLib\xLib\asn1_node.cpp" />
+    <ClCompile Include="ExtendLib\xLib\asn1_tool.cpp" />
+    <ClCompile Include="ExtendLib\xLib\bdb_tool.cpp" />
+    <ClCompile Include="ExtendLib\xLib\bvh_tool.cpp" />
+    <ClCompile Include="ExtendLib\xLib\gz_tool.cpp" />
+    <ClCompile Include="ExtendLib\xLib\https_tool.cpp" />
+    <ClCompile Include="ExtendLib\xLib\http_tool.cpp" />
+    <ClCompile Include="ExtendLib\LogRingBuffer.cpp" />
+    <ClCompile Include="ExtendLib\xLib\ipaddr_tool.cpp" />
+    <ClCompile Include="ExtendLib\xLib\llsd_tool.cpp" />
+    <ClCompile Include="ExtendLib\xLib\protocol.cpp" />
+    <ClCompile Include="ExtendLib\xLib\ssl_tool.cpp" />
+    <ClCompile Include="GlutLib\GlutTool.cpp" />
+    <ClCompile Include="GraphLib\ExGdata.cpp" />
+    <ClCompile Include="GraphLib\Gdata.cpp" />
+    <ClCompile Include="GraphLib\Gio.cpp" />
+    <ClCompile Include="GraphLib\Gmt.cpp" />
+    <ClCompile Include="GraphLib\Graph.cpp" />
+    <ClCompile Include="GraphLib\Jpeg2KTool.cpp" />
+    <ClCompile Include="GraphLib\Jpeg2KTool2.cpp" />
+    <ClCompile Include="GraphLib\JpegTool.cpp" />
+    <ClCompile Include="GraphLib\Morph.cpp" />
+    <ClCompile Include="GraphLib\OpenCVTool.cpp" />
+    <ClCompile Include="GraphLib\TgaTool.cpp" />
+    <ClCompile Include="GraphLib\Thinning.cpp" />
+    <ClCompile Include="MathLib\Matrix++.cpp" />
+    <ClCompile Include="MathLib\Rotation.cpp" />
+    <ClCompile Include="MathLib\Tolerance.cpp" />
+    <ClCompile Include="MathLib\TVector.cpp" />
+    <ClCompile Include="MathLib\Vector.cpp" />
+    <ClCompile Include="MeshLib\ColladaTool.cpp" />
+    <ClCompile Include="MeshLib\FacetBaseData.cpp" />
+    <ClCompile Include="MeshLib\MaterialParam.cpp" />
+    <ClCompile Include="MeshLib\MeshObjectData.cpp" />
+    <ClCompile Include="NiLib\OpenNi2Device.cpp" />
+    <ClCompile Include="NiLib\OpenNi2Tool.cpp" />
+    <ClCompile Include="NiLib\OpenNiDevice.cpp" />
+    <ClCompile Include="NiLib\OpenNiTool.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BasicLib\BasicLib.h" />
+    <ClInclude Include="BasicLib\Lib\buffer.h" />
+    <ClInclude Include="BasicLib\ClassBox.h" />
+    <ClInclude Include="BasicLib\common++.h" />
+    <ClInclude Include="BasicLib\Lib\common.h" />
+    <ClInclude Include="BasicLib\Lib\jbxl_state.h" />
+    <ClInclude Include="BasicLib\Lib\matrix.h" />
+    <ClInclude Include="BasicLib\Lib\mt.h" />
+    <ClInclude Include="BasicLib\Lib\network.h" />
+    <ClInclude Include="BasicLib\Lib\tlist.h" />
+    <ClInclude Include="BasicLib\Lib\ttree.h" />
+    <ClInclude Include="BasicLib\RingBuffer.h" />
+    <ClInclude Include="BasicLib\tools++.h" />
+    <ClInclude Include="BasicLib\Lib\tools.h" />
+    <ClInclude Include="BasicLib\Lib\txml.h" />
+    <ClInclude Include="BasicLib\Lib\xtools.h" />
+    <ClInclude Include="BREPLib\Brep.h" />
+    <ClInclude Include="BREPLib\BrepLib.h" />
+    <ClInclude Include="BREPLib\STL.h" />
+    <ClInclude Include="BREPLib\TriBrep.h" />
+    <ClInclude Include="ExtendLib\BVHTool.h" />
+    <ClInclude Include="ExtendLib\xLib\asn1_node.h" />
+    <ClInclude Include="ExtendLib\xLib\asn1_tool.h" />
+    <ClInclude Include="ExtendLib\xLib\bdb_tool.h" />
+    <ClInclude Include="ExtendLib\xLib\bvh_tool.h" />
+    <ClInclude Include="ExtendLib\xLib\gz_tool.h" />
+    <ClInclude Include="ExtendLib\xLib\https_tool.h" />
+    <ClInclude Include="ExtendLib\xLib\http_tool.h" />
+    <ClInclude Include="ExtendLib\LogRingBuffer.h" />
+    <ClInclude Include="ExtendLib\xLib\ipaddr_tool.h" />
+    <ClInclude Include="ExtendLib\xLib\llsd_tool.h" />
+    <ClInclude Include="ExtendLib\xLib\protocol.h" />
+    <ClInclude Include="ExtendLib\xLib\ssl_tool.h" />
+    <ClInclude Include="GlutLib\GlutTool.h" />
+    <ClInclude Include="GraphLib\ExGdata.h" />
+    <ClInclude Include="GraphLib\Gdata.h" />
+    <ClInclude Include="GraphLib\gheader.h" />
+    <ClInclude Include="GraphLib\Gio.h" />
+    <ClInclude Include="GraphLib\Gmt.h" />
+    <ClInclude Include="GraphLib\Graph.h" />
+    <ClInclude Include="GraphLib\GraphLib.h" />
+    <ClInclude Include="GraphLib\Jpeg2KTool.h" />
+    <ClInclude Include="GraphLib\JpegTool.h" />
+    <ClInclude Include="GraphLib\Morph.h" />
+    <ClInclude Include="GraphLib\OpenCVTool.h" />
+    <ClInclude Include="GraphLib\TgaTool.h" />
+    <ClInclude Include="GraphLib\Thinning.h" />
+    <ClInclude Include="GraphLib\Window.h" />
+    <ClInclude Include="MathLib\MathLib.h" />
+    <ClInclude Include="MathLib\Matrix++.h" />
+    <ClInclude Include="MathLib\Rotation.h" />
+    <ClInclude Include="MathLib\Tolerance.h" />
+    <ClInclude Include="MathLib\TVector.h" />
+    <ClInclude Include="MathLib\Vector.h" />
+    <ClInclude Include="MeshLib\ColladaTool.h" />
+    <ClInclude Include="MeshLib\FacetBaseData.h" />
+    <ClInclude Include="MeshLib\MaterialParam.h" />
+    <ClInclude Include="MeshLib\MeshObjectData.h" />
+    <ClInclude Include="NiLib\NiDevice.h" />
+    <ClInclude Include="NiLib\OpenNi2Device.h" />
+    <ClInclude Include="NiLib\OpenNi2Tool.h" />
+    <ClInclude Include="NiLib\OpenNiDevice.h" />
+    <ClInclude Include="NiLib\OpenNiTool.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
