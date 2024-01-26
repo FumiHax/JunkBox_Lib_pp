@@ -1,7 +1,5 @@
-﻿
-#ifndef  __JBXL_CPP_MESHOBJECTDATA_H_
+﻿#ifndef  __JBXL_CPP_MESHOBJECTDATA_H_
 #define  __JBXL_CPP_MESHOBJECTDATA_H_
-
 
 #include  "tools++.h"
 #include  "txml.h"
@@ -15,14 +13,12 @@
 #define   MOBJN_MTERIALID_RAND_LEN   6
 
 
-
 namespace jbxl {
 
 
 
 class  MeshObjectNode;
 class  MeshObjectData;
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,7 +33,7 @@ class  MeshObjectData;
 class  MeshObjectNode
 {
 public:
-    Buffer  material_id;            ///< マテリアルを識別するID
+    Buffer  material_id;            ///< マテリアルを識別するID．#MATERIAL_ で始まる．
     bool    same_material;          ///< 他の Node が既に同じマテリアルを使用している．
 
     int     facet_no;               ///< 面番号
@@ -92,7 +88,6 @@ void  freeMeshObjectList(MeshObjectNode*& node);
 
 MeshObjectNode*  DelMeshObjectNode(MeshObjectNode* node);
 MeshObjectNode*  AddMeshObjectNode(MeshObjectNode* list, MeshObjectNode* node);
-
 
 
 
@@ -158,7 +153,6 @@ public:
 
 
 inline void  freeMeshObjectData(MeshObjectData*& data) { if(data!=NULL) { data->free(); delete data; data=NULL;} }
-
 
 
 }       // namespace

@@ -32,7 +32,6 @@ void  TextureParam::init(void)
 }
 
 
-
 void  TextureParam::free (void)
 {
     free_Buffer(&name);
@@ -41,14 +40,12 @@ void  TextureParam::free (void)
 }
 
 
-
 void  TextureParam::dup(TextureParam t)
 {
     *this = t;
     
     name = dup_Buffer(t.name);
 }
-
 
 
 void  TextureParam::execShift(UVMap<double>* uv, int num)
@@ -60,7 +57,6 @@ void  TextureParam::execShift(UVMap<double>* uv, int num)
 }
 
 
-
 void  TextureParam::execInvShift(UVMap<double>* uv, int num)
 {
     for (int i=0; i<num; i++) {
@@ -68,7 +64,6 @@ void  TextureParam::execInvShift(UVMap<double>* uv, int num)
         uv[i].v -= shiftV;
     }
 }
-
 
 
 void  TextureParam::execScale(UVMap<double>* uv, int num)
@@ -84,7 +79,6 @@ void  TextureParam::execScale(UVMap<double>* uv, int num)
 }
 
 
-
 void  TextureParam::execInvScale(UVMap<double>* uv, int num)
 {
     double uu, vv;
@@ -96,7 +90,6 @@ void  TextureParam::execInvScale(UVMap<double>* uv, int num)
         uv[i].v = vv + 0.5;
     }
 }
-
 
 
 void  TextureParam::execRotate(UVMap<double>* uv, int num)
@@ -114,7 +107,6 @@ void  TextureParam::execRotate(UVMap<double>* uv, int num)
 }
 
 
-
 void  TextureParam::execInvRotate(UVMap<double>* uv, int num)
 {
     double uu, vv;
@@ -130,7 +122,6 @@ void  TextureParam::execInvRotate(UVMap<double>* uv, int num)
 }
 
 
-
 void  TextureParam::execTrans(UVMap<double>* uv, int num)
 {
     //DEBUG_MODE PRINT_MESG("%f %f, %f %f, %f\n", shiftU, shiftV, scaleU, scaleV, rotate);
@@ -144,7 +135,6 @@ void  TextureParam::execTrans(UVMap<double>* uv, int num)
 }
 
 
-
 void  TextureParam::execInvTrans(UVMap<double>* uv, int num)
 {
     if (flipU) { execFlipU(uv, num); flipU = false;}    
@@ -155,7 +145,6 @@ void  TextureParam::execInvTrans(UVMap<double>* uv, int num)
 
     return;
 }
-
 
 
 void  TextureParam::printParam(FILE* fp)
@@ -179,7 +168,6 @@ void  TextureParam::printParam(FILE* fp)
     fflush(fp);
     return;
 }
-
 
 
 
@@ -208,7 +196,6 @@ bool  jbxl::isSameTexture(TextureParam a, TextureParam b)
 
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MaterialParam クラス
 //
@@ -221,7 +208,8 @@ void  MaterialParam::init(void)
     bumpmap.init();
     specmap.init();
 
-    addname = init_Buffer();
+    //addname = init_Buffer();
+    paramstr = init_Buffer();
 
     transparent = 1.0;
     shininess   = 0.0;
@@ -239,18 +227,17 @@ void  MaterialParam::init(void)
 }
 
 
-
 void  MaterialParam::free (void)
 {
     texture.free();
     bumpmap.free();
     specmap.free();
 
-    free_Buffer(&addname);
+    //free_Buffer(&addname);
+    free_Buffer(&paramstr);
 
     return;
 }
-
 
 
 void  MaterialParam::dup(MaterialParam m)
@@ -261,48 +248,32 @@ void  MaterialParam::dup(MaterialParam m)
     bumpmap.dup(m.bumpmap);
     specmap.dup(m.specmap);
 
-    addname = dup_Buffer(m.addname);
+    //addname = dup_Buffer(m.addname);
+    //paramstr = dup_Buffer(m.paramstr);
+    paramstr = make_Buffer_str(m.getParamString());
 }
-
 
 
 /**
 @param ext 拡張子
 */
-void  MaterialParam::setupFullName(const char* ext)
+void  MaterialParam::setFullName(const char* ext)
 {
+    if (ext==NULL) return;
+
     if (texture.isSetTexture()) {
-        if (addname.buf!=NULL) {
-            texture.addName("_");
-            texture.addName((char*)addname.buf);
-        }
-        if (ext!=NULL) {
-            if (ext[0]!='.') texture.addName(".");
-            texture.addName(ext);
-        }
+        if (ext[0]!='.') texture.addName(".");
+        texture.addName(ext);
     }
     if (bumpmap.isSetTexture()) {
-        if (addname.buf!=NULL) {
-            bumpmap.addName("_");
-            bumpmap.addName((char*)addname.buf);
-        }
-        if (ext!=NULL) {
-            if (ext[0]!='.') bumpmap.addName(".");
-            bumpmap.addName(ext);
-        }
+        if (ext[0]!='.') bumpmap.addName(".");
+        bumpmap.addName(ext);
     }
     if (specmap.isSetTexture()) {
-        if (addname.buf!=NULL) {
-            specmap.addName("_");
-            specmap.addName((char*)addname.buf);
-        }
-        if (ext!=NULL) {
-            if (ext[0]!='.') specmap.addName(".");
-            specmap.addName(ext);
-        }
+        if (ext[0]!='.') specmap.addName(".");
+        specmap.addName(ext);
     }
 }
-
 
 
 void  MaterialParam::printParam(FILE* fp)
@@ -316,7 +287,7 @@ void  MaterialParam::printParam(FILE* fp)
     if (bumpmap.isSetTexture()) bumpmap.printParam(fp);
     if (specmap.isSetTexture()) specmap.printParam(fp);
 
-    fprintf(fp, "MaterialParam.addname     = %s\n", addname.buf);
+    fprintf(fp, "MaterialParam.paramstr    = %s\n", paramstr.buf);
     fprintf(fp, "MaterialParam.transparent = %f\n", transparent);
     fprintf(fp, "MaterialParam.shininess   = %f\n", shininess);
     fprintf(fp, "MaterialParam.glow        = %f\n", glow);
@@ -331,7 +302,6 @@ void  MaterialParam::printParam(FILE* fp)
     fflush(fp);
     return;
 }
-
 
 
 /**
@@ -390,7 +360,6 @@ char*  MaterialParam::getBase64Params(unsigned char obj, unsigned char cc)
 
     return params;
 }
-
 
 
 

@@ -38,7 +38,6 @@ void  MeshObjectNode::init(void)
 }
 
 
-
 /**
 @brief ノードにマテリアルパラメータを設定し，他のノードに同じマテリアルが存在するかチャックする．
 */
@@ -72,7 +71,6 @@ void  MeshObjectNode::setMaterialParam(MaterialParam mparam)
 }
 
 
-
 void  MeshObjectNode::setMaterialID(const char* str)
 {
     free_Buffer(&material_id);
@@ -102,7 +100,6 @@ void  MeshObjectNode::setMaterialID(const char* str)
 }
 
 
-
 void  MeshObjectNode::set(int vertex, int polygon, int vcount)
 {
     num_vertex  = vertex;
@@ -114,7 +111,6 @@ void  MeshObjectNode::set(int vertex, int polygon, int vcount)
 }
 
 
-
 void  MeshObjectNode::free(void)
 {
     delMaterialParam();
@@ -122,7 +118,6 @@ void  MeshObjectNode::free(void)
 
     free_value();
 }
-
 
 
 void  MeshObjectNode::free_value(void)
@@ -134,13 +129,11 @@ void  MeshObjectNode::free_value(void)
 }
 
 
-
 void  MeshObjectNode::clear(void)
 {
     this->free();
     init();
 }
-
 
 
 /**
@@ -181,7 +174,6 @@ bool  MeshObjectNode::getm(int vertex, int polygon, int vcount)
 }
 
 
-
 /**
 インデックス化された頂点データを直接 MeshObjectのデータとしてインポートする．
 */
@@ -209,7 +201,6 @@ bool  MeshObjectNode::computeVertexDirect(FacetBaseData* facetdata)
 
     return true;
 }
-
 
 
 /**
@@ -246,7 +237,6 @@ bool  MeshObjectNode::computeVertexDirect(Vector<double>* impvtx, Vector<double>
 
     return true;
 }
-
 
 
 /**
@@ -328,7 +318,6 @@ void  MeshObjectNode::execAffineTrans(UVMap<double>* uvmap, int uvnum)
 }
 
 
-
 /**
 頂点データから，各 nodeの Planar UVマップを生成する
 頂点データ(vertex_value, normal_value) がインポート済みでなければならない．
@@ -373,7 +362,6 @@ UVMap<double>*  MeshObjectNode::generatePlanarUVMap(Vector<double> scale, UVMap<
 
 
 
-
 ///////////////////////////////////////////////////////////////////
 
 void  jbxl::freeMeshObjectList(MeshObjectNode*& node)
@@ -387,7 +375,6 @@ void  jbxl::freeMeshObjectList(MeshObjectNode*& node)
 
     return;
 }
-
 
 
 //
@@ -405,7 +392,6 @@ MeshObjectNode*  jbxl::DelMeshObjectNode(MeshObjectNode* node)
 }
 
 
-
 MeshObjectNode*  jbxl::AddMeshObjectNode(MeshObjectNode* list, MeshObjectNode* node)
 {
     if (list==NULL) return node;
@@ -419,7 +405,6 @@ MeshObjectNode*  jbxl::AddMeshObjectNode(MeshObjectNode* list, MeshObjectNode* n
 
     return node;
 }
-
 
 
 
@@ -448,7 +433,6 @@ void  MeshObjectData::init(const char* name)
 }
 
 
-
 void  MeshObjectData::free(void)
 {
     free_Buffer(&data_name);
@@ -461,7 +445,6 @@ void  MeshObjectData::free(void)
 }
 
 
-
 void  MeshObjectData::free_value(void)
 {
     freeNull(impvtx_value);
@@ -470,13 +453,11 @@ void  MeshObjectData::free_value(void)
 }
 
 
-
 void  MeshObjectData::clear(void)
 {
     this->free();
     init();
 }
-
 
 
 /**
@@ -490,14 +471,13 @@ FACETを選択的に処理することはできない．予め FACETに分解し
 bool  MeshObjectData::addData(FacetBaseData* facetdata, MaterialParam* param)
 {
     char* name = NULL;
-    if (param!=NULL) name = param->getAdditionalName();
+    if (param!=NULL) name = param->getParamString();
 
     bool ret = addNode(facetdata, name);
     if (ret && param!=NULL) endplist->setMaterialParam(*param);
 
     return ret;
 }
-
 
 
 /**
@@ -521,15 +501,13 @@ bool  MeshObjectData::addData(Vector<double>* vct, Vector<double>* nrm, UVMap<do
     bool ret = importTriData(vct, nrm, map, vnum);
     if (ret) {
         char* name = NULL;
-        if (param!=NULL) name = param->getAdditionalName();
+        if (param!=NULL) name = param->getParamString();
         ret = addNode(name, useBrep);
     }
-
     if (ret && param!=NULL) endplist->setMaterialParam(*param);
 
     return ret;
 }
-
 
 
 /**
@@ -547,7 +525,7 @@ bool  MeshObjectData::addData(TriPolyData* tridata, int tnum, int fnum, Material
     bool ret = importTriData(tridata, tnum, fnum);
     if (ret) {
         char* name = NULL;
-        if (param!=NULL) name = param->getAdditionalName();
+        if (param!=NULL) name = param->getParamString();
         ret = addNode(name, useBrep);
     }
     //
@@ -558,7 +536,6 @@ bool  MeshObjectData::addData(TriPolyData* tridata, int tnum, int fnum, Material
 
     return ret;
 }
-
 
 
 /**
@@ -610,7 +587,6 @@ bool  MeshObjectData::importTriData(Vector<double>* vct, Vector<double>* nrm, UV
 
     return true;
 }
-
 
 
 /**
@@ -699,7 +675,6 @@ bool  MeshObjectData::importTriData(TriPolyData* tridata, int tnum, int fnum)
 }
 
 
-
 bool  MeshObjectData::addNode(FacetBaseData* facetdata, const char* name)
 {
     bool ret = false;
@@ -721,7 +696,6 @@ bool  MeshObjectData::addNode(FacetBaseData* facetdata, const char* name)
 
     return ret;
 }
-
 
 
 /**
@@ -762,7 +736,6 @@ bool  MeshObjectData::addNode(const char* name, bool useBrep)
 }
 
 
-
 /**
 void  MeshObjectData::setMaterialParam(MaterialParam param, int num)
 
@@ -776,6 +749,7 @@ void  MeshObjectData::setMaterialParam(MaterialParam param, int num)
     if (num>=0) {
         while (node!=NULL) {
             if (node->facet_no==num) {
+node->setMaterialID(param.getParamString());
                 node->setMaterialParam(param);
                 return;
             }
@@ -785,6 +759,7 @@ void  MeshObjectData::setMaterialParam(MaterialParam param, int num)
     else {
         while (node!=NULL) {
             if (!node->material_param.enable) {
+node->setMaterialID(param.getParamString());
                 node->setMaterialParam(param);
                 return;
             }
@@ -794,7 +769,6 @@ void  MeshObjectData::setMaterialParam(MaterialParam param, int num)
 
     return;
 }
-
 
 
 /**
@@ -827,6 +801,4 @@ void  MeshObjectData::joinData(MeshObjectData*& data)
 
     return;
 }
-
-
 
