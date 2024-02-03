@@ -10,10 +10,16 @@
 #include  "MaterialParam.h"
 
 
-#define   MOBJN_MTERIALID_RAND_LEN   6
-
-
 namespace jbxl {
+
+
+#define   MOBJN_MTERIALID_RAND_LEN  6
+
+#define   JBXL_3D_FORMAT_NONE       0
+#define   JBXL_3D_FORMAT_DAE        1
+#define   JBXL_3D_FORMAT_OBJ        2
+#define   JBXL_3D_FORMAT_STL_A      3
+#define   JBXL_3D_FORMAT_STL_B      4
 
 
 class  MeshFacetNode;
@@ -26,6 +32,9 @@ class  MeshObjectData;
 
 /**
 @brief MeshObject の Polygonデータ（1面）を格納するクラス．リスト構造を取る．
+
+data_index[i*3], data_index[i*3+1], data_index[i*3+2] が示す vertex_value, normal_value, texcrd_value で一つの面（3角ポリゴン）を形成する．
+例えば，vertex_value[data_index[i*3]], vertex_value[data_index[i*3+1]], vertex_value[data_index[i*3+2]] で3角ポリゴン座標を表す．
 
 MeshObjectNode -> MeshFacetNode
 */

@@ -1,7 +1,6 @@
 ﻿#ifndef  __JBXL_CPP_COLLADA_TOOL_H_
 #define  __JBXL_CPP_COLLADA_TOOL_H_
 
-
 #include  "tools++.h"
 #include  "txml.h"
 
@@ -15,9 +14,10 @@
 namespace jbxl {
 
 
+#define  COLLADA_STR_AUTHOR     "JBXL Collada Tool Library (C) 2014 by Fumi.Iseki"
 #define  COLLADA_STR_XMLNS      "http://www.collada.org/2005/11/COLLADASchema"
-#define  COLLADA_STR_AUTHOR     "JBXL Collada Tools Library (C) 2014"
 #define  COLLADA_STR_TOOL       "JunkBox_Lib++ (http://www.nsl.tuis.ac.jp/)"
+#define  COLLADA_STR_VER        "1.4.1"
 
 //
 #define  COLLADA_X_UP           0
@@ -46,8 +46,9 @@ public:
     void    clear(float  meter,     int axis=COLLADA_Z_UP, const char* ver=NULL) { clear((double)meter, axis, ver); }
     void    free (void);
 
-    void    print(FILE* fp, int mode=XML_INDENT_FORMAT) { print_xml(fp, xml, mode);}
-    void    print_tree(FILE* fp) { print_xml_tree(fp, xml, "    ");}
+    void    outputFile(const char* fn, const char* path=NULL, int mode=XML_INDENT_FORMAT);
+    void    output_dae (FILE* fp, int mode=XML_INDENT_FORMAT) { print_xml(fp, xml, mode);}
+    void    output_tree(FILE* fp) { print_xml_tree(fp, xml, "    ");}
 
 public:
     void    initCollada(double meter, int axis, const char* ver);
@@ -76,8 +77,7 @@ public:
     void    setBlankTexture(const char* name) { if(name!=NULL) blank_texture = make_Buffer_bystr(name);}
     bool    isBlankTexture (const char* name);
 
-    void    outputFile(const char* fn, const char* path=NULL, int mode=XML_INDENT_FORMAT);
-
+public:
     // for Unity
     bool    forUnity4;
     bool    forUnity5;
@@ -89,8 +89,8 @@ private:
 
 public:
     tXML*   xml;
+    //
     tXML*   collada;
-
     tXML*   asset;
     tXML*   contributor;
     tXML*   author;
@@ -118,11 +118,12 @@ public:
     tXML*   instance_visual_scene;
     tXML*   instance_physics_scene;
 
+    bool    phantom_out;
     Buffer  blank_texture;
 };
 
 
-inline void  freeColladaXML(ColladaXML*& xml) { if(xml!=NULL) { xml->free(); delete xml; xml=NULL;} }
+inline void  freeColladaXML(ColladaXML*& dae) { if(dae!=NULL) { dae->free(); delete dae; dae=NULL;} }
 
 
 
