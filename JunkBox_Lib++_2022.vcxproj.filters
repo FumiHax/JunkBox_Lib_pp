@@ -206,9 +206,6 @@
     <ClCompile Include="MeshLib\ColladaTool.cpp">
       <Filter>ソース ファイル\MeshLib</Filter>
     </ClCompile>
-    <ClCompile Include="MeshLib\FacetBaseData.cpp">
-      <Filter>ソース ファイル\MeshLib</Filter>
-    </ClCompile>
     <ClCompile Include="MeshLib\MaterialParam.cpp">
       <Filter>ソース ファイル\MeshLib</Filter>
     </ClCompile>
@@ -244,6 +241,12 @@
     </ClCompile>
     <ClCompile Include="ExtendLib\xLib\dh_tool.cpp">
       <Filter>ソース ファイル\ExtendLib\xLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLib\OBJDataTool.cpp">
+      <Filter>ソース ファイル\MeshLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLib\ContourBaseData.cpp">
+      <Filter>ソース ファイル\MeshLib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,9 +409,6 @@
     <ClInclude Include="MeshLib\ColladaTool.h">
       <Filter>ヘッダー ファイル\MeshLib</Filter>
     </ClInclude>
-    <ClInclude Include="MeshLib\FacetBaseData.h">
-      <Filter>ヘッダー ファイル\MeshLib</Filter>
-    </ClInclude>
     <ClInclude Include="MeshLib\MaterialParam.h">
       <Filter>ヘッダー ファイル\MeshLib</Filter>
     </ClInclude>
@@ -438,6 +438,12 @@
     </ClInclude>
     <ClInclude Include="ExtendLib\xLib\dh_tool.h">
       <Filter>ヘッダー ファイル\ExtendLib\xLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLib\OBJDataTool.h">
+      <Filter>ヘッダー ファイル\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLib\ContourBaseData.h">
+      <Filter>ヘッダー ファイル\MeshLib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
