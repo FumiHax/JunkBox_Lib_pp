@@ -103,7 +103,7 @@ void  OBJData::addObject(MeshObjectData* meshdata, bool collider)
             facet = facet->next;
             continue;
         }
-
+/*
             size_t len = facet->num_vertex*sizeof(UVMap<double>);
             UVMap<double>* uvmap = (UVMap<double>*)malloc(len);
             memcpy(uvmap, facet->texcrd_value, len);
@@ -114,7 +114,14 @@ void  OBJData::addObject(MeshObjectData* meshdata, bool collider)
                 facet->generatePlanarUVMap(scale, uvmap);
             }
             facet->execAffineTrans(uvmap, facet->num_vertex);
-
+*/
+        // PLANAR Texture
+        if (facet->material_param.mapping == MATERIAL_MAPPING_PLANAR) {
+            Vector<double> scale(1.0, 1.0, 1.0);
+            if (meshdata->affine_trans!=NULL) scale = meshdata->affine_trans->scale;
+            facet->generatePlanarUVMap(scale, facet->texcrd_value);
+        }
+        facet->execAffineTrans(facet->texcrd_value, facet->num_vertex);
 
         *_geo_node = new OBJFacetGeoNode();
         *_mtl_node = new OBJFacetMtlNode();
@@ -133,10 +140,8 @@ void  OBJData::addObject(MeshObjectData* meshdata, bool collider)
         for (int i=0; i<(*_geo_node)->num_vertex; i++) {
             (*_geo_node)->vv[i] = facet->vertex_value[i];
             (*_geo_node)->vn[i] = facet->normal_value[i];
-            //(*_geo_node)->vt[i] = facet->texcrd_value[i];
-            (*_geo_node)->vt[i] = uvmap[i];
+            (*_geo_node)->vt[i] = facet->texcrd_value[i];
         }
-            ::free(uvmap);
 
         // Material
         (*_geo_node)->material = dup_Buffer(facet->material_id);
@@ -151,33 +156,6 @@ void  OBJData::addObject(MeshObjectData* meshdata, bool collider)
         _mtl_node = &((*_mtl_node)->next);
         facet = facet->next;
     }
-}
-
-
-// UVマップの出力
-//
-void  OBJData::addTexcrdSource(MeshObjectData* meshdata)
-{
-    if (meshdata==NULL) return;
-
-     MeshFacetNode* facet = meshdata->facet;
-     while (facet!=NULL) {
-        size_t len = facet->num_texcrd*sizeof(UVMap<double>);
-        UVMap<double>* uvmap = (UVMap<double>*)malloc(len);
-        if (uvmap!=NULL) {
-            memcpy(uvmap, facet->texcrd_value, len);
-            // PLANAR Texture
-            if (facet->material_param.mapping==MATERIAL_MAPPING_PLANAR) {
-                Vector<double> scale(1.0, 1.0, 1.0);
-                if (meshdata->affine_trans!=NULL) scale = meshdata->affine_trans->scale;
-                facet->generatePlanarUVMap(scale, uvmap);
-            }
-            facet->execAffineTrans(uvmap, facet->num_texcrd);
-            ::free(uvmap);
-        }
-        facet = facet->next;
-    }
-    return;
 }
 
 
