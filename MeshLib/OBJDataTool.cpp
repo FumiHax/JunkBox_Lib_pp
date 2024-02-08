@@ -103,19 +103,8 @@ void  OBJData::addObject(MeshObjectData* meshdata, bool collider)
             facet = facet->next;
             continue;
         }
-/*
-            size_t len = facet->num_vertex*sizeof(UVMap<double>);
-            UVMap<double>* uvmap = (UVMap<double>*)malloc(len);
-            memcpy(uvmap, facet->texcrd_value, len);
-            // PLANAR Texture
-            if (facet->material_param.mapping == MATERIAL_MAPPING_PLANAR) {
-                Vector<double> scale(1.0, 1.0, 1.0);
-                if (meshdata->affine_trans!=NULL) scale = meshdata->affine_trans->scale;
-                facet->generatePlanarUVMap(scale, uvmap);
-            }
-            facet->execAffineTrans(uvmap, facet->num_vertex);
-*/
-        // PLANAR Texture
+
+        // UV Map and PLANAR Texture
         if (facet->material_param.mapping == MATERIAL_MAPPING_PLANAR) {
             Vector<double> scale(1.0, 1.0, 1.0);
             if (meshdata->affine_trans!=NULL) scale = meshdata->affine_trans->scale;
@@ -123,9 +112,9 @@ void  OBJData::addObject(MeshObjectData* meshdata, bool collider)
         }
         facet->execAffineTrans(facet->texcrd_value, facet->num_vertex);
 
+        // Geometory
         *_geo_node = new OBJFacetGeoNode();
         *_mtl_node = new OBJFacetMtlNode();
-
         (*_geo_node)->num_index = facet->num_index;
         (*_geo_node)->data_index = (int*)malloc(sizeof(int)*(*_geo_node)->num_index);
         for (int i=0; i<(*_geo_node)->num_index; i++) {
