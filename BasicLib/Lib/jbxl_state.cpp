@@ -121,5 +121,6 @@ void  jbxl_add_all_states(void)
     jbxl_add_state(JBXL_GRAPH_IVDMODE_ERROR, "JBXL_GRAPH_IVDMODE_ERROR", "無効なモード");
     jbxl_add_state(JBXL_GRAPH_IVDPARAM_ERROR, "JBXL_GRAPH_IVDPARAM_ERROR", "無効なパラメータ");
     jbxl_add_state(JBXL_GRAPH_IVDDATA_ERROR, "JBXL_GRAPH_IVDDATA_ERROR", "無効なデータ");
+    jbxl_add_state(JBXL_GRAPH_IVDFMT_ERROR, "JBXL_GRAPH_IVDFMT_ERROR", "無効なデータ形式");
     jbxl_add_state(JBXL_GRAPH_THROUGH_ERROR, "JBXL_GRAPH_THROUGH_ERROR", "エラー処理をスルーする");
 }
