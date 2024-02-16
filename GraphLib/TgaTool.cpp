@@ -29,7 +29,7 @@ void  TGAImage::init(void)
     memset(hd, 0, TGA_HEADER_SIZE);
     memset(ft, 0, TGA_FOOTER_SIZE);
 
-    int len = strlen(TGA_FOOTER_STR) + 1;
+    int len = (int)strlen(TGA_FOOTER_STR) + 1;
     int pos = TGA_FOOTER_SIZE - len;
     memcpy(ft + pos, TGA_FOOTER_STR, len);
 
