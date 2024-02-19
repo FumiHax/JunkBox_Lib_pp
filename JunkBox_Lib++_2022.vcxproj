@@ -217,6 +217,7 @@
     <ClCompile Include="GraphLib\OpenCVTool.cpp" />
     <ClCompile Include="GraphLib\TgaTool.cpp" />
     <ClCompile Include="GraphLib\Thinning.cpp" />
+    <ClCompile Include="MathLib\AffineTrans.cpp" />
     <ClCompile Include="MathLib\Matrix++.cpp" />
     <ClCompile Include="MathLib\Rotation.cpp" />
     <ClCompile Include="MathLib\Tolerance.cpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="GraphLib\TgaTool.h" />
     <ClInclude Include="GraphLib\Thinning.h" />
     <ClInclude Include="GraphLib\Window.h" />
+    <ClInclude Include="MathLib\AffineTrans.h" />
     <ClInclude Include="MathLib\MathLib.h" />
     <ClInclude Include="MathLib\Matrix++.h" />
     <ClInclude Include="MathLib\Rotation.h" />
