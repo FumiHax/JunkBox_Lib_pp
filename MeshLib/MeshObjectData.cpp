@@ -79,7 +79,6 @@ void  MeshFacetNode::setMaterialID(const char* str)
         }
         else {
             material_id = make_Buffer_str(JBXL_MATERIAL_PREFIX);
-/*
             char* texture_name = material_param.getName();
             if (texture_name!=NULL) {
                 Buffer texture_id = make_Buffer_bystr(texture_name);
@@ -92,10 +91,11 @@ void  MeshFacetNode::setMaterialID(const char* str)
                 cat_Buffer(&randomstr, &material_id);
                 free_Buffer(&randomstr);
             }
-*/
-            Buffer randomstr = make_Buffer_randomstr(JBXL_MATERIALID_RAND_LEN);
-            cat_Buffer(&randomstr, &material_id);
-            free_Buffer(&randomstr);
+
+            //Buffer randomstr = make_Buffer_randomstr(JBXL_MATERIALID_RAND_LEN);
+            //cat_Buffer(&randomstr, &material_id);
+            //free_Buffer(&randomstr);
+
             cat_s2Buffer("_", &material_id);
             cat_s2Buffer(str, &material_id);
         }
@@ -103,7 +103,6 @@ void  MeshFacetNode::setMaterialID(const char* str)
     //
     else {
         material_id = make_Buffer_str(JBXL_MATERIAL_PREFIX);
-/*
         char* texture_name = material_param.getName();
         if (texture_name!=NULL) {
             Buffer texture_id = make_Buffer_bystr(texture_name);
@@ -116,10 +115,9 @@ void  MeshFacetNode::setMaterialID(const char* str)
             cat_Buffer(&randomstr, &material_id);
             free_Buffer(&randomstr);
         }
-*/
-        Buffer randomstr = make_Buffer_randomstr(JBXL_MATERIALID_RAND_LEN);
-        cat_Buffer(&randomstr, &material_id);
-        free_Buffer(&randomstr);
+        //Buffer randomstr = make_Buffer_randomstr(JBXL_MATERIALID_RAND_LEN);
+        //cat_Buffer(&randomstr, &material_id);
+        //free_Buffer(&randomstr);
     }
     return;
 }
