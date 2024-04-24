@@ -412,8 +412,8 @@ void   ColladaXML::addPolylists(tXML* mesh, MeshObjectData* meshdata, const char
             add_xml_attr_str(polylist, "material", _tochar(facet->material_id.buf+1));
             if (!facet->same_material) {
                 char* material = _tochar(facet->material_id.buf+1);
-                //bool exist_same_material = existSameID(library_materials, "<library_materials><material>", material);
-                //if (!exist_same_material) { // 一番最初
+                bool exist_same_material = existSameID(library_materials, "<library_materials><material>", material);
+                if (!exist_same_material) { // 一番最初
                     char* material_url = addMaterial(_tochar(facet->material_id.buf+1));
                     char* file_id = addImage(facet->material_param.getTextureName());
                     tXML* profile = addEffect(material_url, file_id, facet->material_param);
@@ -425,7 +425,7 @@ void   ColladaXML::addPolylists(tXML* mesh, MeshObjectData* meshdata, const char
                         addExtraBumpmap(profile, bump_id);
                         ::free(bump_id);
                     }
-                //}
+                }
             }
         }
 
