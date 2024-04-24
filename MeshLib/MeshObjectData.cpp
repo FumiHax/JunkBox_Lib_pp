@@ -88,11 +88,14 @@ void  MeshFacetNode::setMaterialID(const char* str)
                 free_Buffer(&texture_id);
             }
             else {
-*/
                 Buffer randomstr = make_Buffer_randomstr(JBXL_MATERIALID_RAND_LEN);
                 cat_Buffer(&randomstr, &material_id);
                 free_Buffer(&randomstr);
-//            }
+            }
+*/
+            Buffer randomstr = make_Buffer_randomstr(JBXL_MATERIALID_RAND_LEN);
+            cat_Buffer(&randomstr, &material_id);
+            free_Buffer(&randomstr);
             cat_s2Buffer("_", &material_id);
             cat_s2Buffer(str, &material_id);
         }
@@ -109,11 +112,14 @@ void  MeshFacetNode::setMaterialID(const char* str)
             free_Buffer(&texture_id);
         }
         else {
-*/
             Buffer randomstr = make_Buffer_randomstr(JBXL_MATERIALID_RAND_LEN);
             cat_Buffer(&randomstr, &material_id);
             free_Buffer(&randomstr);
-//        }
+        }
+*/
+        Buffer randomstr = make_Buffer_randomstr(JBXL_MATERIALID_RAND_LEN);
+        cat_Buffer(&randomstr, &material_id);
+        free_Buffer(&randomstr);
     }
     return;
 }
