@@ -346,7 +346,7 @@ void  OBJData::output_obj(const char* obj_path, const char* mtl_path)
     OBJData* obj = this->next;
     while (obj!=NULL) {
 
-        if (v_num/5000>=f_num) {
+        if (v_num/BJDATATOOL_MAX_VERTEX >= f_num) {
             fclose(fp);
             Buffer obj_file = make_Buffer_str(obj_path);
             del_file_extension_Buffer(&obj_file);
