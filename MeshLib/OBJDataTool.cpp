@@ -347,7 +347,7 @@ void  OBJData::output_obj(const char* obj_path, const char* mtl_path)
     OBJData* obj = this->next;
     while (obj!=NULL) {
 
-        if (facet_num/200 >= file_num) {
+        if (facet_num > OBJDATATOOL_MAX_FACET) {
             fclose(fp);
             Buffer obj_file = make_Buffer_str(obj_path);
             del_file_extension_Buffer(&obj_file);
@@ -356,10 +356,11 @@ void  OBJData::output_obj(const char* obj_path, const char* mtl_path)
             cat_s2Buffer(".obj", &obj_file);
 
             fp = fopen((char*)obj_file.buf, "wb");
-            if (fp==NULL) return;
-            
             free_Buffer(&obj_file);
+            if (fp==NULL) return;
+
             file_num++;
+            facet_num = 0;
             p_num = 1;
         }
 
