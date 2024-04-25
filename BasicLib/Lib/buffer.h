@@ -132,6 +132,7 @@ Buffer  get_seq_data_Buffer(Buffer str, int* ptr);                      ///< 複
 Buffer  awk_Buffer (Buffer buf, char cc, int n);                        ///< Buffer文字列に対する awk．
 Buffer  cawk_Buffer(Buffer buf, char cc, int n);                        ///< Buffer文字列に対する(変形の)awk．
 Buffer  pack_Buffer(Buffer buf, char cc);                               ///< 文字列の先頭のcc(複数)，終わりのcc(複数)，TAB, CR, LF を削除
+void    del_file_extension_Buffer(Buffer* path);                        ///< フルパスを書き換えて拡張子を削除する．
 
 int     cmp_Buffer(Buffer src, Buffer dst, int n);                      ///< バッファ部の比較．
 void    chomp_Buffer(Buffer* buf);                                      ///< 最初の改行コード以降を無視する．
