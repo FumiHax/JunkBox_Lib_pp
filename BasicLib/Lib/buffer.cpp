@@ -1072,24 +1072,6 @@ Buffer  pack_Buffer(Buffer buf, char cc)
 
 
 /**
-void   del_file_extension_Buffer(Buffer* path)
-
-フルパスを書き換えて拡張子を削除する．
-path の内容は書き換えられる．
-
-*/
-void   del_file_extension_Buffer(Buffer* path)
-{
-    if (path==NULL) return;
-
-    char* str = del_file_extension((char*)path->buf);
-    path->vldsz = strlen(str);
-
-    return;
-}
-
-
-/**
 void kanji_convert_Buffer(Buffer* str)
 
 大域変数 @b KanjiCode (tools.h) に従って漢字コードを変換する．@n
