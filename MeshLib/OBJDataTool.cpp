@@ -340,25 +340,26 @@ void  OBJData::output_obj(const char* obj_path, const char* mtl_path)
     fprintf(fp, "# %s\n", OBJDATATOOL_STR_AUTHOR);
     fprintf(fp, "# %s\n", OBJDATATOOL_STR_VER);
 
-    int v_num = 0;
-    int f_num = 1;
+    int facet_num = 0;
+    int file_num  = 1;
+
     int p_num = 1;
     OBJData* obj = this->next;
     while (obj!=NULL) {
 
-        if (v_num/OBJDATATOOL_MAX_VERTEX >= f_num) {
+        if (facet_num/200 >= file_num) {
             fclose(fp);
             Buffer obj_file = make_Buffer_str(obj_path);
             del_file_extension_Buffer(&obj_file);
             cat_s2Buffer("_", &obj_file);
-            cat_s2Buffer(itostr(f_num), &obj_file);
+            cat_s2Buffer(itostr(file_num), &obj_file);
             cat_s2Buffer(".obj", &obj_file);
 
             fp = fopen((char*)obj_file.buf, "wb");
             if (fp==NULL) return;
             
             free_Buffer(&obj_file);
-            f_num++;
+            file_num++;
             p_num = 1;
         }
 
@@ -398,7 +399,7 @@ void  OBJData::output_obj(const char* obj_path, const char* mtl_path)
                 fprintf(fp, "%d/%d/%d\n", facet->data_index[i*3+2]+p_num, facet->data_index[i*3+2]+p_num, facet->data_index[i*3+2]+p_num);
             }
             p_num += facet->num_vertex;
-            v_num += facet->num_vertex;
+            facet_num++;
             //
             facet = facet->next;
         }
