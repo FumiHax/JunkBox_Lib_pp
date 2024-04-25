@@ -1072,16 +1072,18 @@ Buffer  pack_Buffer(Buffer buf, char cc)
 
 
 /**
-void   del_file_extension_Buffer(Buffer path)
+void   del_file_extension_Buffer(Buffer* path)
 
 フルパスを書き換えて拡張子を削除する．
 path の内容は書き換えられる．
 
 */
-void   del_file_extension_Buffer(Buffer* ptah)
+void   del_file_extension_Buffer(Buffer* path)
 {
-    char* str = del_file_extension(path.buf)
-    buf->vldsz = strlen(str);
+    if (path==NULL) return;
+
+    char* str = del_file_extension((char*)path->buf);
+    path->vldsz = strlen(str);
 
     return;
 }
