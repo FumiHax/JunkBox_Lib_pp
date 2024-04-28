@@ -42,6 +42,10 @@ void  ContourTriData::init(void)
     uv1.init();
     uv2.init();
     uv3.init();
+
+    memset(&w1, 0, sizeof(llsd_weight));
+    memset(&w2, 0, sizeof(llsd_weight));
+    memset(&w3, 0, sizeof(llsd_weight));
 }
 
 
@@ -85,6 +89,7 @@ void  ContourBaseData::init(int idx, int num)
     vertex    = NULL;
     normal    = NULL;
     texcrd    = NULL;
+    weight    = NULL;
 }
 
 
@@ -95,6 +100,7 @@ void  ContourBaseData::free(void)
     freeNull(vertex);
     freeNull(normal);
     freeNull(texcrd);
+    freeNull(weight);
 
     init();
 }
@@ -107,6 +113,7 @@ bool  ContourBaseData::getm(void)
     vertex = (Vector<double>*)malloc(sizeof(Vector<double>)*num_data);
     normal = (Vector<double>*)malloc(sizeof(Vector<double>)*num_data);
     texcrd = (UVMap <double>*)malloc(sizeof(UVMap <double>)*num_data);
+    weight = (llsd_weight*)   malloc(sizeof(llsd_weight)*num_data);
 
     if (index==NULL || vertex==NULL || normal==NULL || texcrd==NULL) {
         this->free();
@@ -129,6 +136,7 @@ void  ContourBaseData::dup(ContourBaseData a)
             vertex[i] = a.vertex[i];
             normal[i] = a.normal[i];
             texcrd[i] = a.texcrd[i];
+            weight[i] = a.weight[i];
         }
     }
     return;
@@ -174,6 +182,14 @@ void  TriPolygonData::init(void)
     polygonNum = -1;
     has_normal = false;
     has_texcrd = false;
+    has_weight = false;
+    //
+    for (int i=0; i<3; i++) {
+        vertex[i].init();
+        normal[i].init();
+        texcrd[i].init();
+        memset(&weight[i], 0, sizeof(llsd_weight));
+    }
 }
 
 
