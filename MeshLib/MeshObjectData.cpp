@@ -168,11 +168,11 @@ bool  MeshFacetNode::getm(int vertex, int polygon, int vcount)
     if (num_vertex<=0 || num_polygon<=0) return false;
     num_texcrd = num_vertex;
 
+    data_index   = (int*)malloc(num_index*sizeof(int));
     vertex_value = (Vector<double>*)malloc(num_vertex*sizeof(Vector<double>));
     normal_value = (Vector<double>*)malloc(num_vertex*sizeof(Vector<double>));
     texcrd_value = (UVMap<double>*) malloc(num_texcrd*sizeof(UVMap<double>));
     weight_value = (llsd_weight*)   malloc(num_vertex*sizeof(llsd_weight));     // option
-    data_index   = (int*)malloc(num_index*sizeof(int));
 
     if (data_index==NULL || vertex_value==NULL || normal_value==NULL || texcrd_value==NULL) {
         this->free();
@@ -184,7 +184,12 @@ bool  MeshFacetNode::getm(int vertex, int polygon, int vcount)
 
 
 /**
+bool  MeshFacetNode::computeVertexDirect(ContourBaseData* facetdata)
+
 インデックス化された頂点データを直接 MeshObjectのデータとしてインポートする．
+
+@param  facetdata ContourBaseDataへのポインタ．
+@return インポートに成功したかどうか．
 */
 bool  MeshFacetNode::computeVertexDirect(ContourBaseData* facetdata)
 {
@@ -198,16 +203,82 @@ bool  MeshFacetNode::computeVertexDirect(ContourBaseData* facetdata)
         data_index[i]   = facetdata->index[i];
     }
     for (int i=0; i<num_vertex; i++) {
-        normal_value[i] = facetdata->normal[i];
         vertex_value[i] = facetdata->vertex[i];
+        normal_value[i] = facetdata->normal[i];
         weight_value[i] = facetdata->weight[i];
     }
-
     if (facetdata->texcrd!=NULL) {
         for (int i=0; i<num_texcrd; i++) {
             texcrd_value[i] = facetdata->texcrd[i];
         }
     }
+
+    return true;
+}
+
+
+/**
+bool  MeshFacetNode::computeVertexByBREP(ContourBaseData* facetdata)
+
+BREPを使用して，頂点データを処理する．頂点データは再インデックス化される@n
+データがインデックス化されていない場合，重複頂点を削除するのでデータサイズが小さくなる．@n
+法線ベクトルが計算されていない場合（facetdata->normal がNULLの場合），法線ベクトルを計算する．@n
+頂点数が多い場合は，処理に時間が掛かる．@n
+
+@param  facetdata ContourBaseDataへのポインタ．
+@return インポートに成功したかどうか．
+*/
+bool  MeshFacetNode::computeVertexByBREP(ContourBaseData* facetdata)
+{
+    if (facetdata==NULL) return false;
+    if (facetdata->index==NULL || facetdata->vertex==NULL || facetdata->normal==NULL) return false;
+
+    BREP_SOLID* brep = new BREP_SOLID();
+    if (brep==NULL) return false;
+    // 重複登録を許可しない．データチェックはしない．
+    CreateTriSolidFromVector(brep, facetdata->num_data, facetdata->vertex, facetdata->normal, facetdata->texcrd, facetdata->weight, false, false); 
+
+    long int  vnum;
+    BREP_VERTEX** vertex_data = GetOctreeVertices(brep->octree, &vnum);
+    if (vertex_data==NULL) {
+        freeBrepSolid(brep);
+        return false;
+    }
+    int vcount = facetdata->vcount;
+
+    // メモリの確保
+    set((int)vnum, brep->facetno, vcount);
+    if (!getm()) {
+        ::free(vertex_data);
+        freeBrepSolid(brep);
+        return false;
+    }
+
+    // Vertex & Normal & Texcoord
+    for (int i=0; i<num_vertex; i++) {
+        vertex_value[i] = vertex_data[i]->point;
+        normal_value[i] = vertex_data[i]->normal;
+        texcrd_value[i] = vertex_data[i]->uvmap;
+        weight_value[i] = vertex_data[i]->weight;
+    }
+
+    // Index
+    int polyn = 0;
+    BREP_CONTOUR_LIST::iterator icon;
+    for (icon=brep->contours.begin(); icon!=brep->contours.end(); icon++){
+        BREP_WING* wing = (*icon)->wing;
+        for (int i=0; i<vcount; i++) {
+            BREP_VERTEX* vertex = wing->vertex;
+            if (vertex!=NULL) {
+                data_index[polyn*vcount+i] = vertex->index;
+            }
+            wing = wing->next;
+        }
+        polyn++;
+    }
+
+    ::free(vertex_data);
+    freeBrepSolid(brep);
 
     return true;
 }
@@ -807,6 +878,7 @@ bool  MeshObjectData::addNode(const char* name, MaterialParam* param, bool useBr
     freeNull(impvtx_value);
     freeNull(impnrm_value);
     freeNull(impmap_value);
+    freeNull(impwgt_value);
 
     return ret;
 }

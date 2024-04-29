@@ -83,6 +83,7 @@ public:
 
 public:
     bool    computeVertexDirect(ContourBaseData* facetdata);
+    bool    computeVertexByBREP(ContourBaseData* facetdata);
     bool    computeVertexDirect(Vector<double>* vtx, Vector<double>* nml, UVMap<double>* map, llsd_weight* wgt, int num, int vcount=3);
     bool    computeVertexByBREP(Vector<double>* vtx, Vector<double>* nml, UVMap<double>* map, llsd_weight* wgt, int num, int vcount=3);
 };
@@ -145,15 +146,15 @@ public:
     void    delAffineTrans(void) { freeAffineTrans(affineTrans);}
 
 public:
+    //      addData(){addNode();}
     bool    addData(ContourBaseData* facetdata, MaterialParam* param);
     bool    addNode(ContourBaseData* facetdata, const char* name, MaterialParam* param);
-
-    bool    addData(TriPolygonData* tridata, int tnum, int fnum, MaterialParam* param, bool useBrep);  ///< 処理するFACETを選択できる
-    bool    importTriData(TriPolygonData* tridata, int tnum, int fnum=-1);
-
+    
+    //      addData(){importTriData(); addNode();}
     bool    addData(Vector<double>* vct, Vector<double>* nrm, UVMap<double>* map, llsd_weight* wgt, int vnum, MaterialParam* param, bool useBrep);
+    bool    addData(TriPolygonData* tridata, int tnum, int fnum, MaterialParam* param, bool useBrep);  ///< 処理するFACETを選択できる
     bool    importTriData(Vector<double>* vct, Vector<double>* nrm, UVMap<double>* map, llsd_weight* wgt, int vnum);
-
+    bool    importTriData(TriPolygonData* tridata, int tnum, int fnum=-1);
     bool    addNode(const char* name, MaterialParam* param, bool useBrep);
     //
     void    joinData(MeshObjectData*& data);    ///< data は削除される．
