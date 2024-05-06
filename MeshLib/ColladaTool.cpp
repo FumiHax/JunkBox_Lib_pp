@@ -919,8 +919,7 @@ void  ColladaXML::addScene(const char* geometry_id, MeshObjectData* meshdata, bo
         }
         join_xml(visual_scene, joints_template);
     }
-
-    tXML* avatar = get_xml_attr_node(joints_template, "name", "avatar");
+    tXML* avatar = get_xml_attr_node(joints_template, "name", "\"avatar\"");
     if (avatar!=NULL) avatar = avatar->next;
      
     //
