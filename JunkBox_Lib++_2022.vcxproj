@@ -225,7 +225,9 @@
     <ClCompile Include="MathLib\Vector.cpp" />
     <ClCompile Include="MeshLib\ColladaTool.cpp" />
     <ClCompile Include="MeshLib\ContourBaseData.cpp" />
+    <ClCompile Include="MeshLib\FBXDataTool.cpp" />
     <ClCompile Include="MeshLib\MaterialParam.cpp" />
+    <ClCompile Include="MeshLib\MeshFacetNode.cpp" />
     <ClCompile Include="MeshLib\MeshObjectData.cpp" />
     <ClCompile Include="MeshLib\OBJDataTool.cpp" />
     <ClCompile Include="NiLib\OpenNi2Device.cpp" />
@@ -292,7 +294,9 @@
     <ClInclude Include="MathLib\Vector.h" />
     <ClInclude Include="MeshLib\ColladaTool.h" />
     <ClInclude Include="MeshLib\ContourBaseData.h" />
+    <ClInclude Include="MeshLib\FBXDataTool.h" />
     <ClInclude Include="MeshLib\MaterialParam.h" />
+    <ClInclude Include="MeshLib\MeshFacetNode.h" />
     <ClInclude Include="MeshLib\MeshObjectData.h" />
     <ClInclude Include="MeshLib\OBJDataTool.h" />
     <ClInclude Include="NiLib\NiDevice.h" />

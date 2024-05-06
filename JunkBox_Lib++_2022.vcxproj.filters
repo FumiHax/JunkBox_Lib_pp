@@ -251,6 +251,12 @@
     <ClCompile Include="MathLib\AffineTrans.cpp">
       <Filter>ソース ファイル\MathLib</Filter>
     </ClCompile>
+    <ClCompile Include="MeshLib\FBXDataTool.cpp">
+      <Filter>ソース ファイル\MeshLib</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLib\MeshFacetNode.cpp">
+      <Filter>ソース ファイル\MeshLib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicLib\BasicLib.h">
@@ -450,6 +456,12 @@
     </ClInclude>
     <ClInclude Include="MathLib\AffineTrans.h">
       <Filter>ヘッダー ファイル\MathLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLib\FBXDataTool.h">
+      <Filter>ヘッダー ファイル\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLib\MeshFacetNode.h">
+      <Filter>ヘッダー ファイル\MeshLib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
