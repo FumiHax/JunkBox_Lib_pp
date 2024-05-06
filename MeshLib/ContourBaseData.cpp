@@ -42,10 +42,19 @@ void  ContourTriData::init(void)
     uv1.init();
     uv2.init();
     uv3.init();
+    //w1.init();
+    //w2.init();
+    //w3.init();
+}
 
-    memset(&w1, 0, sizeof(llsd_weight));
-    memset(&w2, 0, sizeof(llsd_weight));
-    memset(&w3, 0, sizeof(llsd_weight));
+
+void  ContourTriData::free(void)
+{
+    contourNum = 0;
+
+    //w1.free();
+    //w2.free();
+    //w3.free();
 }
 
 
@@ -81,44 +90,48 @@ void  ContourTriData::execRotate(Quaternion<double> q)
 
 void  ContourBaseData::init(int idx, int num)
 {
-    num_index = idx;
-    num_data  = num;
-    vcount    = 3;
+    num_index  = idx;
+    num_data   = num;
+    vcount     = 3;
 
-    index     = NULL;
-    vertex    = NULL;
-    normal    = NULL;
-    texcrd    = NULL;
-    weight    = NULL;
+    index      = NULL;
+    vertex     = NULL;
+    normal     = NULL;
+    texcrd     = NULL;
+    weight     = NULL;
 }
 
 
 void  ContourBaseData::free(void)
 {
     freeNull(index);
-
     freeNull(vertex);
     freeNull(normal);
     freeNull(texcrd);
-    freeNull(weight);
+    freeArrayParams<double>(weight, num_data);
 
-    init();
+    init(0, 0);
 }
 
 
 bool  ContourBaseData::getm(void)
 {
-    index = (int*)malloc(sizeof(int)*num_index);
-
+    index  = (int*)malloc(sizeof(int)*num_index);
     vertex = (Vector<double>*)malloc(sizeof(Vector<double>)*num_data);
     normal = (Vector<double>*)malloc(sizeof(Vector<double>)*num_data);
-    texcrd = (UVMap <double>*)malloc(sizeof(UVMap <double>)*num_data);
-    weight = (llsd_weight*)   malloc(sizeof(llsd_weight)*num_data);
+    texcrd = (UVMap <double>*)malloc(sizeof(UVMap<double>) *num_data);
+    weight = (ArrayParam<double>*)malloc(sizeof(ArrayParam<double>)*num_data);
 
     if (index==NULL || vertex==NULL || normal==NULL || texcrd==NULL) {
         this->free();
         return false;
     }
+
+    memset(index,  0, sizeof(int)*num_data);
+    memset(vertex, 0, sizeof(Vector<double>)*num_data);
+    memset(normal, 0, sizeof(Vector<double>)*num_data);
+    memset(texcrd, 0, sizeof(UVMap<double>) *num_data);
+    memset(weight, 0, sizeof(ArrayParam<double>)*num_data);
 
     return true;
 }
@@ -136,7 +149,7 @@ void  ContourBaseData::dup(ContourBaseData a)
             vertex[i] = a.vertex[i];
             normal[i] = a.normal[i];
             texcrd[i] = a.texcrd[i];
-            weight[i] = a.weight[i];
+            weight[i].dup(a.weight[i]);
         }
     }
     return;
@@ -188,14 +201,33 @@ void  TriPolygonData::init(void)
         vertex[i].init();
         normal[i].init();
         texcrd[i].init();
-        memset(&weight[i], 0, sizeof(llsd_weight));
+        weight[i].init();
     }
+}
+
+
+void  TriPolygonData::free(void)
+{
+    for (int i=0; i<3; i++) {
+        if (!weight[i].get_size()) weight[i].free();
+    }
+    init();
 }
 
 
 void  TriPolygonData::dup(TriPolygonData a)
 {
-    *this = a;
+    polygonNum = a.polygonNum;     ///< ポリゴン番号
+    has_normal = a.has_normal;     ///< 配列データの場合，一番最初のデータが値を持っていれば十分である．
+    has_texcrd = a.has_texcrd;     ///< 配列データの場合，一番最初のデータが値を持っていれば十分である．
+    has_weight = a.has_weight;     ///< 配列データの場合，一番最初のデータが値を持っていれば十分である．
+    //
+    for (int i=0; i<3; i++) {
+        vertex[i] = a.vertex[i];
+        normal[i] = a.normal[i];
+        texcrd[i] = a.texcrd[i];
+        weight[i].dup(a.weight[i]);
+    }
 }
 
 
@@ -251,7 +283,7 @@ TriPolygonData*  jbxl::joinTriPolygonData(TriPolygonData*& first, int num_p, Tri
 
     TriPolygonData* join = (TriPolygonData*)malloc((num_p+num_n)*sizeof(TriPolygonData));
     if (join==NULL) return NULL;
-    
+
     int num = 0;
     for (int i=0; i<num_p; i++) {
         join[i].dup(first[i]);
@@ -273,6 +305,9 @@ TriPolygonData*  jbxl::joinTriPolygonData(TriPolygonData*& first, int num_p, Tri
 
 void  jbxl::freeTriPolygonData(TriPolygonData*& tridata, int n)
 {
+    //DEBUG_MODE PRINT_MESG("JBXL::freeTriPolygonData(): start.\n");
+    if (n<=0) return;
+
     if (tridata!=NULL) {
         for (int i=0; i<n; i++) {
             tridata[i].free();
@@ -280,5 +315,54 @@ void  jbxl::freeTriPolygonData(TriPolygonData*& tridata, int n)
         ::free(tridata);
         tridata = NULL;
     }
+    //DEBUG_MODE PRINT_MESG("JBXL::freeTriPolygonData(): end.\n");
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// SkinJointData
+//
+
+void  SkinJointData::init(int n)
+{
+    joint_num = 0;
+    pelvis_offset = 0.0;
+
+    inverse_bind = NULL;
+    alt_inverse_bind = NULL;
+    bind_shape.init();
+    joint_names.init();
+
+    if (n>0) {
+        joint_num = n;
+        inverse_bind     = (Matrix<double>*)malloc(sizeof(Matrix<double>)*joint_num);
+        alt_inverse_bind = (Matrix<double>*)malloc(sizeof(Matrix<double>)*joint_num);
+        //
+        for (int i=0; i<joint_num; i++) {
+            inverse_bind[i]     = Matrix<double>(2, 4, 4);
+            alt_inverse_bind[i] = Matrix<double>(2, 4, 4);
+        }
+        bind_shape = Matrix<double>(2, 4, 4);
+        //
+        joint_names.init(joint_num);
+    }
+}
+
+
+void  SkinJointData::free()
+{
+    for (int i=0; i<joint_num; i++) {
+        inverse_bind[i].free();
+        alt_inverse_bind[i].free();
+    }
+    freeNull(inverse_bind);
+    freeNull(alt_inverse_bind);
+    bind_shape.free();
+    //
+    joint_names.free_ptr();
+    joint_names.free();
+
+    init();
 }
 

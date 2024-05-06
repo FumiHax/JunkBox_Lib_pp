@@ -576,6 +576,7 @@ BREP_VERTEX::BREP_VERTEX()
     calc_normal     = true;
     tolerance       = Abs_Vertex_Tolerance;
 
+    weight.init();
     forbidden_list  = NULL;
     distance2       = HUGE_VALF;
 }
@@ -587,6 +588,8 @@ BREP_VERTEX::~BREP_VERTEX()
     if (!wing_list.empty()) {
         DEBUG_MODE PRINT_MESG("~BREP_VERTEX:  List of Wing is not empty!!\n");
     }
+
+    weight.free();
 
     if (forbidden_list!=NULL) {
         forbidden_list->clear();
@@ -1006,7 +1009,7 @@ DllExport int jbxl::CompareVertex(BREP_VERTEX* v1, BREP_VERTEX* v2)
     double  dist2 = (v1->point.x - v2->point.x)*(v1->point.x - v2->point.x) +
                     (v1->point.y - v2->point.y)*(v1->point.y - v2->point.y) +
                     (v1->point.z - v2->point.z)*(v1->point.z - v2->point.z);
-    if (dist2<=tolerance*tolerance && v1->uvmap==v2->uvmap) return 8;   // 同じ位置．同じテクスチャマップ．
+    if (dist2<=tolerance*tolerance) return 8;   // 同じ位置．同じテクスチャマップ．
 
     int code = 0;
     if (v1->point.x > v2->point.x) code += 1;
