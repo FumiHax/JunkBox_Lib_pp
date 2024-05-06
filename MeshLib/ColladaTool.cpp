@@ -969,7 +969,8 @@ void  ColladaXML::addScene(const char* geometry_id, MeshObjectData* meshdata, bo
         for (int j=1; j<=4; j++) {
             append_xml_content_node(matrix, dtostr(affine.matrix.element(i, j)));
             if (avatar!=NULL) {
-                append_xml_content_node(avatar, dtostr(affine.matrix.element(i, j)));
+                double element = affine.matrix.element(i, j);
+                append_xml_content_node(avatar, dtostr(element));
             }
         }
     }
