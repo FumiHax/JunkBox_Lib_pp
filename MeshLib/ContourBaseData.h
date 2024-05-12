@@ -12,6 +12,7 @@
 
 #include "Vector.h"
 #include "Rotation.h"
+#include "AffineTrans.h"
 #include "buffer.h"
 
 
@@ -78,10 +79,10 @@ class  ContourTriData
 public:
     int contourNum;
 
-    Vector<double>      v1,  v2,  v3;
-    Vector<double>      n1,  n2,  n3;
-    UVMap<double>       uv1, uv2, uv3;
-    //ArrayParam<double>  w1,  w2,  w3;
+    Vector<double>   v1,  v2,  v3;
+    Vector<double>   n1,  n2,  n3;
+    UVMap<double>    uv1, uv2, uv3;
+    //ArrayParam<int>  w1,  w2,  w3;
 
 public:
     ContourTriData(int n = 0) { init(); contourNum = n;}
@@ -114,7 +115,7 @@ public:
     Vector<double>      vertex[3];
     Vector<double>      normal[3];
     UVMap<double>       texcrd[3];
-    ArrayParam<double>  weight[3];
+    ArrayParam<int>     weight[3];
 
 public:
     TriPolygonData(void) { init();}
@@ -148,15 +149,15 @@ void   freeTriPolygonData(TriPolygonData*& tridata, int n);
 class  ContourBaseData
 {
 public:
-    int     num_index;              ///< インデックスの数．(index の要素数）
-    int     num_data;               ///< データ数．（vertex, normal, texcrd, weight の要素数）
-    int     vcount;                 ///< ポリゴンの頂点数．通常は3
+    int     num_index;           ///< インデックスの数．(index の要素数）
+    int     num_data;            ///< データ数．（vertex, normal, texcrd, weight の要素数）
+    int     vcount;              ///< ポリゴンの頂点数．通常は3
 
-    int*                index;      ///< インデックスデータ
-    Vector<double>*     vertex;     ///< 頂点データ       vertex[index[0]], vertex[index[1]], vertex[index[2]], ... の順に並ぶ
-    Vector<double>*     normal;     ///< 法線ベクトル     normal[index[0]], normal[index[1]], normal[index[2]], ... の順に並ぶ
-    UVMap<double>*      texcrd;     ///< テクスチャマップ texcrd[index[0]], texcrd[index[1]], texcrd[index[2]], ... の順に並ぶ
-    ArrayParam<double>* weight;     ///< Skin の Weight   weight[index[0]], weight[index[1]], weight[index[2]], ... の順に並ぶ
+    int*             index;      ///< インデックスデータ
+    Vector<double>*  vertex;     ///< 頂点データ       vertex[index[0]], vertex[index[1]], vertex[index[2]], ... の順に並ぶ
+    Vector<double>*  normal;     ///< 法線ベクトル     normal[index[0]], normal[index[1]], normal[index[2]], ... の順に並ぶ
+    UVMap<double>*   texcrd;     ///< テクスチャマップ texcrd[index[0]], texcrd[index[1]], texcrd[index[2]], ... の順に並ぶ
+    ArrayParam<int>* weight;     ///< Skin の Weight   weight[index[0]], weight[index[1]], weight[index[2]], ... の順に並ぶ
 
 public:
     ContourBaseData(int idx=0, int num=0) { init(idx, num);}
@@ -187,11 +188,15 @@ public:
     int     joint_num;              ///< Jointの数．
     double  pelvis_offset;
 
-    Matrix<double>*     inverse_bind;
-    Matrix<double>*     alt_inverse_bind;
-
-    Matrix<double>      bind_shape;
-    ArrayParam<char*>   joint_names;
+    AffineTrans<double>* inverse_bind;
+    AffineTrans<double>* alt_inverse_bind;
+    AffineTrans<double>  bind_shape;
+/*
+    Matrix<double>*      inverse_bind;
+    Matrix<double>*      alt_inverse_bind;
+    Matrix<double>       bind_shape;
+*/
+    ArrayParam<char*>    joint_names;
 
 public:
     SkinJointData(int num=0) { init(num);}
