@@ -209,7 +209,7 @@ void  TriPolygonData::init(void)
 void  TriPolygonData::free(void)
 {
     for (int i=0; i<3; i++) {
-        if (!weight[i].get_size()) weight[i].free();
+        weight[i].free();
     }
     init();
 }
@@ -313,6 +313,7 @@ void  jbxl::freeTriPolygonData(TriPolygonData*& tridata, int n)
     //DEBUG_MODE PRINT_MESG("JBXL::freeTriPolygonData(): start.\n");
     if (n<=0) return;
 
+PRINT_MESG("                                FT==> %'ld\n", memory_check());
     if (tridata!=NULL) {
         for (int i=0; i<n; i++) {
             tridata[i].free();
@@ -321,6 +322,7 @@ void  jbxl::freeTriPolygonData(TriPolygonData*& tridata, int n)
         tridata = NULL;
     }
     //DEBUG_MODE PRINT_MESG("JBXL::freeTriPolygonData(): end.\n");
+PRINT_MESG("                                FX==> %'ld\n", memory_check());
 }
 
 
@@ -350,10 +352,6 @@ void  SkinJointData::init(int n)
         for (int i=0; i<joint_num; i++) {
             inverse_bind[i].init();
             alt_inverse_bind[i].init();
-        /*
-            inverse_bind[i] = Matrix<double>(2, 4, 4);
-            alt_inverse_bind[i] = Matrix<double>(2, 4, 4);
-        */
         }
         joint_names.init(joint_num);
     }

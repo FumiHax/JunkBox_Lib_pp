@@ -60,7 +60,9 @@ public:
 
     void    init(void);
     void    free(void);
+//    void    free_all(void);
     void    free_value(void);
+    void    del_nodes(MeshFacetNode* next);
     void    clear(void);
 
     void    set (int vertex,   int polygon,   int vcount=3);
@@ -86,7 +88,7 @@ public:
 
 
 inline void  freeMeshFacetNode(MeshFacetNode*& node) { if(node!=NULL) { node->free(); delete node; node=NULL;} }
-void  freeMeshObjectList(MeshFacetNode*& node);
+void  freeMeshFacetList(MeshFacetNode*& node);
 
 MeshFacetNode*  DelMeshFacetNode(MeshFacetNode* node);
 MeshFacetNode*  AddMeshFacetNode(MeshFacetNode* list, MeshFacetNode* node);

@@ -43,7 +43,7 @@ void  MeshObjectData::free(void)
 
     delAffineTrans();
 
-    freeMeshObjectList(facet);
+    freeMeshFacetList(facet);
     facet = facet_end = NULL;
 }
 
@@ -452,7 +452,6 @@ void  MeshObjectData::setMaterialParam(MaterialParam param, int num)
             node = node->next;
         }
     }
-
     return;
 }
 

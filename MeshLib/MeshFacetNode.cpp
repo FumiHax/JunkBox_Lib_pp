@@ -42,6 +42,7 @@ void  MeshFacetNode::init(void)
 */
 void  MeshFacetNode::setMaterialParam(MaterialParam mparam)
 {
+PRINT_MESG("                          OO==> %'ld\n", memory_check());
     material_param.free();
     material_param.dup(mparam);
     material_param.enable = true;
@@ -65,7 +66,7 @@ void  MeshFacetNode::setMaterialParam(MaterialParam mparam)
         }
         node = node->next;
     }
-
+PRINT_MESG("                          OP==> %'ld\n", memory_check());
     return;
 }
 
@@ -120,11 +121,43 @@ void  MeshFacetNode::set(int vertex, int polygon, int vcount)
 
 void  MeshFacetNode::free(void)
 {
+/*
+    if (next!=NULL) {
+        del_nodes(next);    
+        ::free(next);
+    }
+*/
     delMaterialParam();
     free_Buffer(&material_id);
+    //
+    free_value();
+    //free_all();
+    next = NULL;
+    //prev = NULL;
+}
 
+
+/*
+void  MeshFacetNode::del_nodes(MeshFacetNode* pp)
+{
+    if (pp->next!=NULL) {
+        del_nodes(pp->next);
+        ::free(pp->next);
+    }
+    free_all();
+    next = NULL;
+}
+*/
+
+/*
+void  MeshFacetNode::free_all(void)
+{
+    delMaterialParam();
+    free_Buffer(&material_id);
+    //
     free_value();
 }
+*/
 
 
 void  MeshFacetNode::free_value(void)
@@ -469,12 +502,12 @@ UVMap<double>*  MeshFacetNode::generatePlanarUVMap(Vector<double> scale, UVMap<d
 
 ///////////////////////////////////////////////////////////////////
 
-void  jbxl::freeMeshObjectList(MeshFacetNode*& node)
+void  jbxl::freeMeshFacetList(MeshFacetNode*& node)
 {
     if (node==NULL) return;
 
     MeshFacetNode* next = node->next;
-    if (next!=NULL) freeMeshObjectList(next);
+    if (next!=NULL) freeMeshFacetList(next);
 
     freeMeshFacetNode(node);
 
