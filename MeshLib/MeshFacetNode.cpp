@@ -42,7 +42,6 @@ void  MeshFacetNode::init(void)
 */
 void  MeshFacetNode::setMaterialParam(MaterialParam mparam)
 {
-PRINT_MESG("                          OO==> %'ld\n", memory_check());
     material_param.free();
     material_param.dup(mparam);
     material_param.enable = true;
@@ -66,7 +65,6 @@ PRINT_MESG("                          OO==> %'ld\n", memory_check());
         }
         node = node->next;
     }
-PRINT_MESG("                          OP==> %'ld\n", memory_check());
     return;
 }
 
@@ -119,45 +117,15 @@ void  MeshFacetNode::set(int vertex, int polygon, int vcount)
 }
 
 
+/**
+next 以降は freeMeshFacetList() で解放する．
+*/
 void  MeshFacetNode::free(void)
 {
-/*
-    if (next!=NULL) {
-        del_nodes(next);    
-        ::free(next);
-    }
-*/
     delMaterialParam();
     free_Buffer(&material_id);
-    //
-    free_value();
-    //free_all();
-    next = NULL;
-    //prev = NULL;
-}
-
-
-/*
-void  MeshFacetNode::del_nodes(MeshFacetNode* pp)
-{
-    if (pp->next!=NULL) {
-        del_nodes(pp->next);
-        ::free(pp->next);
-    }
-    free_all();
-    next = NULL;
-}
-*/
-
-/*
-void  MeshFacetNode::free_all(void)
-{
-    delMaterialParam();
-    free_Buffer(&material_id);
-    //
     free_value();
 }
-*/
 
 
 void  MeshFacetNode::free_value(void)
@@ -528,6 +496,10 @@ MeshFacetNode*  jbxl::DelMeshFacetNode(MeshFacetNode* node)
 
     return next;
 }
+
+
+// in MeshFacetNode.h
+// inline void  freeMeshFacetNode(MeshFacetNode*& node) { if(node!=NULL) { node->free(); delete node; node=NULL;} }
 
 
 MeshFacetNode*  jbxl::AddMeshFacetNode(MeshFacetNode* list, MeshFacetNode* node)

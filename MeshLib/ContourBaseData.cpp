@@ -313,7 +313,6 @@ void  jbxl::freeTriPolygonData(TriPolygonData*& tridata, int n)
     //DEBUG_MODE PRINT_MESG("JBXL::freeTriPolygonData(): start.\n");
     if (n<=0) return;
 
-PRINT_MESG("                                FT==> %'ld\n", memory_check());
     if (tridata!=NULL) {
         for (int i=0; i<n; i++) {
             tridata[i].free();
@@ -322,7 +321,6 @@ PRINT_MESG("                                FT==> %'ld\n", memory_check());
         tridata = NULL;
     }
     //DEBUG_MODE PRINT_MESG("JBXL::freeTriPolygonData(): end.\n");
-PRINT_MESG("                                FX==> %'ld\n", memory_check());
 }
 
 
