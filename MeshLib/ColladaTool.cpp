@@ -172,29 +172,32 @@ void  ColladaXML::addObject(MeshObjectData* meshdata, bool collider, SkinJointDa
         }
     }
 
-    char* geom_id = addGeometry(meshdata);              // 幾何情報を配置
-    addController(geom_id, meshdata, joints);           // Joints 情報を配置
-    addScene(geom_id, meshdata, collider, joints);      // Scene への配置（位置，サイズ，回転，コライダー, Joints）
+    //
+    char* geom_id = addGeometry(meshdata);                          // 幾何情報を配置
+    char* ctrl_id = addController(geom_id, meshdata, joints);       // Joints 情報を配置
+    addScene(geom_id, ctrl_id, meshdata, collider, joints);         // Scene への配置（位置，サイズ，回転，コライダー, Joints）
     
     if (geom_id!=NULL) ::free(geom_id);
+    if (ctrl_id!=NULL) ::free(ctrl_id);
     return;
 }
 
 
-void  ColladaXML::addController(const char* geometry_id, MeshObjectData* meshdata, SkinJointData* joints)
+char*  ColladaXML::addController(const char* geometry_id, MeshObjectData* meshdata, SkinJointData* joints)
 {
-    if (geometry_id==NULL || meshdata==NULL || joints==NULL) return;
+    if (geometry_id==NULL || meshdata==NULL || joints==NULL) return NULL;
 
     Buffer geometry_name = dup_Buffer(meshdata->data_name);
     if (geometry_name.buf==NULL) geometry_name = make_Buffer_str(geometry_id+1);
 
     Buffer randomstr = make_Buffer_randomstr(8);
 
-    Buffer controller_id = make_Buffer_str("avatar_");
+    //Buffer controller_id = make_Buffer_str("avatar_");
+    Buffer controller_id = make_Buffer_str("#AVATAR_");
     cat_Buffer(&randomstr, &controller_id);
 
     tXML* controller_tag = add_xml_node(library_controllers_tag, "controller");
-    add_xml_attr_str(controller_tag, "id", _tochar(controller_id.buf));
+    add_xml_attr_str(controller_tag, "id", _tochar(controller_id.buf + 1));
     add_xml_attr_str(controller_tag, "name",  "avater");
 
     tXML* skin_tag = add_xml_node(controller_tag, "skin");
@@ -310,14 +313,14 @@ void  ColladaXML::addController(const char* geometry_id, MeshObjectData* meshdat
 
     free_Buffer(&geometry_name);
     free_Buffer(&randomstr);
-    free_Buffer(&controller_id);
+    //free_Buffer(&controller_id);
     free_Buffer(&joint_id);
     free_Buffer(&joint_name_id);
     free_Buffer(&invbind_id);
     free_Buffer(&invbind_float_id);
     if (weight_id!=NULL) ::free(weight_id);
 
-    return;
+    return _tochar(controller_id.buf);
 }
 
 
@@ -932,9 +935,9 @@ void  ColladaXML::addExtraBumpmap(tXML* profile_tag, const char* bump_id)
 /**
  Scene への配置（位置，サイズ，回転，コライダー, Joints）
 */
-void  ColladaXML::addScene(const char* geometry_id, MeshObjectData* meshdata, bool collider, SkinJointData* joints)
+void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObjectData* meshdata, bool collider, SkinJointData* joints)
 {
-    if (geometry_id==NULL || meshdata==NULL) return;
+    if ((geometry_id==NULL && controller_id==NULL) || meshdata==NULL) return;
 
     bool local_affine = true;
     AffineTrans<double> affine;
@@ -993,7 +996,7 @@ void  ColladaXML::addScene(const char* geometry_id, MeshObjectData* meshdata, bo
     }
 
     Buffer geometry_name = dup_Buffer(meshdata->data_name);
-    if (geometry_name.buf==NULL) geometry_name = make_Buffer_str(geometry_id+1);
+    if (geometry_name.buf==NULL) geometry_name = make_Buffer_str(geometry_id + 1);
     //
     Buffer randomstr = make_Buffer_randomstr(8);
     Buffer node_id = make_Buffer_str("#NODE_");
@@ -1062,8 +1065,15 @@ void  ColladaXML::addScene(const char* geometry_id, MeshObjectData* meshdata, bo
     append_xml_content_node(scale_tag, dtostr(affine.scale.z));
 */
 
-    tXML* instance_tag = add_xml_node(node_tag, "instance_geometry");
-    add_xml_attr_str(instance_tag, "url", geometry_id);
+    tXML* instance_tag = NULL;
+    if (controller_id!=NULL) {
+        instance_tag = add_xml_node(node_tag, "instance_controller");
+        add_xml_attr_str(instance_tag, "url", controller_id);
+    }
+    else {
+        instance_tag = add_xml_node(node_tag, "instance_geometry");
+        add_xml_attr_str(instance_tag, "url", geometry_id);
+    }
 
     tXML* bind_material_tag = add_xml_node(instance_tag, "bind_material");
     tXML* technique_common_tag = add_xml_node(bind_material_tag, "technique_common");
@@ -1087,8 +1097,15 @@ void  ColladaXML::addScene(const char* geometry_id, MeshObjectData* meshdata, bo
         add_xml_content_node(dynamic_tag, "false");
         add_xml_content_node(mass_tag, "0");
         tXML* shape_tag   = add_xml_node(technique_common_tag, "shape");
-        instance_tag      = add_xml_node(shape_tag, "instance_geometry");
-        add_xml_attr_str(instance_tag, "url", geometry_id);
+        //
+        if (controller_id!=NULL) {
+            instance_tag = add_xml_node(shape_tag, "instance_controller");
+            add_xml_attr_str(instance_tag, "url", controller_id);
+        }
+        else {
+            instance_tag = add_xml_node(shape_tag, "instance_geometry");
+            add_xml_attr_str(instance_tag, "url", geometry_id);
+        }
     }
 
     //
