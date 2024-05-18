@@ -126,6 +126,7 @@ public:
 
     tXML*   joints_template_tag;
     tList*  joints_bento_name;
+    bool    has_joints;
     bool    has_bento_joints;
 
     bool    phantom_out;

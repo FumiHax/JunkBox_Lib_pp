@@ -26,6 +26,7 @@ void  ColladaXML::init(double meter, int axis, const char* ver)
     //
     joints_template_tag = NULL;
     joints_bento_name   = NULL;
+    has_joints          = false;
     has_bento_joints    = false;
 
     blank_texture = init_Buffer();
@@ -153,6 +154,7 @@ void  ColladaXML::addObject(MeshObjectData* meshdata, bool collider, SkinJointDa
 
     if (joints!=NULL && joints_template!=NULL) {
         if (joints_template_tag==NULL) {
+            has_joints = true;
             joints_template_tag = joints_template;
             joints_bento_name   = joints_name;
             // Bento
@@ -947,8 +949,9 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
         affine = *(meshdata->affineTrans);
     }
 
+    Vector<double> pelvis = Vector<double>(0.0, 0.0, 1.067);
     // joints
-    if (joints!=NULL && joints_template_tag!=NULL && visual_scene_tag!=NULL && visual_scene_tag->next==NULL) {
+    if (has_joints && (visual_scene_tag!=NULL && visual_scene_tag->next==NULL)) {
         char buf[LNAME];
         memset(buf, 0, LNAME);
         buf[0] = '"';
@@ -973,6 +976,12 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
                         }
                     }
                 }
+                // Pelvis の座標
+                if (!strcasecmp(joint_name, "mPelvis")) {
+                    pelvis.x = joints->alt_inverse_bind[jnt].matrix.element(1, 4);
+                    pelvis.y = joints->alt_inverse_bind[jnt].matrix.element(2, 4);
+                    pelvis.z = joints->alt_inverse_bind[jnt].matrix.element(3, 4);
+                }
             }
         }
 
@@ -980,16 +989,20 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
             // 不要な Bento Joints を削除
             delete_bento_joints();
         }
-
-        // xml の結合
+        // joints_template の結合
         join_xml(visual_scene_tag, joints_template_tag);
 
         //**********************************************************************************
         // jointの位置合わせ用変換行列を計算
         AffineTrans<double> joint_space = joints->inverse_bind[0] * joints->bind_shape;
         AffineTrans<double> joint_trans = joint_space.getInvAffine();
-        skeleton = joint_trans * affine;
-        skeleton.shift =  - joints->alt_inverse_bind[0].shift;
+
+        Vector<double> shift = joint_trans.execRotateScale(pelvis);
+        joint_trans.shift = joint_trans.shift - shift;
+
+        skeleton = affine*joint_trans;
+        setJointLocationMatrix();
+
         joint_space.free();
         joint_trans.free();
         //**********************************************************************************
@@ -1189,14 +1202,12 @@ void  ColladaXML::setJointLocationMatrix(void)
 */
 void  ColladaXML::setJointLocationMatrix(void)
 {
+    if (!has_joints) return;
+
     tXML* avatar_tag = get_xml_node_str(collada_tag, "<library_visual_scenes><visual_scene><node><matrix>");
     if (avatar_tag!=NULL) {
-        if (total_vertex>0) getObjectCenter();
-        skeleton.shift.x += center.x;
-        skeleton.shift.y += center.y;
-        skeleton.shift.z += center.z;
         skeleton.computeMatrix();
-
+        //
         for (int i=1; i<=4; i++) {
             for (int j=1; j<=4; j++) {
                 double element = skeleton.matrix.element(i, j);
