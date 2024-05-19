@@ -1062,12 +1062,18 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
     free_Buffer(&randomstr);
     free_Buffer(&node_id);
 
-    // Controller
+    // 
+    affine.computeMatrix();
     tXML* matrix_tag = add_xml_node(node_tag, "matrix");
+    for (int i = 1; i <= 4; i++) {
+        for (int j = 1; j <= 4; j++) {
+            append_xml_content_node(matrix_tag, dtostr(affine.matrix.element(i, j)));
+        }
+    }
+
+    // Controller
     tXML* instance_tag = NULL;
     if (controller_id!=NULL) {
-        set_xml_content_node(matrix_tag, "1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1");
-        //
         instance_tag = add_xml_node(node_tag, "instance_controller");
         add_xml_attr_str(instance_tag, "url", controller_id);
         //
@@ -1084,13 +1090,6 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
         }
     }
     else {
-        // Controller for no skin
-        affine.computeMatrix();
-        for (int i=1; i<=4; i++) {
-            for (int j=1; j<=4; j++) {
-                append_xml_content_node(matrix_tag, dtostr(affine.matrix.element(i, j)));
-            }
-        }
         instance_tag = add_xml_node(node_tag, "instance_geometry");
         add_xml_attr_str(instance_tag, "url", geometry_id);
     }
