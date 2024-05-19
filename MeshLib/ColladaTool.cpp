@@ -990,9 +990,9 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
                     for (int i=1; i<=4; i++) {
                         for (int j=1; j<=4; j++) {
                             double element = joints->alt_inverse_bind[jnt].matrix.element(i, j);
-                            //if (i==1 && j==1) set_xml_content_node(matrix_tag, dtostr(element));
-                            //else           append_xml_content_node(matrix_tag, dtostr(element));
-                            append_xml_content_node(matrix_tag, dtostr(element));
+                            if (i==1 && j==1) set_xml_content_node(matrix_tag, dtostr(element));
+                            else           append_xml_content_node(matrix_tag, dtostr(element));
+                            //append_xml_content_node(matrix_tag, dtostr(element));
                         }
                     }
                 }
