@@ -55,7 +55,6 @@ public:
     void    initCollada(float  meter, int axis, const char* ver) { initCollada((double)meter, axis, ver); }
     //void    addObject(MeshObjectData* meshdata, bool collider, SkinJointData* skin_joint=NULL, tXML* joints_template=NULL, tList* joints_name=NULL);
     void    addObject(MeshObjectData* meshdata, bool collider, SkinJointData* skin_joint=NULL, tXML* joints_template=NULL);
-    void    closeObject(void);
 
     char*   addGeometry(MeshObjectData* meshdata);
     char*   addController(const char* geometry_id, MeshObjectData* meshdata, SkinJointData* skin_joint);
@@ -78,6 +77,7 @@ public:
     tXML*   addEffect(const char* material_url, const char* file_id, MaterialParam param);
     void    addExtraBumpmap(tXML* effect_tag, const char* bump_id);
 
+    void    closeSolid(void);
     void    deleteJoint(tXML* delete_tag);
 
     bool    existSameID(tXML* top, const char* tag, const char* id);

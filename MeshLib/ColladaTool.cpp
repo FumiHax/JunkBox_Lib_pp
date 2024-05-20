@@ -186,9 +186,10 @@ void  ColladaXML::addObject(MeshObjectData* meshdata, bool collider, SkinJointDa
 }
 
 
-void  ColladaXML::closeObject(void)
+void  ColladaXML::closeSolid(void)
 {
     tXML* pelvis_tag = get_xml_attr_node(joints_template_tag, "name","\"mPelvis\"");
+    if (pelvis_tag==NULL) PRINT_MESG("WARNING: ColladaXML::closeObject: not found mPelvis in Joints template file.\n");
     deleteNousedJoints(pelvis_tag);
 
     return;

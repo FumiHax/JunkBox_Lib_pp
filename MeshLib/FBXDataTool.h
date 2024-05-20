@@ -55,7 +55,7 @@ public:
     Vector<double> execAffineTrans(bool origin);
 
     void    addObject(MeshObjectData* meshdata, bool collider, SkinJointData* joints);
-    void    closeObject(void) {}
+    void    closeSolid(void) {}
 
     void    outputFile(const char* fn, const char* out_path, const char* tex_dirn);
     void    output_fbx(FILE* fp);
