@@ -55,6 +55,7 @@ public:
     void    initCollada(float  meter, int axis, const char* ver) { initCollada((double)meter, axis, ver); }
     //void    addObject(MeshObjectData* meshdata, bool collider, SkinJointData* skin_joint=NULL, tXML* joints_template=NULL, tList* joints_name=NULL);
     void    addObject(MeshObjectData* meshdata, bool collider, SkinJointData* skin_joint=NULL, tXML* joints_template=NULL);
+    void    closeObject(void);
 
     char*   addGeometry(MeshObjectData* meshdata);
     char*   addController(const char* geometry_id, MeshObjectData* meshdata, SkinJointData* skin_joint);
