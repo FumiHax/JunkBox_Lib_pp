@@ -1035,8 +1035,8 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
     }
 
     //Buffer geometry_name = dup_Buffer(meshdata->data_name);
-    //if (geometry_name.buf==NULL) geometry_name = make_Buffer_str(geometry_id + 1);
     Buffer geometry_name = dup_Buffer(meshdata->alt_name);
+    if (geometry_name.buf==NULL) geometry_name = make_Buffer_str(geometry_id + 1);
     //
     Buffer randomstr = make_Buffer_randomstr(8);
     Buffer node_id = make_Buffer_str("#NODE_");
