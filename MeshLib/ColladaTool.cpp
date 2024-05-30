@@ -193,8 +193,8 @@ char*  ColladaXML::addController(const char* geometry_id, MeshObjectData* meshda
     if (geometry_id==NULL || meshdata==NULL || joints==NULL) return NULL;
 
     //Buffer geometry_name = dup_Buffer(meshdata->data_name);
-    //if (geometry_name.buf==NULL) geometry_name = make_Buffer_str(geometry_id+1);
     Buffer geometry_name = dup_Buffer(meshdata->alt_name);
+    if (geometry_name.buf==NULL) geometry_name = make_Buffer_str(geometry_id+1);
     Buffer randomstr = make_Buffer_randomstr(8);
 
     Buffer controller_id = make_Buffer_str("#AVATAR_");
@@ -344,6 +344,7 @@ char*  ColladaXML::addGeometry(MeshObjectData* meshdata)
     if (geometry_name.buf!=NULL) {
         cat_s2Buffer("_", &geometry_name);
         cat_Buffer(&randomstr, &geometry_name);
+        PRINT_MESG("=====> %s\n", (char*)geometry_name.buf)
     }
     else {
         geometry_name = make_Buffer_str(geometry_id.buf + 1);
