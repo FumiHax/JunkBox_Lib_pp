@@ -341,6 +341,8 @@ char*  ColladaXML::addGeometry(MeshObjectData* meshdata)
 
     Buffer geometry_name = dup_Buffer(meshdata->data_name);
     if (geometry_name.buf==NULL) geometry_name = make_Buffer_str(geometry_id.buf + 1);
+//////////////////////////////////////////////////////////////////////////////////////////////////
+    cat_Buffer(&randomstr, &geometry_name);
 
     // library_geometries
     tXML* geomrtry_tag = add_xml_node(library_geometries_tag, "geometry");
