@@ -349,8 +349,8 @@ char*  MaterialParam::getBase64Params(unsigned char obj, unsigned char cc)
     double blue    = texture.getColor(2);
     double transp  = getTransparent();
     double cutoff  = texture.getAlphaCutoff();
-    int  alphaMode = texture.getAlpahaMode();
-    bool hasAalpha = texture.getAlphaChannel();
+    int  alphaMode = texture.getAlphaMode();
+    bool hasAlpha  = texture.getAlphaChannel();
     /*
     short int rotate = (short int)((int)(texture.getRotate()*2000.)%32768);     // 2Byte化
     short int shiftu = (short int)((int)(texture.getShiftU()*2000.)%32768);
@@ -372,7 +372,7 @@ char*  MaterialParam::getBase64Params(unsigned char obj, unsigned char cc)
     attr[MATERIAL_ATTR_GLOW]        = (uByte)(glow*255);
     attr[MATERIAL_ATTR_BRIGHT]      = (uByte)(bright*255);
     attr[MATERIAL_ATTR_LIGHT]       = (uByte)(light*255);
-    attr[MATERIAL_ATTR_LPHA]        = (uByte)(alphamode);
+    attr[MATERIAL_ATTR_ALPHAMODE]   = (uByte)(alphamode);
     /*
     memcpy(attr + MATERIAL_ATTR_SHIFT_U, &shiftu, 2);
     memcpy(attr + MATERIAL_ATTR_SHIFT_V, &shiftv, 2);
