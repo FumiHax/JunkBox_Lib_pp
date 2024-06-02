@@ -344,7 +344,7 @@ char*  ColladaXML::addGeometry(MeshObjectData* meshdata)
     if (geometry_name.buf!=NULL) {
         cat_s2Buffer("_", &geometry_name);
         cat_Buffer(&randomstr, &geometry_name);
-        PRINT_MESG("=====> %s\n", (char*)geometry_name.buf)
+        PRINT_MESG("=====> %s\n", (char*)geometry_name.buf);
     }
     else {
         geometry_name = make_Buffer_str(geometry_id.buf + 1);
