@@ -225,8 +225,6 @@ void  OBJData::outputFile(const char* fname, const char* out_path, const char* t
     cat_Buffer(&file_name, &obj_path);
     change_file_extension_Buffer(&obj_path, ".obj");
 
-    canonical_filename_Buffer(&mtl_path);
-    canonical_filename_Buffer(&obj_path);
     canonical_filename_Buffer(&rel_tex);
     canonical_filename_Buffer(&rel_mtl);
     this->output_mtl((char*)mtl_path.buf, (char*)rel_tex.buf);  // mtl file
