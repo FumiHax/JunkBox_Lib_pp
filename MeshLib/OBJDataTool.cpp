@@ -225,6 +225,10 @@ void  OBJData::outputFile(const char* fname, const char* out_path, const char* t
     cat_Buffer(&file_name, &obj_path);
     change_file_extension_Buffer(&obj_path, ".obj");
 
+    canonical_filename_Buffer(&mtl_path);
+    canonical_filename_Buffer(&obj_path);
+    canonical_filename_Buffer(&rel_tex);
+    canonical_filename_Buffer(&rel_mtl);
     this->output_mtl((char*)mtl_path.buf, (char*)rel_tex.buf);  // mtl file
     this->output_obj((char*)obj_path.buf, (char*)rel_mtl.buf);  // obj file
     //
@@ -504,12 +508,15 @@ void  OBJFacetMtlNode::setup_params(void)
 
     if (texture.isSetTexture()) {       // map_Kd
         this->map_kd = make_Buffer_str(texture.getName());
+        canonical_filename_Buffer(&this->map_kd);
     }
     if (specmap.isSetTexture()) {       // map_Ks
         this->map_ks = make_Buffer_str(specmap.getName());
+        canonical_filename_Buffer(&this->map_ks);
     }
     if (bumpmap.isSetTexture()) {       // map_bump
         this->map_bump = make_Buffer_str(bumpmap.getName());
+        canonical_filename_Buffer(&this->map_bump);
     }
 
     this->ka = Vector<double>(1.0, 1.0, 1.0);
