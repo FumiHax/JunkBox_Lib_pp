@@ -206,7 +206,11 @@ void  OBJData::outputFile(const char* fname, const char* out_path, const char* t
     if (file_name.buf[0]=='.') file_name.buf[0] = '_';
     //
     Buffer obj_path;
+#ifdef WIN32
+    if (out_path==NULL) obj_path = make_Buffer_bystr(".\\");
+#else
     if (out_path==NULL) obj_path = make_Buffer_bystr("./");
+#endif
     else                obj_path = make_Buffer_bystr(out_path);
     //
     Buffer rel_tex;    //  相対パス
@@ -225,8 +229,6 @@ void  OBJData::outputFile(const char* fname, const char* out_path, const char* t
     cat_Buffer(&file_name, &obj_path);
     change_file_extension_Buffer(&obj_path, ".obj");
 
-    canonical_filename_Buffer(&rel_tex);
-    canonical_filename_Buffer(&rel_mtl);
     this->output_mtl((char*)mtl_path.buf, (char*)rel_tex.buf);  // mtl file
     this->output_obj((char*)obj_path.buf, (char*)rel_mtl.buf);  // obj file
     //
