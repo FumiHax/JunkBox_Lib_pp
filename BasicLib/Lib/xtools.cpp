@@ -2064,6 +2064,32 @@ void  canonical_filename_Buffer(Buffer* fname)
 // ファイルリスト
 
 /**
+tList*  _add_key_val_list(tList* pp, tList* list, const char* key, const char* val, int mode)
+
+add_resource_list() の補助関数
+
+*/
+tList*  _add_key_val_list(tList* pp, tList* list, const char* key, const char* val, int mode)
+{
+    // 同一キーがあった場合の処理
+    tList* fnd = strncasecmp_tList(list, key, 0, 1);
+    if (fnd!=NULL) {
+        if (mode==1) {          // スキップ
+            return pp;
+        }
+        else if (mode==2) {     // 上書き
+            del_tList_node(&fnd);
+        }
+    }
+    // データ追加
+    tList_data ldat = make_tList_data_str(key, val);
+    pp = add_tList_node_bydata(pp, ldat);
+
+    return pp;
+}
+
+
+/**
 tList*  add_resource_list(const char* path, int keylen, tList* list, tList* extn, int mode)
 
 ディレクトリ pathを検索して，リソースリストにファイルを追加し，リストの先頭を返す．@n
@@ -2090,27 +2116,14 @@ tList*  add_resource_list(const char* path, int keylen, tList* list, tList* extn
         char* ext = get_file_extension((char*)fn.buf);
         //
         if (extn==NULL || strncasecmp_tList(extn, ext, 0, 1)==NULL) {   // 拡張子の検査
-            // キーの長さ調整
-            if (keylen>0  && fn.vldsz>=keylen) {
+            if (keylen<=0) {
+                pp = _add_key_val_list(pp, list, (char*)fn.buf, (char*)lp->ldat.val.buf, mode);
+            }
+            else if (fn.vldsz>=keylen) {
                 fn.buf[keylen] = '\0';
                 fn.vldsz = keylen;
+                pp = _add_key_val_list(pp, list, (char*)fn.buf, (char*)lp->ldat.val.buf, mode);
             }
-            // 同一キーがあった場合の処理
-            tList* find = strncasecmp_tList(list, (char*)fn.buf, 0, 1);
-            if (find!=NULL) {
-                if (mode==1) {          // スキップ
-                    lp = lp->next;
-                    free_Buffer(&fn);
-                    continue;
-                }
-                else if (mode==2) {     // 上書き
-                    del_tList_node(&find);
-                }
-            }
-            // データ追加
-            lp->ldat.key = make_Buffer_bystr((char*)fn.buf);
-            tList_data ldat = dup_tList_data(lp->ldat);
-            pp = add_tList_node_bydata(pp, ldat);
         }
 
         if (list==NULL) list = pp;
@@ -2118,7 +2131,7 @@ tList*  add_resource_list(const char* path, int keylen, tList* list, tList* extn
         free_Buffer(&fn);
     }
 
-    del_tList(&tp);
+    del_all_tList(&tp);
     return list;
 }
 
