@@ -2064,7 +2064,7 @@ void  canonical_filename_Buffer(Buffer* fname)
 // ファイルリスト
 
 /**
-tList*  add_resource_list(const char* path, int keylen, tList* list, tList* extn)
+tList*  add_resource_list(const char* path, int keylen, tList* list, tList* extn, int mode)
 
 ディレクトリ pathを検索して，リソースリストにファイルを追加し，リストの先頭を返す．@n
 リソースリストのキーは，リソースのファイル名の先頭 keylen文字とする．keylenが 0以下ならファイル名全体をキーとする．
@@ -2073,31 +2073,44 @@ tList*  add_resource_list(const char* path, int keylen, tList* list, tList* extn
 @param keylen キー長．0以下ならファイル名全体．
 @param list   追加操作を行うリスト．NULLなら新しいリストそ作成して返す．
 @param extn   除外拡張子のリスト．
+@param mode   同じキーがあった場合の処理．0: 重複登録，1: 先に登録されたものを優先，2:後に登録されるものを優先
 @return リソースのリスト
 */
-tList*  add_resource_list(const char* path, int keylen, tList* list, tList* extn)
+tList*  add_resource_list(const char* path, int keylen, tList* list, tList* extn, int mode)
 {
     if (path==NULL) return list;
 
-    tList* lp = get_dir_files(path);
     tList* pp = find_tList_end(list);
+    tList* lp = get_dir_files(path);
+    tList* tp = lp;
 
     // Generate Key. ファイル名の先頭 keylen文字をキーにする．
     while (lp!=NULL) {
-        Buffer fn = make_Buffer_bystr(get_file_name((char*)lp->ldat.val.buf));
+        Buffer fn = make_Buffer_bystr(get_file_name((char*)lp->ldat.val.buf));  // ファイル名
         char* ext = get_file_extension((char*)fn.buf);
         //
-        if (extn==NULL || strncasecmp_tList(extn, ext, 0, 1)==NULL) {
-            if (keylen<=0) {
-                lp->ldat.key = make_Buffer_bystr((char*)fn.buf);
-                pp = add_tList_node_bydata(pp, lp->ldat);
-            }
-            else if (fn.vldsz>=keylen) {
+        if (extn==NULL || strncasecmp_tList(extn, ext, 0, 1)==NULL) {   // 拡張子の検査
+            // キーの長さ調整
+            if (keylen>0  && fn.vldsz>=keylen) {
                 fn.buf[keylen] = '\0';
                 fn.vldsz = keylen;
-                lp->ldat.key = make_Buffer_bystr((char*)fn.buf);
-                pp = add_tList_node_bydata(pp, lp->ldat);
             }
+            // 同一キーがあった場合の処理
+            tList* find = strncasecmp_tList(list, (char*)fn.buf, 0, 1);
+            if (find!=NULL) {
+                if (mode==1) {          // スキップ
+                    lp = lp->next;
+                    free_Buffer(&fn);
+                    continue;
+                }
+                else if (mode==2) {     // 上書き
+                    del_tList_node(&find);
+                }
+            }
+            // データ追加
+            lp->ldat.key = make_Buffer_bystr((char*)fn.buf);
+            tList_data ldat = dup_tList_data(lp->ldat);
+            pp = add_tList_node_bydata(pp, ldat);
         }
 
         if (list==NULL) list = pp;
@@ -2105,6 +2118,7 @@ tList*  add_resource_list(const char* path, int keylen, tList* list, tList* extn
         free_Buffer(&fn);
     }
 
+    del_tList(&tp);
     return list;
 }
 
