@@ -124,11 +124,11 @@ void  TextureParam::execInvRotate(UVMap<double>* uv, int num)
 void  TextureParam::execTrans(UVMap<double>* uv, int num)
 {
     //PRINT_MESG("shift = (%f %f), scale = (%f %f), rot = %f\n", shiftU, shiftV, scaleU, scaleV, rotate);
-    if (flipU) { execFlipU(uv, num); flipU = false;}    
-    if (flipV) { execFlipV(uv, num); flipV = false;}    
+    if (flipU) { execFlipU(uv, num); flipU = false;}
+    if (flipV) { execFlipV(uv, num); flipV = false;}
+    if (isSetRotate()) execRotate(uv, num);
     if (isSetScale())  execScale (uv, num);
     if (isSetShift())  execShift (uv, num);
-    if (isSetRotate()) execRotate(uv, num);
 
     return;
 }
@@ -136,11 +136,11 @@ void  TextureParam::execTrans(UVMap<double>* uv, int num)
 
 void  TextureParam::execInvTrans(UVMap<double>* uv, int num)
 {
-    if (flipU) { execFlipU(uv, num); flipU = false;}    
-    if (flipV) { execFlipV(uv, num); flipV = false;}    
-    if (isSetRotate()) execInvRotate(uv, num);
+    if (flipU) { execFlipU(uv, num); flipU = false;}
+    if (flipV) { execFlipV(uv, num); flipV = false;}
     if (isSetShift())  execInvShift (uv, num);
     if (isSetScale())  execInvScale (uv, num);
+    if (isSetRotate()) execInvRotate(uv, num);
 
     return;
 }
