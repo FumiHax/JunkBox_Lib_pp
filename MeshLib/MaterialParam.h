@@ -137,8 +137,6 @@ public:
     void    execFlipU(UVMap<double>* uv, int n) { for(int i=0; i<n; i++) uv[i].u = 1.0 - uv[i].u;}
     void    execFlipV(UVMap<double>* uv, int n) { for(int i=0; i<n; i++) uv[i].v = 1.0 - uv[i].v;}
 
-    void    normalize(UVMap<double>* uv, int n);
-
     void    printParam(FILE* fp);
 };
 

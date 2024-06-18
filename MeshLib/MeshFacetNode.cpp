@@ -422,17 +422,6 @@ void  MeshFacetNode::execAffineTransUVMap(UVMap<double>* uvmap, int uvnum)
 }
 
 
-void  MeshFacetNode::normalizeUVMap(UVMap<double>* uvmap, int uvnum)
-{
-    if (uvmap==NULL) uvmap = texcrd_value;
-    if (uvnum==-1)   uvnum = num_texcrd;
-
-    material_param.texture.normalize(uvmap, uvnum);
-
-    return;
-}
-
-
 /**
 UVMap<double>*  MeshFacetNode::generatePlanarUVMap(Vector<double> scale, UVMap<double>* uvmap)
 

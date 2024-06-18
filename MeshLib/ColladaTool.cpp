@@ -485,7 +485,6 @@ char*  ColladaXML::addTexcrdSource(tXML* tag, MeshObjectData* meshdata)
                     facet->generatePlanarUVMap(scale, uvmap);
                 }
                 facet->execAffineTransUVMap(uvmap, facet->num_texcrd);
-                facet->normalizeUVMap(uvmap, facet->num_texcrd);
 
                 for (int i=0; i<facet->num_texcrd; i++) {
                     append_xml_content_node(source_array_tag, dtostr(uvmap[i].u));

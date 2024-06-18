@@ -76,7 +76,6 @@ public:
     void*   getMaterialID(void) { return _tochar(material_id.buf);}
 
     void    execAffineTransUVMap(UVMap<double>* uvmap=NULL, int num=-1);
-    void    normalizeUVMap(UVMap<double>* uvmap=NULL, int num=-1);
     UVMap<double>*  generatePlanarUVMap(Vector<double> scale, UVMap<double>* uvmap=NULL);
 
 public:

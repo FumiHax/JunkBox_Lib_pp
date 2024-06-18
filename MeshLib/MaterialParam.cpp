@@ -124,6 +124,10 @@ void  TextureParam::execInvRotate(UVMap<double>* uv, int num)
 void  TextureParam::execTrans(UVMap<double>* uv, int num)
 {
     //PRINT_MESG("shift = (%f %f), scale = (%f %f), rot = %f\n", shiftU, shiftV, scaleU, scaleV, rotate);
+scaleV=-128;
+//scaleU=0;
+//shiftU0=0.0;
+
     if (flipU) { execFlipU(uv, num); flipU = false;}
     if (flipV) { execFlipV(uv, num); flipV = false;}
     if (isSetRotate()) execRotate(uv, num);
@@ -143,27 +147,6 @@ void  TextureParam::execInvTrans(UVMap<double>* uv, int num)
     if (isSetRotate()) execInvRotate(uv, num);
 
     return;
-}
-
-
-void  TextureParam::normalize(UVMap<double>* uv, int num)
-{
-    return;
-    for (int i=0; i<num; i++) {
-//PRINT_MESG("(%f, %f)\n", uv[i].u, uv[i].v);
-        if (uv[i].u>1.0 || uv[i].u<-1.0) {
-            uv[i].u  = uv[i].u - (double)(int)uv[i].u;
-            if (uv[i].u==0.0) uv[i].u = 1.0;
-        }
-        if (uv[i].v>1.0 || uv[i].v<-1.0) {
-            uv[i].v  = uv[i].v - (double)(int)uv[i].v;
-            if (uv[i].v==0.0) uv[i].v = 1.0;
-        }
-        //
-        //if (uv[i].u<0.0) uv[i].u = 1.0 + uv[i].u;
-        //if (uv[i].v<0.0) uv[i].v = 1.0 + uv[i].v;
-//PRINT_MESG("(%f, %f)\n", uv[i].u, uv[i].v);
-    }
 }
 
 
@@ -365,6 +348,8 @@ void  MaterialParam::printParam(FILE* fp)
 */
 char*  MaterialParam::getBase64Params(unsigned char obj, unsigned char cc)
 {
+    //printParam(stderr);
+
     uByte attr[MATERIAL_ATTR_LEN];
 
     double red     = texture.getColor(0);
