@@ -123,11 +123,7 @@ void  TextureParam::execInvRotate(UVMap<double>* uv, int num)
 
 void  TextureParam::execTrans(UVMap<double>* uv, int num)
 {
-    //PRINT_MESG("shift = (%f %f), scale = (%f %f), rot = %f\n", shiftU, shiftV, scaleU, scaleV, rotate);
-scaleV=-128;
-//scaleU=0;
-//shiftU0=0.0;
-
+    DEBUG_MODE PRINT_MESG("JBXL::TextureParam::execTrans: shift = (%f %f), scale = (%f %f), rot = %f\n", shiftU, shiftV, scaleU, scaleV, rotate);
     if (flipU) { execFlipU(uv, num); flipU = false;}
     if (flipV) { execFlipV(uv, num); flipV = false;}
     if (isSetRotate()) execRotate(uv, num);
