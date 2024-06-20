@@ -146,6 +146,7 @@ pnum を指定すると，指定されたポリゴンデータのみが追加さ
 bool  MeshObjectData::addData(TriPolygonData* tridata, int tnum, int pnum, MaterialParam* param, bool useBrep)
 {
     DEBUG_MODE PRINT_MESG("MeshObjectData::addData() for TriPolygonData: start.\n");
+
     bool ret = importTriData(tridata, tnum, pnum);
     if (ret) {
         char* name = NULL;
@@ -257,6 +258,9 @@ bool  MeshObjectData::importTriData(TriPolygonData* tridata, int tnum, int pnum)
     DEBUG_MODE PRINT_MESG("MeshObjectData::importTriData: for TriPolygonData: start.\n");
     if (tridata==NULL) return false;
 
+FILE* fp = fopen("AAAA.txt", "w");
+fprintf(fp, "XXX => %d %d\n", tnum, pnum);
+
     free_value();
 
     int num = 0;
@@ -312,7 +316,8 @@ bool  MeshObjectData::importTriData(TriPolygonData* tridata, int tnum, int pnum)
         int msize = sizeof(UVMap<double>)*vnum;
         impmap_value = (UVMap<double>*)malloc(msize);
         if (impmap_value!=NULL) {
-            for (int i=0, n=0; i<tnum; i++) {
+            int n = 0;
+            for (int i=0; i<tnum; i++) {
                 if (tridata[i].polygonNum==pnum || pnum<0) {
                     impmap_value[n*3]   = tridata[i].texcrd[0];
                     impmap_value[n*3+1] = tridata[i].texcrd[1];
@@ -320,13 +325,21 @@ bool  MeshObjectData::importTriData(TriPolygonData* tridata, int tnum, int pnum)
                     n++;
                 }
             }
+fprintf(fp, "UVMAP %d\n", n);
         }
         else {
             freeNull(impvtx_value);
             freeNull(impnrm_value);
             return false;
         }
+
     }
+PRINT_MESG("MeshObjectData::importTriData:UVMAP= %d", vnum);
+fprintf(fp, "MeshObjectData::importTriData:UVMAP= %d", vnum);
+
+fflush(fp);
+fclose(fp);
+
 
     // Vertex Weight (option)
     if (impwgt_value!=NULL) freeArrayParams<int>(impwgt_value, num_import);
@@ -427,6 +440,9 @@ bool  MeshObjectData::addNode(const char* name, MaterialParam* param, bool useBr
     impwgt_value = NULL;
 
     DEBUG_MODE PRINT_MESG("MeshObjectData::addNode(): for TriPolygonData or Vector<>: end.\n");
+FILE* fp = fopen("AAAA.txt", "a");
+fprintf(fp, "NUM = index = %d, VERT = %d, UV = %d\n", ttl_index, ttl_vertex, ttl_texcrd);
+fclose(fp);
     return ret;
 }
 
