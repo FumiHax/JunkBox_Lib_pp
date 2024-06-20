@@ -258,9 +258,6 @@ bool  MeshObjectData::importTriData(TriPolygonData* tridata, int tnum, int pnum)
     DEBUG_MODE PRINT_MESG("MeshObjectData::importTriData: for TriPolygonData: start.\n");
     if (tridata==NULL) return false;
 
-FILE* fp = fopen("AAAA.txt", "w");
-fprintf(fp, "XXX => %d %d\n", tnum, pnum);
-
     free_value();
 
     int num = 0;
@@ -279,7 +276,8 @@ fprintf(fp, "XXX => %d %d\n", tnum, pnum);
     if (impvtx_value!=NULL) freeNull(impvtx_value);
     impvtx_value = (Vector<double>*)malloc(lsize);
     if (impvtx_value!=NULL) {
-        for (int i=0, n=0; i<tnum; i++) {
+        int n = 0;
+        for (int i=0; i<tnum; i++) {
             if (tridata[i].polygonNum==pnum || pnum<0) {
                 impvtx_value[n*3]   = tridata[i].vertex[0];
                 impvtx_value[n*3+1] = tridata[i].vertex[1];
@@ -295,7 +293,8 @@ fprintf(fp, "XXX => %d %d\n", tnum, pnum);
     if (tridata[0].has_normal) {
         impnrm_value = (Vector<double>*)malloc(lsize);
         if (impnrm_value!=NULL) {
-            for (int i=0, n=0; i<tnum; i++) {
+            int n = 0;
+            for (int i=0; i<tnum; i++) {
                 if (tridata[i].polygonNum==pnum || pnum<0) {
                     impnrm_value[n*3]   = tridata[i].normal[0];
                     impnrm_value[n*3+1] = tridata[i].normal[1];
@@ -325,7 +324,6 @@ fprintf(fp, "XXX => %d %d\n", tnum, pnum);
                     n++;
                 }
             }
-fprintf(fp, "UVMAP %d\n", n);
         }
         else {
             freeNull(impvtx_value);
@@ -334,12 +332,6 @@ fprintf(fp, "UVMAP %d\n", n);
         }
 
     }
-PRINT_MESG("MeshObjectData::importTriData:UVMAP= %d", vnum);
-fprintf(fp, "MeshObjectData::importTriData:UVMAP= %d", vnum);
-
-fflush(fp);
-fclose(fp);
-
 
     // Vertex Weight (option)
     if (impwgt_value!=NULL) freeArrayParams<int>(impwgt_value, num_import);
@@ -363,7 +355,7 @@ fclose(fp);
     num_vcount = 3;         // Contour（ポリゴン）を形成する頂点数
     num_import = vnum;      // 総頂点数
 
-    DEBUG_MODE PRINT_MESG("MeshObjectData::importTriData: for TriPolygonData: end.\n");
+    DEBUG_MODE PRINT_MESG("MeshObjectData::importTriData: for TriPolygonData (%d): end.\n", vnum);
     return true;
 }
 
@@ -440,9 +432,6 @@ bool  MeshObjectData::addNode(const char* name, MaterialParam* param, bool useBr
     impwgt_value = NULL;
 
     DEBUG_MODE PRINT_MESG("MeshObjectData::addNode(): for TriPolygonData or Vector<>: end.\n");
-FILE* fp = fopen("AAAA.txt", "a");
-fprintf(fp, "NUM = index = %d, VERT = %d, UV = %d\n", ttl_index, ttl_vertex, ttl_texcrd);
-fclose(fp);
     return ret;
 }
 
