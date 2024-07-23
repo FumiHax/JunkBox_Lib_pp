@@ -23,38 +23,39 @@ namespace jbxl {
 //
 
 /**
-先頭のデータはアンカー．
-アンカーでない場合は num_fbx == -1
 */
 class  FBXData
 {
 public:
-    FBXData() { this->init();}
+    FBXData(void) { this->init();}
     virtual ~FBXData(void);
 
 public:
     Buffer  fbx_name;
     bool    phantom_out;
+    bool    has_joints;
+    bool    no_offset;
 
     bool    forUnity;
     bool    forUE;
     int     engine;
 
     AffineTrans<double>* affineTrans;
+    AffineTrans<double>  skeleton;
 
 public:
     void    init(void); 
     void    free(void); 
 
     void    setUnity(bool b) { this->forUnity = b;}
-    void    setUE(bool b)    { this->forUE = b;}
+    void    setUE(bool b)    { this->forUE    = b;}
     void    setEngine(int);
 
     void    setAffineTrans (AffineTrans<double> a) { delAffineTrans(); affineTrans = new AffineTrans<double>(); affineTrans->dup(a);}
     void    delAffineTrans (void) { freeAffineTrans(this->affineTrans);}
-    Vector<double> execAffineTrans(bool origin);
+    Vector<double> execDegeneracy(void);
 
-    void    addObject(MeshObjectData* meshdata, bool collider, SkinJointData* joints);
+    void    addShell(MeshObjectData* meshdata, bool collider, SkinJointData* joints=NULL);
     void    closeSolid(void) {}
 
     void    outputFile(const char* fn, const char* out_path, const char* tex_dirn);

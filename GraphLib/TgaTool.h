@@ -58,8 +58,8 @@ public:
 
 TGAImage    readTGAFile (const char* fname);
 TGAImage    readTGAData (FILE* fp);
-int         writeTGAFile(const char* fname, TGAImage tga);
-int         writeTGAData(FILE* fp, TGAImage tga);
+int         writeTGAFile(const char* fname, TGAImage* tga);
+int         writeTGAData(FILE* fp, TGAImage* tga);
 
 int         setupTGAData(TGAImage* tga, bool rle);
 
@@ -97,6 +97,7 @@ template <typename T>  MSGraph<T> TGAImage2MSGraph(TGAImage tga)
     else if (tga.col==1) vp.color = GRAPH_COLOR_GRAY;
     else {
         vp.state = JBXL_GRAPH_IVDARG_ERROR;
+        vp.free();
         return vp;
     }
 

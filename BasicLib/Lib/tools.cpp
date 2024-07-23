@@ -2792,7 +2792,7 @@ unsigned char*  encode_base64(unsigned char* buf, int sz)
     
     if (buf==NULL) return NULL;
     if (sz<0) len = (int)strlen((const char*)buf);
-    else        len = sz;
+    else      len = sz;
     if (len<=0) return NULL;
 
     sz  = ((len+2)/3)*4;
@@ -4176,4 +4176,28 @@ void  print_16x(FILE* fp, unsigned char* mesg, int n)
     }
     fprintf(fp, "\n");
 }
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// グラフィック
+//
+
+static  char  _GraphicFileExtension[L_OCT];
+
+char*    get_graphic_extension(uWord tex)
+{
+    memset(_GraphicFileExtension, 0, L_OCT);
+
+    uWord file = tex & 0x00f0;
+    if      (file==JBXL_TEXTURE_JPEG) memcpy(_GraphicFileExtension, ".jpeg", 5);
+    else if (file==JBXL_TEXTURE_TIFF) memcpy(_GraphicFileExtension, ".tiff", 5);
+    else if (file==JBXL_TEXTURE_PNG)  memcpy(_GraphicFileExtension, ".png",  4);
+    else if (file==JBXL_TEXTURE_TGA)  memcpy(_GraphicFileExtension, ".tga",  4);
+    else if (file==JBXL_TEXTURE_JP2K) memcpy(_GraphicFileExtension, ".jp2",  4);
+    else if (file==JBXL_TEXTURE_RAS)  memcpy(_GraphicFileExtension, ".ras",  4);
+
+    return _GraphicFileExtension;
+}
+
 

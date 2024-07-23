@@ -36,7 +36,7 @@ class  OBJFacetMtlNode;
 //
 
 /**
-先頭のデータはアンカー．
+先頭のデータは SHELLデータへのアンカー．
 
 num_obj はアンカーのみ有効な値を持つ．アンカーでない場合は num_obj == -1
 
@@ -44,24 +44,24 @@ num_obj はアンカーのみ有効な値を持つ．アンカーでない場合
 class  OBJData
 {
 public:
-    OBJData(int n=0) { this->init(n);}  // n: OBJデータの総数．デフォルト（n=0）ではアンカーを作る
-    virtual ~OBJData(void);
+    OBJData(int n=0) { this->init(n);}  // n: OBJデータ（SHELLデータ）の総数．デフォルト（n=0）ではアンカーを作る
+    virtual ~OBJData(void) { this->free();}
 
 public:
     Buffer  obj_name;
     bool    phantom_out;
-    int     num_obj;                    // nextに続くOBJデータの総数．        
+    int     num_obj;                    // nextに続くOBJ（SHELL）データの総数．        
 
     bool    no_offset;
     bool    forUnity;
     bool    forUE;
     int     engine;
 
+    AffineTrans<double>* affineTrans;
+
     OBJData* next;
     OBJFacetGeoNode* geo_node;
     OBJFacetMtlNode* mtl_node;
-
-    AffineTrans<double>* affineTrans;
 
 public:
     void    init(int n); 
@@ -69,15 +69,16 @@ public:
     void    delete_next(void);
 
     void    setUnity(bool b) { this->forUnity = b;}
-    void    setUE(bool b)    { this->forUE = b;}
+    void    setUE(bool b)    { this->forUE    = b;}
     void    setEngine(int);
 
     void    setAffineTrans (AffineTrans<double> a) { delAffineTrans(); affineTrans = new AffineTrans<double>(); affineTrans->dup(a);}
     void    delAffineTrans (void) { freeAffineTrans(this->affineTrans);}
-    Vector<double> execAffineTrans(void);
+
+    Vector<double> execDegeneracy(void);
 
 public:
-    void    addObject(MeshObjectData* meshdata, bool collider);
+    void    addShell(MeshObjectData* shelldata, bool collider);
     void    closeSolid(void) {}
 
     void    outputFile(const char* fn, const char* out_path, const char* tex_dirn, const char* mtl_dirn);
@@ -96,7 +97,7 @@ class  OBJFacetGeoNode
 {
 public:
     OBJFacetGeoNode() { this->init();}
-    virtual ~OBJFacetGeoNode(void);
+    virtual ~OBJFacetGeoNode(void) { this->free();}
 
 public:
     Buffer  material;
@@ -126,7 +127,7 @@ class  OBJFacetMtlNode
 {
 public:
     OBJFacetMtlNode() { this->init();}
-    virtual ~OBJFacetMtlNode(void);
+    virtual ~OBJFacetMtlNode(void) { this->free();}
 
 public:
     Buffer  material;

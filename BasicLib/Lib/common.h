@@ -160,6 +160,7 @@
 #define  L_16           16
 #define  L_OCT           8
 
+#define  LEN_REAL       32        ///< 15*2 + '@\0' + 1(予備)
 #define  LEN_INT        22        ///< log 2^64 + '@\0' + 1(予備)
 #define  LEN_IPADDR     17        ///< strlen("AAA.BBB.CCC.DDD") + '@\0' + 1(予備)
 #define  LEN_IPADDR6    41        ///< strlen("1111:2222:333:4444:5555:6666:7777:8888") + '@\0' + 1(予備)
@@ -280,28 +281,45 @@
 
 
 // for 3D
-#define  JBXL_3D_FORMAT_NONE       0
-#define  JBXL_3D_FORMAT_DAE        1
-#define  JBXL_3D_FORMAT_OBJ        2
-#define  JBXL_3D_FORMAT_FBX        3
-#define  JBXL_3D_FORMAT_GLTF       4
-#define  JBXL_3D_FORMAT_STL        8
-#define  JBXL_3D_FORMAT_STL_A      8   // ASCII
-#define  JBXL_3D_FORMAT_STL_B      9   // Binary
+#define  JBXL_3D_FORMAT_NONE        0
+#define  JBXL_3D_FORMAT_DAE         1
+#define  JBXL_3D_FORMAT_OBJ         2
+#define  JBXL_3D_FORMAT_FBX         3
+#define  JBXL_3D_FORMAT_GLTF        4
+#define  JBXL_3D_FORMAT_GLB         5
+#define  JBXL_3D_FORMAT_STL         8
+#define  JBXL_3D_FORMAT_STL_A       8   ///< ASCII
+#define  JBXL_3D_FORMAT_STL_B       9   ///< Binary
 
-#define  JBXL_3D_ENGINE_NONE       0
-#define  JBXL_3D_ENGINE_UNITY      1
-#define  JBXL_3D_ENGINE_UE         2
+#define  JBXL_3D_ENGINE_NONE        0
+#define  JBXL_3D_ENGINE_UNITY       1
+#define  JBXL_3D_ENGINE_UE          2
+ 
+// Texture  
+// see gLib/gheader.h
+#define  JBXL_TEXTURE_UN_KNOWN      0
+#define  JBXL_TEXTURE_MOON          3
+#define  JBXL_TEXTURE_DICOM         4
+#define  JBXL_TEXTURE_USERSET       5
+
+#define  JBXL_TEXTURE_CT           16   ///< 0x0010 CT (Moon)
+#define  JBXL_TEXTURE_JPEG         32   ///< 0x0020
+#define  JBXL_TEXTURE_JPG          32
+#define  JBXL_TEXTURE_TIFF         48   ///< 0x0030
+#define  JBXL_TEXTURE_PNG          64   ///< 0x0040
+#define  JBXL_TEXTURE_TGA          80   ///< 0x0050
+#define  JBXL_TEXTURE_JP2K         96   ///< 0x0060
+#define  JBXL_TEXTURE_RAS         112   ///< 0x0070 SUN RASTER 8bit
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-typedef  unsigned char  uByte;
-typedef  char           sByte;
-typedef  unsigned short uWord;
-typedef  short          sWord;
-typedef  unsigned int   uDWord;
-typedef  int            sDWord;
+typedef  unsigned char  uByte;          ///< 1Byte
+typedef  char           sByte;          ///< 1Byte
+typedef  unsigned short uWord;          ///< 2Byte
+typedef  short          sWord;          ///< 2Byte
+typedef  unsigned int   uDWord;         ///< 4Byte
+typedef  int            sDWord;         ///< 4Byte
 
 
 /** Parameter

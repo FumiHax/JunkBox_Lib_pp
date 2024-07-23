@@ -13,12 +13,6 @@ using namespace jbxl;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 
-OBJData::~OBJData(void)
-{
-    this->free();
-}
-
-
 void  OBJData::init(int n)
 {
     this->obj_name    = init_Buffer();
@@ -29,6 +23,7 @@ void  OBJData::init(int n)
     this->forUnity    = true;
     this->forUE       = false;
 
+    this->engine      = JBXL_3D_ENGINE_UE;
     this->next        = NULL;
     this->geo_node    = NULL;
     this->mtl_node    = NULL;
@@ -80,9 +75,9 @@ void  OBJData::delete_next(void)
 }
 
 
-void  OBJData::addObject(MeshObjectData* meshdata, bool collider)
+void  OBJData::addShell(MeshObjectData* shelldata, bool collider)
 {
-    if (meshdata==NULL) return;
+    if (shelldata==NULL) return;
 
     OBJData* ptr_obj = this;
     while (ptr_obj->next!=NULL) ptr_obj = ptr_obj->next;
@@ -90,25 +85,25 @@ void  OBJData::addObject(MeshObjectData* meshdata, bool collider)
     ptr_obj->next = new OBJData(-1);
     this->num_obj++;
 
-    if (meshdata->affineTrans!=NULL) { // Grass の場合は NULL
-        ptr_obj->next->setAffineTrans(*meshdata->affineTrans);
+    if (shelldata->affineTrans!=NULL) { // Grass の場合は NULL
+        ptr_obj->next->setAffineTrans(*shelldata->affineTrans);
     }
-    ptr_obj->next->obj_name = dup_Buffer(meshdata->data_name);
+    ptr_obj->next->obj_name = dup_Buffer(shelldata->data_name);
 
-    MeshFacetNode* facet = meshdata->facet;
+    MeshFacetNode* facet = shelldata->facet;
     OBJFacetGeoNode** _geo_node = &(ptr_obj->next->geo_node);
     OBJFacetMtlNode** _mtl_node = &(ptr_obj->next->mtl_node);
     while (facet!=NULL) {
         if (facet->num_vertex != facet->num_texcrd) {
-            PRINT_MESG("OBJData::addObject: Error: missmatch vertex and uvmap number! (%d != %d)\n", facet->num_vertex, facet->num_texcrd);
+            PRINT_MESG("OBJData::addShell: Error: missmatch vertex and uvmap number! (%d != %d)\n", facet->num_vertex, facet->num_texcrd);
             facet = facet->next;
             continue;
         }
 
         // UV Map and PLANAR Texture
-        if (facet->material_param.mapping == MATERIAL_MAPPING_PLANAR) {
+        if (facet->material_param.mapping==MATERIAL_MAPPING_PLANAR) {
             Vector<double> scale(1.0, 1.0, 1.0);
-            if (meshdata->affineTrans!=NULL) scale = meshdata->affineTrans->scale;
+            if (shelldata->affineTrans!=NULL) scale = shelldata->affineTrans->scale;
             facet->generatePlanarUVMap(scale, facet->texcrd_value);
         }
         facet->execAffineTransUVMap(facet->texcrd_value, facet->num_vertex);
@@ -164,14 +159,14 @@ void  OBJData::addObject(MeshObjectData* meshdata, bool collider)
 
 
 /**
-Vector<double>  OBJData::execAffineTrans(void)
+Vector<double>  OBJData::execDegeneracy(void)
 
-OBJデータの Affine変換を行う．
+OBJデータの 原点縮退変換を行う．
 no_offset が trueの場合，データの中心を原点に戻し，実際の位置をオフセットで返す．
 
 @retval データのオフセット．
 */
-Vector<double>  OBJData::execAffineTrans(void)
+Vector<double>  OBJData::execDegeneracy(void)
 {
     Vector<double> center(0.0, 0.0, 0.0);
 
@@ -206,11 +201,7 @@ void  OBJData::outputFile(const char* fname, const char* out_path, const char* t
     if (file_name.buf[0]=='.') file_name.buf[0] = '_';
     //
     Buffer obj_path;
-#ifdef WIN32
-    if (out_path==NULL) obj_path = make_Buffer_bystr(".\\");
-#else
     if (out_path==NULL) obj_path = make_Buffer_bystr("./");
-#endif
     else                obj_path = make_Buffer_bystr(out_path);
     //
     Buffer rel_tex;    //  相対パス
@@ -225,13 +216,13 @@ void  OBJData::outputFile(const char* fname, const char* out_path, const char* t
 
     Buffer mtl_path = dup_Buffer(obj_path);
     cat_Buffer(&rel_mtl, &mtl_path);
-
     cat_Buffer(&file_name, &obj_path);
     change_file_extension_Buffer(&obj_path, ".obj");
 
     this->output_mtl((char*)mtl_path.buf, (char*)rel_tex.buf);  // mtl file
     this->output_obj((char*)obj_path.buf, (char*)rel_mtl.buf);  // obj file
     //
+    free_Buffer(&file_name);
     free_Buffer(&obj_path);
     free_Buffer(&mtl_path);
     free_Buffer(&rel_mtl);
@@ -340,11 +331,14 @@ void  OBJData::output_obj(const char* obj_path, const char* mtl_path)
 
             for (int i=0; i<facet->num_vertex; i++) {
                 Vector<float> vv = Vector<float>((float)facet->vv[i].x, (float)facet->vv[i].y, (float)facet->vv[i].z);
-                if (this->engine == JBXL_3D_ENGINE_UE) {
+                if (this->engine == JBXL_3D_ENGINE_UNITY) {
+                    fprintf(fp, "v %f %f %f\n", vv.x, vv.z, -vv.y);                     // for Unity
+                }
+                else if (this->engine == JBXL_3D_ENGINE_UE) {
                     fprintf(fp, "v %f %f %f\n", vv.x*100.f, vv.y*100.f, vv.z*100.f);    // for UE
                 }
                 else {
-                    fprintf(fp, "v %f %f %f\n", vv.x, vv.z, -vv.y);                     // for Unity
+                    fprintf(fp, "v %f %f %f\n", vv.x, vv.y, vv.z);
                 }
             }
             for (int i=0; i<facet->num_vertex; i++) {
@@ -353,11 +347,11 @@ void  OBJData::output_obj(const char* obj_path, const char* mtl_path)
             }
             for (int i=0; i<facet->num_vertex; i++) {
                 Vector<float> vn = Vector<float>((float)facet->vn[i].x, (float)facet->vn[i].y, (float)facet->vn[i].z);
-                if (this->engine == JBXL_3D_ENGINE_UE) {
-                    fprintf(fp, "vn %f %f %f\n", vn.x, vn.y, vn.z);                     // for UE
+                if (this->engine == JBXL_3D_ENGINE_UNITY) {
+                    fprintf(fp, "vn %f %f %f\n", vn.x, vn.z, -vn.y);                    // for Unity
                 }
                 else {
-                    fprintf(fp, "vn %f %f %f\n", vn.x, vn.z, -vn.y);                    // for Unity
+                    fprintf(fp, "vn %f %f %f\n", vn.x, vn.y, vn.z);                     // for UE or others
                 }
             }
             //
@@ -383,11 +377,6 @@ void  OBJData::output_obj(const char* obj_path, const char* mtl_path)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-OBJFacetGeoNode::~OBJFacetGeoNode(void)
-{
-    this->free();
-}
-
 
 void  OBJFacetGeoNode::init(void)
 {
@@ -404,7 +393,7 @@ void  OBJFacetGeoNode::init(void)
 }
 
 
-void OBJFacetGeoNode::free(void)
+void  OBJFacetGeoNode::free(void)
 {
     free_Buffer(&(this->material));
     this->num_index  = 0;
@@ -445,11 +434,6 @@ void  OBJFacetGeoNode::delete_next(void)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //
-OBJFacetMtlNode::~OBJFacetMtlNode(void)
-{
-    this->free();
-}
-
 
 void  OBJFacetMtlNode::init(void)
 {

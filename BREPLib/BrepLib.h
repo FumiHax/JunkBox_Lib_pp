@@ -39,7 +39,7 @@ public:
     void    free (void);
 
 public:
-    int     addObject(MeshObjectData* mesh) { return addSolid(mesh);}   // 有効なファセットの数を返す
+    int     addShell(MeshObjectData* mesh)  { return addSolid(mesh);}   // 有効なファセットの数を返す
     int     addSolid (MeshObjectData* mesh);                            // 有効なファセットの数を返す
     void    closeSolid(void) {}
     void    outputFile(const char* fn, const char* path=NULL, bool asciifile=true);

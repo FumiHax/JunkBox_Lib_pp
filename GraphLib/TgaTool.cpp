@@ -54,7 +54,7 @@ void  TGAImage::clear(void)
 */
 void  TGAImage::clear(void) 
 {
-    memset(gp, 0, xs*ys*col);
+    if (gp!=NULL) memset(gp, 0, xs*ys*col);
     return;
 }
 
@@ -64,9 +64,7 @@ void  TGAImage::fill(uByte v)
 */
 void  TGAImage::fill(uByte v) 
 {
-    int i;
-    for (i=0; i<xs*ys*col; i++) gp[i] = v;
-
+    if (gp!=NULL) memset(gp, v, xs*ys*col);
     return;
 }
 
@@ -281,28 +279,29 @@ TGAImage  jbxl::readTGAData(FILE* fp)
 
 
 /**
-int  jbxl::writeTGAFile(const char* fname, TGAImage tga)
+int  jbxl::writeTGAFile(const char* fname, TGAImage* tga)
 
 tga の画像データを fnameに書き出す．
 
 @param  fname  ファイル名
 @param  tga    保存する TGAデータ
 
-@retval 0                        正常終了
-@retval JBXL_GRAPH_OPFILE_ERROR  ファイルオープンエラー
-@retval JBXL_GRAPH_HEADER_ERROR  不正ファイル（TGAファイルでない？）
-@retval JBXL_GRAPH_MEMORY_ERROR  メモリエラー
-@retval JBXL_GRAPH_NODATA_ERROR  tga にデータが無い
-@retval JBXL_GRAPH_IVDARG_ERROR  ファイル名が NULL, or サポート外のチャンネル数
+@retval 0                          正常終了
+@retval JBXL_GRAPH_OPFILE_ERROR    ファイルオープンエラー
+@retval JBXL_GRAPH_HEADER_ERROR    不正ファイル（TGAファイルでない？）
+@retval JBXL_GRAPH_MEMORY_ERROR    メモリエラー
+@retval JBXL_GRAPH_NODATA_ERROR    tga にデータが無い
+@retval JBXL_GRAPH_IVDARG_ERROR    ファイル名が NULL
+@retval JBXL_GRAPH_IVDCOLOR_ERROR  サポート外のチャンネル数
 */
-int  jbxl::writeTGAFile(const char* fname, TGAImage tga)
+int  jbxl::writeTGAFile(const char* fname, TGAImage* tga)
 {
     FILE*  fp;
     int    ret;
 
     if (fname==NULL) return JBXL_GRAPH_IVDARG_ERROR;
-    if (tga.col<=0 || tga.col>4) return JBXL_GRAPH_IVDARG_ERROR;
-    if (tga.gp==NULL) return JBXL_GRAPH_NODATA_ERROR;
+    if (tga->col<=0 || tga->col>4) return JBXL_GRAPH_IVDCOLOR_ERROR;
+    if (tga->gp==NULL) return JBXL_GRAPH_NODATA_ERROR;
 
     fp = fopen(fname, "wb");
     if (fp==NULL) {
@@ -317,30 +316,31 @@ int  jbxl::writeTGAFile(const char* fname, TGAImage tga)
 
 
 /**
-int  jbxl::writeTGAData(FILE* fp, TGAImage tga, bool rle)
+int  jbxl::writeTGAData(FILE* fp, TGAImage* tga)
 
 tga の画像データを fpに書き出す．
 
 @param  fp     ファイル記述子
 @param  tga    保存する TGAデータ
 
-@retval 0                        正常終了
-@retval JBXL_GRAPH_OPFILE_ERROR  ファイルオープンエラー
-@retval JBXL_GRAPH_HEADER_ERROR  不正ファイル（TGAファイルでない？）
-@retval JBXL_GRAPH_MEMORY_ERROR  メモリエラー
-@retval JBXL_GRAPH_NODATA_ERROR  tga にデータが無い
-@retval JBXL_GRAPH_IVDARG_ERROR  サポート外のチャンネル数
-@retval JBXL_GRAPH_IVDFMT_ERROR  サポート外のデータ形式
+@retval 0                          正常終了
+@retval JBXL_GRAPH_OPFILE_ERROR    ファイルオープンエラー
+@retval JBXL_GRAPH_HEADER_ERROR    不正ファイル（TGAファイルでない？）
+@retval JBXL_GRAPH_MEMORY_ERROR    メモリエラー
+@retval JBXL_GRAPH_NODATA_ERROR    tga にデータが無い
+@retval JBXL_GRAPH_IVDCOLOR_ERROR  サポート外のチャンネル数
+@retval JBXL_GRAPH_IVDFMT_ERROR    サポート外のデータ形式
 */
-int  jbxl::writeTGAData(FILE* fp, TGAImage tga)
+int  jbxl::writeTGAData(FILE* fp, TGAImage* tga)
 {
     if (fp==NULL) return JBXL_GRAPH_OPFILE_ERROR;
-    if (tga.col<=0 || tga.col>4) return JBXL_GRAPH_IVDARG_ERROR;
-    if (tga.gp==NULL) return JBXL_GRAPH_NODATA_ERROR;
+    if (tga->col<=0 || tga->col>4) return JBXL_GRAPH_IVDCOLOR_ERROR;
+    if (tga->gp==NULL) return JBXL_GRAPH_NODATA_ERROR;
 
-    fwrite(tga.hd, TGA_HEADER_SIZE, 1, fp);
-    fwrite(tga.gp, tga.length, 1, fp);
-    fwrite(tga.ft, TGA_FOOTER_SIZE, 1, fp);
+    fwrite(tga->hd, TGA_HEADER_SIZE, 1, fp);
+    fwrite(tga->gp, tga->length, 1, fp);
+    fwrite(tga->ft, TGA_FOOTER_SIZE, 1, fp);
+
     return 0;
 }
 
@@ -358,7 +358,7 @@ TGAのヘッダを設定し直して，必要なら RLEを行う．
 */
 int  jbxl::setupTGAData(TGAImage* tga, bool rle)
 {
-    if (tga->col<=0 || tga->col>4) return JBXL_GRAPH_IVDARG_ERROR;
+    if (tga->col<=0 || tga->col>4) return JBXL_GRAPH_IVDCOLOR_ERROR;
 
     memset(tga->hd, 0, TGA_HEADER_SIZE);
     if      (tga->col==3 || tga->col==4) tga->hd[2] = 2;    // Full Color

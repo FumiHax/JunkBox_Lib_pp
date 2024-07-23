@@ -11,7 +11,7 @@ this software is based in part on the work of the Independent JPEG Group. http:/
 
 #include "JpegTool.h"
 
-#ifdef ENABLE_JPEGLIB
+#ifdef ENABLE_JPEG
 
 
 using namespace jbxl;
@@ -51,7 +51,8 @@ void  JPEGImage::clear(void)
 */
 void  JPEGImage::clear(void) 
 {
-    memset(gp, 0, sizeof(JSAMPLE)*xs*ys*col);
+    if (gp!=NULL) memset(gp, 0, sizeof(JSAMPLE)*xs*ys*col);
+
     return;
 }
 
@@ -61,8 +62,8 @@ void  JPEGImage::fill(JSAMPLE v)
 */
 void  JPEGImage::fill(JSAMPLE v) 
 {
-    int i;
-    for (i=0; i<xs*ys*col; i++) gp[i] = v;
+    if (gp==NULL) return;
+    for (int i=0; i<xs*ys*col; i++) gp[i] = v;
 
     return;
 }
@@ -224,7 +225,7 @@ JPEGImage  jbxl::readJPEGData(FILE* fp)
 
 
 /**
-int  jbxl::writeJPEGFile(const char* fname, JPEGImage jp, int qulty)
+int  jbxl::writeJPEGFile(const char* fname, JPEGImage* jp, int qulty)
 
 jp の画像データを fnameに書き出す．
 
@@ -232,21 +233,22 @@ jp の画像データを fnameに書き出す．
 @param  jp     保存する JPEGデータ
 @param  qulty  保存のクオリティ 0〜100  100が最高画質
 
-@retval 0                   正常終了
-@retval JBXL_GRAPH_OPFILE_ERROR  ファイルオープンエラー
-@retval JBXL_GRAPH_HEADER_ERROR  不正ファイル（JPEGファイルでない？）
-@retval JBXL_GRAPH_MEMORY_ERROR  メモリエラー
-@retval JBXL_GRAPH_NODATA_ERROR  jp にデータが無い
-@retval JBXL_GRAPH_IVDARG_ERROR  ファイル名が NULL, or サポート外のチャンネル数（現在の所チャンネル数は 1か 3のみをサポート）
+@retval 0                          正常終了
+@retval JBXL_GRAPH_OPFILE_ERROR    ファイルオープンエラー
+@retval JBXL_GRAPH_HEADER_ERROR    不正ファイル（JPEGファイルでない？）
+@retval JBXL_GRAPH_MEMORY_ERROR    メモリエラー
+@retval JBXL_GRAPH_NODATA_ERROR    jp にデータが無い
+@retval JBXL_GRAPH_IVDARG_ERROR    ファイル名が NULL
+@retval JBXL_GRAPH_IVDCOLOR_ERROR  サポート外のチャンネル数（現在の所チャンネル数は 1か 3のみをサポート）
 */
-int  jbxl::writeJPEGFile(const char* fname, JPEGImage jp, int qulty)
+int  jbxl::writeJPEGFile(const char* fname, JPEGImage* jp, int qulty)
 {
     FILE*  fp;
     int    ret;
 
     if (fname==NULL) return JBXL_GRAPH_IVDARG_ERROR;
-    if (jp.col!=1 && jp.col!=3) return JBXL_GRAPH_IVDARG_ERROR;
-    if (jp.gp==NULL || jp.image==NULL) return JBXL_GRAPH_NODATA_ERROR;
+    if (jp->col!=1 && jp->col!=3) return JBXL_GRAPH_IVDCOLOR_ERROR;
+    if (jp->gp==NULL || jp->image==NULL) return JBXL_GRAPH_NODATA_ERROR;
 
     fp = fopen(fname, "wb");
     if (fp==NULL) {
@@ -261,7 +263,7 @@ int  jbxl::writeJPEGFile(const char* fname, JPEGImage jp, int qulty)
 
 
 /**
-int  jbxl::writeJPEGData(FILE* fp, JPEGImage jp, int qulty)
+int  jbxl::writeJPEGData(FILE* fp, JPEGImage* jp, int qulty)
 
 jp の画像データを fpに書き出す．
 
@@ -269,21 +271,21 @@ jp の画像データを fpに書き出す．
 @param  jp     保存する JPEGデータ
 @param  qulty  保存のクオリティ 0〜100  100が最高画質
 
-@retval 0                   正常終了
-@retval JBXL_GRAPH_OPFILE_ERROR  ファイルオープンエラー
-@retval JBXL_GRAPH_HEADER_ERROR  不正ファイル（JPEGファイルでない？）
-@retval JBXL_GRAPH_MEMORY_ERROR  メモリエラー
-@retval JBXL_GRAPH_NODATA_ERROR  jp にデータが無い
-@retval JBXL_GRAPH_IVDARG_ERROR  サポート外のチャンネル数（現在の所チャンネル数は 1か 3のみをサポート）
+@retval 0                          正常終了
+@retval JBXL_GRAPH_OPFILE_ERROR    ファイルオープンエラー
+@retval JBXL_GRAPH_HEADER_ERROR    不正ファイル（JPEGファイルでない？）
+@retval JBXL_GRAPH_MEMORY_ERROR    メモリエラー
+@retval JBXL_GRAPH_NODATA_ERROR    jp にデータが無い
+@retval JBXL_GRAPH_IVDCOLOR_ERROR  サポート外のチャンネル数（現在の所チャンネル数は 1か 3のみをサポート）
 */
-int  jbxl::writeJPEGData(FILE* fp, JPEGImage jp, int qulty)
+int  jbxl::writeJPEGData(FILE* fp, JPEGImage* jp, int qulty)
 {
     struct jpeg_compress_struct jdat;
     struct jpeg_error_mgr       jerr;
 
     if (fp==NULL) return JBXL_GRAPH_OPFILE_ERROR;
-    if (jp.col!=1 && jp.col!=3) return JBXL_GRAPH_IVDARG_ERROR;
-    if (jp.gp==NULL || jp.image==NULL) return JBXL_GRAPH_NODATA_ERROR;
+    if (jp->col!=1 && jp->col!=3) return JBXL_GRAPH_IVDCOLOR_ERROR;
+    if (jp->gp==NULL || jp->image==NULL) return JBXL_GRAPH_NODATA_ERROR;
 
     if (qulty>100)    qulty = 100;
     else if (qulty<0) qulty = 0;
@@ -299,17 +301,17 @@ int  jbxl::writeJPEGData(FILE* fp, JPEGImage jp, int qulty)
     fseek(fp, 0, 0);
     jpeg_stdio_dest(&jdat, fp);
 
-    jdat.image_width      = jp.xs;
-    jdat.image_height     = jp.ys;
-    jdat.input_components = jp.col;
-    if (jp.col==1) jdat.in_color_space = JCS_GRAYSCALE;
-    else           jdat.in_color_space = JCS_RGB;
+    jdat.image_width      = jp->xs;
+    jdat.image_height     = jp->ys;
+    jdat.input_components = jp->col;
+    if (jp->col==1) jdat.in_color_space = JCS_GRAYSCALE;
+    else            jdat.in_color_space = JCS_RGB;
 
     jpeg_set_quality (&jdat, qulty, TRUE);
     jpeg_set_defaults(&jdat);
 
     jpeg_start_compress (&jdat, TRUE);
-    jpeg_write_scanlines(&jdat, jp.image, jp.ys);
+    jpeg_write_scanlines(&jdat, jp->image, jp->ys);
     jpeg_finish_compress(&jdat);
 
     jpeg_destroy_compress(&jdat);
@@ -354,7 +356,7 @@ CmnHead  jbxl::JPEGImage2CmnHead(JPEGImage jp)
     }
     else {
         hd.kind  = HEADER_NONE;
-        hd.xsize = JBXL_GRAPH_IVDARG_ERROR;
+        hd.xsize = JBXL_GRAPH_IVDCOLOR_ERROR;
         return hd;
     }
 
