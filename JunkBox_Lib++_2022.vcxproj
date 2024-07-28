@@ -215,8 +215,10 @@
     <ClCompile Include="GraphLib\JpegTool.cpp" />
     <ClCompile Include="GraphLib\Morph.cpp" />
     <ClCompile Include="GraphLib\OpenCVTool.cpp" />
+    <ClCompile Include="GraphLib\PngTool.cpp" />
     <ClCompile Include="GraphLib\TgaTool.cpp" />
     <ClCompile Include="GraphLib\Thinning.cpp" />
+    <ClCompile Include="GraphLib\TiffTool.cpp" />
     <ClCompile Include="MathLib\AffineTrans.cpp" />
     <ClCompile Include="MathLib\Matrix++.cpp" />
     <ClCompile Include="MathLib\Rotation.cpp" />
@@ -226,6 +228,7 @@
     <ClCompile Include="MeshLib\ColladaTool.cpp" />
     <ClCompile Include="MeshLib\ContourBaseData.cpp" />
     <ClCompile Include="MeshLib\FBXDataTool.cpp" />
+    <ClCompile Include="MeshLib\GLTFDataTool.cpp" />
     <ClCompile Include="MeshLib\MaterialParam.cpp" />
     <ClCompile Include="MeshLib\MeshFacetNode.cpp" />
     <ClCompile Include="MeshLib\MeshObjectData.cpp" />
@@ -282,8 +285,10 @@
     <ClInclude Include="GraphLib\JpegTool.h" />
     <ClInclude Include="GraphLib\Morph.h" />
     <ClInclude Include="GraphLib\OpenCVTool.h" />
+    <ClInclude Include="GraphLib\PngTool.h" />
     <ClInclude Include="GraphLib\TgaTool.h" />
     <ClInclude Include="GraphLib\Thinning.h" />
+    <ClInclude Include="GraphLib\TiffTool.h" />
     <ClInclude Include="GraphLib\Window.h" />
     <ClInclude Include="MathLib\AffineTrans.h" />
     <ClInclude Include="MathLib\MathLib.h" />
@@ -295,6 +300,7 @@
     <ClInclude Include="MeshLib\ColladaTool.h" />
     <ClInclude Include="MeshLib\ContourBaseData.h" />
     <ClInclude Include="MeshLib\FBXDataTool.h" />
+    <ClInclude Include="MeshLib\GLTFDataTool.h" />
     <ClInclude Include="MeshLib\MaterialParam.h" />
     <ClInclude Include="MeshLib\MeshFacetNode.h" />
     <ClInclude Include="MeshLib\MeshObjectData.h" />

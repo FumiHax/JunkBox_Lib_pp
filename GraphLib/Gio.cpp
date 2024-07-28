@@ -1570,11 +1570,19 @@ int  jbxl::writeCmnHeadData(FILE* fp, CmnHead* hd, bool cnt)
     }
 #endif
 
+// Not Implement yet
+#ifdef  ENABLE_PGN
+    // PNG
+#endif
+
     // TIFF
     /*if (kind==TIFF_DATA) {
         csize = 
         return csize;
     }*/
+
+    // TGA
+
 
     ////////////////////////////////////////////////////////////////////////
     // CT : ヘッダの準備

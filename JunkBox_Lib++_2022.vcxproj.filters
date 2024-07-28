@@ -257,6 +257,15 @@
     <ClCompile Include="MeshLib\MeshFacetNode.cpp">
       <Filter>ソース ファイル\MeshLib</Filter>
     </ClCompile>
+    <ClCompile Include="MeshLib\GLTFDataTool.cpp">
+      <Filter>ソース ファイル\MeshLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\PngTool.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphLib\TiffTool.cpp">
+      <Filter>ソース ファイル\GraphLib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicLib\BasicLib.h">
@@ -462,6 +471,15 @@
     </ClInclude>
     <ClInclude Include="MeshLib\MeshFacetNode.h">
       <Filter>ヘッダー ファイル\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLib\GLTFDataTool.h">
+      <Filter>ヘッダー ファイル\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\PngTool.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphLib\TiffTool.h">
+      <Filter>ヘッダー ファイル\GraphLib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
