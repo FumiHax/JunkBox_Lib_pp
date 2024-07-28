@@ -218,7 +218,6 @@
     <ClCompile Include="GraphLib\PngTool.cpp" />
     <ClCompile Include="GraphLib\TgaTool.cpp" />
     <ClCompile Include="GraphLib\Thinning.cpp" />
-    <ClCompile Include="GraphLib\TiffTool.cpp" />
     <ClCompile Include="MathLib\AffineTrans.cpp" />
     <ClCompile Include="MathLib\Matrix++.cpp" />
     <ClCompile Include="MathLib\Rotation.cpp" />
@@ -288,7 +287,6 @@
     <ClInclude Include="GraphLib\PngTool.h" />
     <ClInclude Include="GraphLib\TgaTool.h" />
     <ClInclude Include="GraphLib\Thinning.h" />
-    <ClInclude Include="GraphLib\TiffTool.h" />
     <ClInclude Include="GraphLib\Window.h" />
     <ClInclude Include="MathLib\AffineTrans.h" />
     <ClInclude Include="MathLib\MathLib.h" />
