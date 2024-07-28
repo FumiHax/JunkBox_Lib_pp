@@ -49,13 +49,14 @@ public:
 
 public:
     Buffer  obj_name;
-    bool    phantom_out;
     int     num_obj;                    // nextに続くOBJ（SHELL）データの総数．        
 
+    bool    phantom_out;
     bool    no_offset;
+    int     engine;
+
     bool    forUnity;
     bool    forUE;
-    int     engine;
 
     AffineTrans<double>* affineTrans;
 
@@ -75,15 +76,17 @@ public:
     void    setAffineTrans (AffineTrans<double> a) { delAffineTrans(); affineTrans = new AffineTrans<double>(); affineTrans->dup(a);}
     void    delAffineTrans (void) { freeAffineTrans(this->affineTrans);}
 
-    Vector<double> execDegeneracy(void);
+    Vector<double> execAffineTrans(void);
 
 public:
     void    addShell(MeshObjectData* shelldata, bool collider);
     void    closeSolid(void) {}
 
-    void    outputFile(const char* fn, const char* out_path, const char* tex_dirn, const char* mtl_dirn);
-    void    output_mtl(const char* mtl_path, const char* tex_dirn);
-    void    output_obj(const char* obj_path, const char* mtl_path);
+    void    outputFile(const char* fn, const char* out_path, const char* ptm_dirn, const char* tex_dirn, const char* mtl_dirn);
+    void    output_mtl(char* fn, char* out_dirn, char* ptm_dirn, char* tex_dirn, char* bin_dirn);
+    void    output_obj(char* fn, char* out_dirn, char* ptm_dirn, char* tex_dirn, char* bin_dirn);
+    //void    output_mtl(const char* mtl_path, const char* tex_dirn);
+    //void    output_obj(const char* obj_path, const char* mtl_path);
 };
 
 

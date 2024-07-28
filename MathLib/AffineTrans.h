@@ -37,13 +37,13 @@ public:
     AffineTrans(void) { init();}
     virtual ~AffineTrans(void) {}
 
-    void   init(void) { initComponents(); matrix = Matrix<T>(2, 4, 4);}
+    void   init(void) { initComponents(); matrix = Matrix<T>(2, 4, 4); computeMatrix();}
     void   setup(void){ init();}
     void   initComponents(void) { initScale(); initRotate(); initShift();}
 
-    void   set(Vector<T> s, Quaternion<T> q, Vector<T> t) { scale=s; shift=t, rotate=q; computeMatrix(true);}
+    void   set(Vector<T> s, Quaternion<T> q, Vector<T> t) { scale=s; shift=t, rotate=q; computeMatrix();}
     void   free(void) { initComponents(); matrix.free();}
-    void   clear(void){ initComponents(); matrix.clear();}
+    void   clear(void){ initComponents(); matrix.clear(); computeMatrix();}
     void   dup(AffineTrans a);
     AffineTrans<T>  dup(void);
 
@@ -102,6 +102,10 @@ public:
     Vector<T> execInvScale(Vector<T> v) { return Vector<T>(v.x/scale.x, v.y/scale.y, v.z/scale.z, (T)0.0, Min(v.c, scale.c));}
     Vector<T> execRotate(Vector<T> v)   { return VectorRotation(v, rotate);}
     Vector<T> execInvRotate(Vector<T> v){ return VectorInvRotation(v, rotate);}
+
+    // for debug
+    void   printMatrix(void);
+    void   printComponents(void);
 };
 
 
@@ -381,6 +385,28 @@ template <typename T> Vector<T>  AffineTrans<T>::execMatrixTrans(Vector<T> v)
     
     return vct;
 }
+
+
+template <typename T> void  AffineTrans<T>::printMatrix(void)
+{
+    for(int j=1; j<=4; j++) {
+        for(int i=1; i<=4; i++) {
+            T element = matrix.element(i, j);
+            print_message(" %g ", element);
+        }
+        print_message("\n");
+    }
+    return;
+}
+
+
+template <typename T> void  AffineTrans<T>::printComponents(void)
+{
+    print_message("shift = (%g, %g, %g)\n", shift.x, shift.y, shift.z);
+    print_message("scale = (%g, %g, %g)\n", scale.x, scale.y, scale.z);
+    print_message("rot   = (%g, %g, %g, %g)\n", rotate.s, rotate.x, rotate.y, rotate.z);
+}
+
 
 
 }        // namespace

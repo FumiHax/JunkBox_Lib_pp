@@ -57,37 +57,23 @@ void  FBXData::setEngine(int e)
 }
 
 
-void  FBXData::outputFile(const char* fname, const char* out_path, const char* tex_dirn)
+void  FBXData::outputFile(const char* fname, const char* out_dirn, const char* ptm_dirn, const char* tex_dirn, const char* bin_dirn)
 {
-    FILE* fp = NULL;
+    UNUSED(out_dirn);
+    UNUSED(ptm_dirn);
+    UNUSED(tex_dirn);
+    UNUSED(bin_dirn);
+
     char* packname = pack_head_tail_char(get_file_name(fname), ' ');
     Buffer file_name = make_Buffer_bystr(packname);
     ::free(packname);
-
+    //
     canonical_filename_Buffer(&file_name);
     if (file_name.buf[0]=='.') file_name.buf[0] = '_';
-    //
-    Buffer fbx_path;    // 出力パス
-    if (out_path==NULL) fbx_path = make_Buffer_bystr("./");
-    else                fbx_path = make_Buffer_bystr(out_path);
-    //
-    Buffer rel_tex;     //  Texture 相対パス
-    if (tex_dirn==NULL) rel_tex = make_Buffer_bystr("");
-    else                rel_tex = make_Buffer_bystr(tex_dirn);
 
-    cat_Buffer(&file_name, &fbx_path);
-    change_file_extension_Buffer(&fbx_path, ".fbx");
 
-    fp = fopen((char*)fbx_path.buf, "wb");
-    if (fp!=NULL) {
-        this->output_fbx(fp);
-        fclose(fp);
-    }
-    //
+
     free_Buffer(&file_name);
-    free_Buffer(&fbx_path);
-    free_Buffer(&rel_tex);
-    //
     return;
 }
 
@@ -127,9 +113,13 @@ void  FBXData::addShell(MeshObjectData* meshdata, bool collider, SkinJointData* 
         facet = facet->next;
     }
 
+    //
+    this->phantom_out = true;
     if (collider) {
+        this->phantom_out = false;
     }
 
+    //
     if (joints!=NULL) {
     }
 
@@ -138,12 +128,12 @@ void  FBXData::addShell(MeshObjectData* meshdata, bool collider, SkinJointData* 
 
 
 /**
-Vector<double>  FBXData::execDegeneracy(void)
+Vector<double>  FBXData::execAffineTrans(void)
 
 FBXデータの 原点縮退変換を行う．
 no_offset が trueの場合，データの中心を原点に戻し，実際の位置をオフセットで返す．
 */
-Vector<double>  FBXData::execDegeneracy(void)
+Vector<double>  FBXData::execAffineTrans(void)
 {
     Vector<double> center(0.0, 0.0, 0.0);
 
