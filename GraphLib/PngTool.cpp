@@ -98,6 +98,7 @@ void   PNGImage::getm(int x, int y, int c)
         state = JBXL_GRAPH_MEMORY_ERROR;
         return;
     }
+
     memset(gp, 0, length);
     
     return;
@@ -244,21 +245,9 @@ int  PNGImage::writeData(FILE* fp)
         return state;
     }
 
-    /*
-    if (setjmp(png_jmpbuf(strct))) {
-
-    }
-    */
-
-
     png_init_io(strct, fp);
     png_set_IHDR(strct, info, xs, ys, 8, type, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-
     uByte** datap = (uByte**)png_malloc(strct, sizeof(uByte*) * ys);
-    //png_bytepp datap = (png_bytepp)png_malloc(strct, sizeof(png_bytep) * ys);
-    //png_bytep* datap = (png_bytep*)malloc(sizeof(png_bytep) * ys);
-
-
     if (datap==NULL) {
         png_destroy_write_struct(&strct, &info);
         strct = NULL;
@@ -270,8 +259,6 @@ int  PNGImage::writeData(FILE* fp)
 
     int len = xs*col;
     for (int j=0; j<ys; j++) {
-        //datap[j] = (png_bytep)png_malloc(strct, len);
-        //datap[j] = (png_byte*)malloc(sizeof(png_byte)*len);
         datap[j] = (uByte*)malloc(len);
         if (datap[j]==NULL) {
             for (int i=0; i<j; i++) png_free(strct, datap[i]);
@@ -285,28 +272,7 @@ int  PNGImage::writeData(FILE* fp)
         memcpy(datap[j], gp + j*len, len);
     }
     //
-/*
-FILE* pp = fopen("aaa.txt", "w");
-fprintf(pp, "aaaaaa\n");
-fflush(pp);
-    png_write_info(strct, info);
-fprintf(pp, "bbbbbb\n");
-fflush(pp);    
- //   png_write_image(strct, datap);
-fprintf(pp, "aaaaaa\n");
-fflush(pp);
     png_write_png(strct, info, PNG_TRANSFORM_IDENTITY, NULL);
- //   png_write_end(strct, NULL);
-fprintf(pp, "aaaaaa\n");
-fflush(pp);
-fclose(pp);
-*/
-
-    png_write_png(strct, info, PNG_TRANSFORM_IDENTITY, NULL);
-
-
-
-
 
     for (int j=0; j<ys; j++) png_free(strct, datap[j]);
     png_free(strct, datap);
@@ -409,9 +375,6 @@ png の画像データを fnameに書き出す．
 */
 int  jbxl::writePNGFile(const char* fname, PNGImage* png)
 {
-#ifdef WIN32
-return JBXL_ERROR;
-#endif
     if (fname==NULL) return JBXL_GRAPH_IVDARG_ERROR;
     if (png->state!=JBXL_NORMAL || png->gp==NULL) return JBXL_GRAPH_NODATA_ERROR;
 
