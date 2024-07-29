@@ -263,6 +263,9 @@
     <ClCompile Include="GraphLib\PngTool.cpp">
       <Filter>ソース ファイル\GraphLib</Filter>
     </ClCompile>
+    <ClCompile Include="BasicLib\Lib\tjson.cpp">
+      <Filter>ソース ファイル\BasicLib\Lib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicLib\BasicLib.h">
@@ -474,6 +477,9 @@
     </ClInclude>
     <ClInclude Include="GraphLib\PngTool.h">
       <Filter>ヘッダー ファイル\GraphLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLib\Lib\tjson.h">
+      <Filter>ヘッダー ファイル\BasicLib\Lib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

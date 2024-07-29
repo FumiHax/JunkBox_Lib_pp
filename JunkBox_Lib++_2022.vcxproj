@@ -179,6 +179,7 @@
     </ClCompile>
     <ClCompile Include="BasicLib\Lib\mt.cpp" />
     <ClCompile Include="BasicLib\Lib\network.cpp" />
+    <ClCompile Include="BasicLib\Lib\tjson.cpp" />
     <ClCompile Include="BasicLib\Lib\tlist.cpp" />
     <ClCompile Include="BasicLib\Lib\ttree.cpp" />
     <ClCompile Include="BasicLib\RingBuffer.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="BasicLib\Lib\matrix.h" />
     <ClInclude Include="BasicLib\Lib\mt.h" />
     <ClInclude Include="BasicLib\Lib\network.h" />
+    <ClInclude Include="BasicLib\Lib\tjson.h" />
     <ClInclude Include="BasicLib\Lib\tlist.h" />
     <ClInclude Include="BasicLib\Lib\ttree.h" />
     <ClInclude Include="BasicLib\RingBuffer.h" />
