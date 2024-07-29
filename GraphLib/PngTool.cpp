@@ -98,7 +98,6 @@ void   PNGImage::getm(int x, int y, int c)
         state = JBXL_GRAPH_MEMORY_ERROR;
         return;
     }
-
     memset(gp, 0, length);
     
     return;
