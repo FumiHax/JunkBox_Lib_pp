@@ -1006,7 +1006,7 @@ void  xml_open_node_Buffer(tXML* pp, Buffer* buf, int mode, int indent)
         }
         //
         if (pp->esis!=NULL || pp->ysis!=NULL) {
-            cat_s2Buffer(CRLF, buf); 
+            cat_s2Buffer(CRLF, buf);
             char* tabs = (char*)malloc(pp->depth-indent+1);
             if (tabs!=NULL) {
                 for (i=indent; i<pp->depth; i++) tabs[i-indent] = '\t';
@@ -1018,7 +1018,7 @@ void  xml_open_node_Buffer(tXML* pp, Buffer* buf, int mode, int indent)
         //
         cat_Buffer(&(pp->ldat.key), buf);
         //
-        if (pp->esis!=NULL) cat_s2Buffer(CRLF, buf); 
+        if (pp->esis!=NULL) cat_s2Buffer(CRLF, buf);
     }
 
     // xml TAG
@@ -2251,7 +2251,7 @@ int  get_xml_int_attr(tXML* pp, tXML* pt, const char* attr)
             Buffer buf = make_Buffer_bystr(val);
             char* ptr  = (char*)buf.buf;
             if (ptr[strlen(ptr)-1]=='"') ptr[strlen(ptr)-1] = '\0';
-            if (ptr[0]=='"') ptr++; 
+            if (ptr[0]=='"') ptr++;
             ret = atoi(ptr);
             free_Buffer(&buf);
         }
@@ -2278,7 +2278,7 @@ double  get_xml_double_attr(tXML* pp, tXML* pt, const char* attr)
             Buffer buf = make_Buffer_bystr(val);
             char* ptr  = (char*)buf.buf;
             if (ptr[strlen(ptr)-1]=='"') ptr[strlen(ptr)-1] = '\0';
-            if (ptr[0]=='"') ptr++; 
+            if (ptr[0]=='"') ptr++;
             ret = atof(ptr);
             free_Buffer(&buf);
         }
@@ -2560,7 +2560,7 @@ int  get_xml_int_attr_bystr(tXML* pp, const char* str, const char* attr)
             Buffer buf = make_Buffer_bystr(val);
             char* ptr  = (char*)buf.buf;
             if (ptr[strlen(ptr)-1]=='"') ptr[strlen(ptr)-1] = '\0';
-            if (ptr[0]=='"') ptr++; 
+            if (ptr[0]=='"') ptr++;
             ret = atoi(ptr);
             free_Buffer(&buf);
         }
@@ -2588,7 +2588,7 @@ double  get_xml_double_attr_bystr(tXML* pp, const char* str, const char* attr)
             Buffer buf = make_Buffer_bystr(val);
             char* ptr  = (char*)buf.buf;
             if (ptr[strlen(ptr)-1]=='"') ptr[strlen(ptr)-1] = '\0';
-            if (ptr[0]=='"') ptr++; 
+            if (ptr[0]=='"') ptr++;
             ret = atof(ptr);
             free_Buffer(&buf);
         }
