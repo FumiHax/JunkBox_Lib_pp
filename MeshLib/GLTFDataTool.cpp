@@ -400,7 +400,7 @@ void  GLTFData::addMaterials(MeshFacetNode* facet)
                 //
                 memset(buf, 0, LBUF);
                 //snprintf(buf, LBUF-1, JBXL_GLTF_MATERIAL, material_name, 1.0, 1.0, 1.0, 1.0, img_no);
-                snprintf(buf, LBUF-1, JBXL_GLTF_MATERIAL, material_name, img_no);
+                snprintf(buf, LBUF-1, JBXL_GLTF_MTL_NAME_PBR, material_name, img_no);
                 json_insert_parse(this->materials, buf);
                 tJson* pbr = search_key_json(this->materials, "pbrMetallicRoughness", FALSE, this->material_no + 1);
                 if (pbr!=NULL) {
@@ -418,6 +418,8 @@ void  GLTFData::addMaterials(MeshFacetNode* facet)
 /**
 void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
 
+glTF-2.0.html
+    5.19. Material
 
 */
 void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
@@ -437,6 +439,14 @@ void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
     json_insert_parse(pbr, buf);
 
 
+    memset(buf, 0, LBUF);
+    //snprintf(buf, LBUF-1, JBXL_GLTF_MTL_ALPHMODE, "OPAQUE"); MASK
+    snprintf(buf, LBUF-1, JBXL_GLTF_MTL_ALPHMODE, "BLEND");
+    json_insert_parse(pbr->prev, buf);
+
+
+    //"metallicFactor": 0.5,
+    //"roughnessFactor": 0.1
 /*
     float cutoff   = (float)texture.getAlphaCutoff();
     int  alphaMode = texture.getAlphaMode();

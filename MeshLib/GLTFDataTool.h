@@ -47,14 +47,19 @@ namespace jbxl {
 #define  JBXL_GLTF_MESH         "{\"name\":\"%s\",\"mesh\":%d}"
 #define  JBXL_GLTF_MESH_PRIM    "{\"indices\":%d,\"attributes\":{\"POSITION\":%d,\"NORMAL\":%d,\"TEXCOORD_0\":%d},\"material\":%d,\"mode\":4}"
 //#define  JBXL_GLTF_MATERIAL     "{\"name\":\"%s\",\"pbrMetallicRoughness\":{\"baseColorFactor\":[%f,%f,%f,%f],\"baseColorTexture\":{\"index\":%d,\"texCoord\":0}}}"
-#define  JBXL_GLTF_MATERIAL     "{\"name\":\"%s\",\"pbrMetallicRoughness\":{\"baseColorTexture\":{\"index\":%d,\"texCoord\":0}}}"
+
 #define  JBXL_GLTF_TEXTURE      "{\"source\":%d}"
 //#define  JBXL_GLTF_TEXTURE      "{\"source\":%d, \"sampler\":%d}"
 #define  JBXL_GLTF_IMAGE        "{\"uri\":\"%s\"}"
 
+#define  JBXL_GLTF_MTL_NAME_PBR "{\"name\":\"%s\",\"pbrMetallicRoughness\":{\"baseColorTexture\":{\"index\":%d,\"texCoord\":0}}}"
 #define  JBXL_GLTF_MTL_BCOLORF  "{\"baseColorFactor\":[%f,%f,%f,%f]}"
+#define  JBXL_GLTF_MTL_METALF   "{\"metallicFactor\":\"%f\"}"
+#define  JBXL_GLTF_MTL_ROUGHF   "{\"roughnessFactor\":\"%f\"}"
 
-
+#define  JBXL_GLTF_MTL_ALPHMODE "{\"alphaMode\":\"%s\"}"
+#define  JBXL_GLTF_MTL_CUTOFF   "{\"alphaCutoff\":\"%f\"}"
+#define  JBXL_GLTF_MTL_EMISSIVE "{\"emissiveFactor\":\"%f\"}"
 
 
 
