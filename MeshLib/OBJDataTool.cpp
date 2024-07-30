@@ -235,7 +235,7 @@ void  OBJData::output_mtl(char* fname, char* out_dirn, char* ptm_dirn, char* tex
 #ifdef WIN32
     replace_char(tex_path.buf, tex_path.vldsz, '\\', '/');        // for MS Windows
 #endif
-    
+
     tList* material_list = NULL;
     OBJData* obj = this->next;
     while (obj!=NULL) {
