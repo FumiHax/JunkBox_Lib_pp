@@ -399,13 +399,57 @@ void  GLTFData::addMaterials(MeshFacetNode* facet)
                 }
                 //
                 memset(buf, 0, LBUF);
-                snprintf(buf, LBUF-1, JBXL_GLTF_MATERIAL, material_name, 1.0, 1.0, 1.0, 1.0, img_no);
+                //snprintf(buf, LBUF-1, JBXL_GLTF_MATERIAL, material_name, 1.0, 1.0, 1.0, 1.0, img_no);
+                snprintf(buf, LBUF-1, JBXL_GLTF_MATERIAL, material_name, img_no);
                 json_insert_parse(this->materials, buf);
+                tJson* pbr = search_key_json(this->materials, "pbrMetallicRoughness", FALSE, this->material_no + 1);
+                if (pbr!=NULL) {
+                    this->addMaterialParameters(pbr, facet);     
+                }
                 this->material_no++;
             }
         }
         facet = facet->next;
     }
+    return;
+}
+
+
+/**
+void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
+
+
+*/
+void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
+{
+    char buf[LBUF];
+
+    MaterialParam param  = facet->material_param;
+    TextureParam texture = param.texture;
+
+    float red      = (float)texture.getColor(0);
+    float green    = (float)texture.getColor(1);
+    float blue     = (float)texture.getColor(2);
+    float transp   = (float)texture.getColor(3);
+
+    memset(buf, 0, LBUF);
+    snprintf(buf, LBUF-1, JBXL_GLTF_MTL_BCOLORF, red, green, blue, transp);
+    json_insert_parse(pbr, buf);
+
+
+/*
+    float cutoff   = (float)texture.getAlphaCutoff();
+    int  alphaMode = texture.getAlphaMode();
+    bool hasAlpha  = texture.hasAlphaChannel();
+*/
+
+
+/*
+    shininess;
+    glow;
+    bright;
+    light
+*/
     return;
 }
 
