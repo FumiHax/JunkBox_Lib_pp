@@ -1273,7 +1273,7 @@ bufには十分な領域がなければならない．frmは bufとメモリ領�
 
 @param[in]  buf  操作対象の文字列
 @param[out] buf  変換された文字列
-@param      len  bufの領域の大きさ（長さ）'@\0'を含む
+@param      len  buf中の変換対象のbufの領域の大きさ（長さ）
 @param      frm  変換する文字列
 @param      tos  変換後の文字列
 
@@ -1285,6 +1285,7 @@ char*  replace_str(char* buf, int len, const char* frm, const char* tos)
     int i, j, k, slen, flen, tlen;
 
     if (buf==NULL || frm==NULL || tos==NULL) return NULL;
+    if (len<=0) len = (int)strlen(buf) + 1;
 
     wrk = (char*)malloc(len);
     if (wrk==NULL) return NULL;
