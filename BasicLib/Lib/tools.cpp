@@ -1239,6 +1239,30 @@ char*  change_esc(char* mesg)
 }
 
 
+/**
+void   replace_char(unsigned char* buf, int len, unsigned char frm, unsigned char toc)
+
+buf中の frm (char) を tosで置き換える．
+
+@param      buf  操作対象のデータ．バイナリも可．
+@param      len  bufの領域の大きさ（長さ）'@\0'を含む．<= 0 の場合は buf を文字列として扱う．
+@param      frm  変換するバイトデータ
+@param      tos  変換後の倍とデータ
+*/
+void   replace_char(unsigned char* buf, int len, unsigned char frm, unsigned char toc)
+{
+    if (buf==NULL) return;
+    if (len<=0) len = (int)strlen((char*)buf) + 1;
+
+    int i;
+    for (i=0; i<len; i++) {
+        if (buf[i]==frm) buf[i] = toc;
+    }
+
+    return;
+}
+
+
 /** 
 char*  replace_str(char* buf, int len, const char* frm, const char* tos)
 
