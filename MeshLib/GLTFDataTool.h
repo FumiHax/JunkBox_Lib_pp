@@ -54,12 +54,11 @@ namespace jbxl {
 
 #define  JBXL_GLTF_MTL_NAME_PBR "{\"name\":\"%s\",\"pbrMetallicRoughness\":{\"baseColorTexture\":{\"index\":%d,\"texCoord\":0}}}"
 #define  JBXL_GLTF_MTL_BCOLORF  "{\"baseColorFactor\":[%f,%f,%f,%f]}"
-#define  JBXL_GLTF_MTL_METALF   "{\"metallicFactor\":\"%f\"}"
-#define  JBXL_GLTF_MTL_ROUGHF   "{\"roughnessFactor\":\"%f\"}"
+#define  JBXL_GLTF_MTL_METALF   "{\"metallicFactor\":%f}"
+#define  JBXL_GLTF_MTL_ROUGHF   "{\"roughnessFactor\":%f}"
 
-#define  JBXL_GLTF_MTL_ALPHMODE "{\"alphaMode\":\"%s\"}"
-#define  JBXL_GLTF_MTL_CUTOFF   "{\"alphaCutoff\":\"%f\"}"
-#define  JBXL_GLTF_MTL_EMISSIVE "{\"emissiveFactor\":\"%f\"}"
+#define  JBXL_GLTF_MTL_CUTOFF   "{\"alphaCutoff\":%f}"
+#define  JBXL_GLTF_MTL_EMISSIVE "{\"emissiveFactor\":[%f,%f,%f]}"
 
 
 
