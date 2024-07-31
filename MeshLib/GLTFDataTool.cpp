@@ -451,8 +451,13 @@ void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
     //bright(0 or 1), light(?)
     //bool hasAlpha  = texture.hasAlphaChannel();
 
-    int alpha_mode = texture.getAlphaMode();
-    if (alpha_mode==MATERIAL_ALPHA_NONE) {
+    char kind_obj = param.getKind();
+    int  alpha_mode = texture.getAlphaMode();
+
+    if (kind_obj=='T' || kind_obj=='G') {
+        json_insert_parse(pbr->prev, "{\"alphaMode\":\"BLEND\"}");
+    }
+    else if (alpha_mode==MATERIAL_ALPHA_NONE) {
         json_insert_parse(pbr->prev, "{\"alphaMode\":\"OPAQUE\"}");
     }
     else if (alpha_mode==MATERIAL_ALPHA_BLENDING) {
