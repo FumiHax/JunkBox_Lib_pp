@@ -441,15 +441,16 @@ void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
     snprintf(buf, LBUF-1, JBXL_GLTF_MTL_METALF, shininess);
     json_insert_parse(pbr, buf);
 
+    /*
     float glossiness = (float)param.getGlossiness();
     memset(buf, 0, LBUF);
     snprintf(buf, LBUF-1, JBXL_GLTF_MTL_ROUGHF, glossiness);
     json_insert_parse(pbr, buf);
-
+    */
     //
-    //brigh(0 or 1), light(?)
+    //bright(0 or 1), light(?)
     //bool hasAlpha  = texture.hasAlphaChannel();
-    
+
     int alpha_mode = texture.getAlphaMode();
     if (alpha_mode==MATERIAL_ALPHA_NONE) {
         json_insert_parse(pbr->prev, "{\"alphaMode\":\"OPAQUE\"}");
@@ -461,17 +462,20 @@ void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
         json_insert_parse(pbr->prev, "{\"alphaMode\":\"MASK\"}");
     }
     else if (alpha_mode==MATERIAL_ALPHA_EMISSIVE) {
-        float glow = param.getGlow();
-        memset(buf, 0, LBUF);
-        snprintf(buf, LBUF-1, JBXL_GLTF_MTL_EMISSIVE, glow, glow, glow);
-        json_insert_parse(pbr->prev, buf);
+        //
     }
+
+    float glow = param.getGlow();
+    memset(buf, 0, LBUF);
+    snprintf(buf, LBUF-1, JBXL_GLTF_MTL_EMISSIVE, glow*red, glow*green, glow*blue);
+    json_insert_parse(pbr->prev, buf);
 
     float cutoff = (float)texture.getAlphaCutoff();
     memset(buf, 0, LBUF);
     snprintf(buf, LBUF-1, JBXL_GLTF_MTL_CUTOFF, cutoff);
     json_insert_parse(pbr->prev, buf);
 
+    //param.printParam(stderr);
     return;
 }
 

@@ -317,10 +317,12 @@ void  MaterialParam::printParam(FILE* fp)
         return;
     }
 
+    fprintf(fp, "----------------------------------------------\n");
     texture.printParam(fp);
-    if (bumpmap.isSetTexture()) bumpmap.printParam(fp);
     if (specmap.isSetTexture()) specmap.printParam(fp);
+    if (bumpmap.isSetTexture()) bumpmap.printParam(fp);
 
+    fprintf(fp, "----------------------------------------------\n");
     fprintf(fp, "MaterialParam.paramstr    = %s\n", paramstr.buf);
 //    fprintf(fp, "MaterialParam.transparent = %f\n", transparent);
     fprintf(fp, "MaterialParam.shininess   = %f\n", shininess);
