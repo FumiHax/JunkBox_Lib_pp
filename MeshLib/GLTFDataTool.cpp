@@ -427,19 +427,25 @@ void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
 
     MaterialParam param  = facet->material_param;
     TextureParam texture = param.texture;
+    
+    char kind_obj   = param.getKind();
+    bool hasAlpha   = texture.hasAlphaChannel();
+    int  alpha_mode = texture.getAlphaMode();
 
-    float red      = (float)texture.getColor(0);
-    float green    = (float)texture.getColor(1);
-    float blue     = (float)texture.getColor(2);
-    float transp   = (float)texture.getColor(3);
+    float red       = (float)texture.getColor(0);
+    float green     = (float)texture.getColor(1);
+    float blue      = (float)texture.getColor(2);
+    float transp    = (float)texture.getColor(3);
     memset(buf, 0, LBUF);
     snprintf(buf, LBUF-1, JBXL_GLTF_MTL_BCOLORF, red, green, blue, transp);
     json_insert_parse(pbr, buf);
 
-    float shininess = (float)param.getShininess();
-    memset(buf, 0, LBUF);
-    snprintf(buf, LBUF-1, JBXL_GLTF_MTL_METALF, shininess);
-    json_insert_parse(pbr, buf);
+    if (kind_obj!='E') {
+        float shininess = (float)param.getShininess();
+        memset(buf, 0, LBUF);
+        snprintf(buf, LBUF-1, JBXL_GLTF_MTL_METALF, shininess);
+        json_insert_parse(pbr, buf);
+    }
 
     /*
     float glossiness = (float)param.getGlossiness();
@@ -450,9 +456,6 @@ void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
     //
     //bright(0 or 1), light(?)
 
-    bool hasAlpha = texture.hasAlphaChannel();
-    char kind_obj = param.getKind();
-    int  alpha_mode = texture.getAlphaMode();
 
     if (kind_obj=='T' || kind_obj=='G') {
         json_insert_parse(pbr->prev, "{\"alphaMode\":\"BLEND\"}");
@@ -478,9 +481,11 @@ void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
     }
 
     float glow = (float)param.getGlow();
-    memset(buf, 0, LBUF);
-    snprintf(buf, LBUF-1, JBXL_GLTF_MTL_EMISSIVE, glow*red, glow*green, glow*blue);
-    json_insert_parse(pbr->prev, buf);
+    if (glow>0.0) {
+        memset(buf, 0, LBUF);
+        snprintf(buf, LBUF-1, JBXL_GLTF_MTL_EMISSIVE, glow*red, glow*green, glow*blue);
+        json_insert_parse(pbr->prev, buf);
+    }
 
     //param.printParam(stderr);
     return;
