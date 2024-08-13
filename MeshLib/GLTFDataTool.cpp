@@ -717,11 +717,15 @@ void  GLTFData::addMaterialParameters(tJson* pbr, MeshFacetNode* facet)
         snprintf(buf, LBUF-1, JBXL_GLTF_MTLS_CUTOFF, cutoff);
         json_insert_parse(pbr->prev, buf);
     }
-    else if (alpha_mode==MATERIAL_ALPHA_EMISSIVE) {
-        //
-    }
+    //else if (alpha_mode==MATERIAL_ALPHA_EMISSIVE) {
+    //}
     else {
-        json_insert_parse(pbr->prev, "{\"alphaMode\":\"OPAQUE\"}");
+        if (transp<=0.99) {
+            json_insert_parse(pbr->prev, "{\"alphaMode\":\"BLEND\"}");
+        }
+        else {
+            json_insert_parse(pbr->prev, "{\"alphaMode\":\"OPAQUE\"}");
+        }
     }
 
     float glow = (float)param.getGlow();
