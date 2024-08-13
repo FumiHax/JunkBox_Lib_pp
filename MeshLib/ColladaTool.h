@@ -57,12 +57,12 @@ public:
 
     char*   addGeometry(MeshObjectData* shelldata);
     char*   addController(const char* geometry_id, MeshObjectData* shelldata, SkinJointData* skin_joint);
-    void    addScene(const char* geometry_id, char* controll_id, MeshObjectData* shelldata, bool collider, SkinJointData* skin_join);
+    void    addScene(const char* geometry_id, char* controll_id, MeshObjectData* shelldata, bool collider, SkinJointData* skin_joint);
 
     char*   addVertexSource(tXML* tag, MeshObjectData* shelldata);
     char*   addNormalSource(tXML* tag, MeshObjectData* shelldata);
     char*   addTexcrdSource(tXML* tag, MeshObjectData* shelldata);
-    char*   addWeightSource(tXML* tag, MeshObjectData* shelldata, Vector<int>* weight_index, int joints_num);
+    char*   addWeightSource(tXML* tag, MeshObjectData* shelldata, Vector<int>* weight_index, int num_joints);
 
     char*   addVerticesPos (tXML* mesh_tag, const char* position_id);
 
@@ -124,7 +124,7 @@ public:
 
 public:
     AffineTrans<double>* affineTrans;
-    AffineTrans<double>  skeleton;
+    AffineTrans<double>  affineSkeleton;
 
     tXML*   joints_template_tag;
     bool    has_joints;

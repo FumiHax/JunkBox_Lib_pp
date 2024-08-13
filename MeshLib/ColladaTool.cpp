@@ -34,7 +34,7 @@ void  ColladaXML::init(double meter, int axis, const char* ver)
     forUnity      = true;
      
     affineTrans   = NULL;;
-    skeleton.init();
+    affineSkeleton.init();
 }
 
 
@@ -42,8 +42,8 @@ void  ColladaXML::free(void)
 {
     free_Buffer(&blank_texture);
     del_all_xml(&xml_tag);
-    skeleton.free();
 
+    affineSkeleton.free();
     if (affineTrans!=NULL) affineTrans->free();
     affineTrans = NULL;
 }
@@ -148,11 +148,11 @@ void  ColladaXML::initCollada(double meter, int axis, const char* ver)
 }
 
 
-void  ColladaXML::addShell(MeshObjectData* shelldata, bool collider, SkinJointData* joints, tXML* joints_template)
+void  ColladaXML::addShell(MeshObjectData* shelldata, bool collider, SkinJointData* skin_joint, tXML* joints_template)
 {
     if (shelldata==NULL) return;
 
-    if (joints!=NULL && joints_template!=NULL) {
+    if (skin_joint!=NULL && joints_template!=NULL) {
         if (joints_template_tag==NULL) {
             has_joints = true;
             joints_template_tag = joints_template;
@@ -162,9 +162,9 @@ void  ColladaXML::addShell(MeshObjectData* shelldata, bool collider, SkinJointDa
         }
     }
     //
-    char* geom_id = addGeometry(shelldata);                          // 幾何情報を配置
-    char* ctrl_id = addController(geom_id, shelldata, joints);       // Joints 情報を配置
-    addScene(geom_id, ctrl_id, shelldata, collider, joints);         // Scene への配置（位置，サイズ，回転，コライダー, Joints）
+    char* geom_id = addGeometry(shelldata);                         // 幾何情報を配置
+    char* ctrl_id = addController(geom_id, shelldata, skin_joint);  // Joints 情報を配置
+    addScene(geom_id, ctrl_id, shelldata, collider, skin_joint);    // Scene への配置（位置，サイズ，回転，コライダー, Joints）
     
     if (geom_id!=NULL) ::free(geom_id);
     if (ctrl_id!=NULL) ::free(ctrl_id);
@@ -188,9 +188,9 @@ void  ColladaXML::closeSolid(void)
 }
 
 
-char*  ColladaXML::addController(const char* geometry_id, MeshObjectData* shelldata, SkinJointData* joints)
+char*  ColladaXML::addController(const char* geometry_id, MeshObjectData* shelldata, SkinJointData* skin_joint)
 {
-    if (geometry_id==NULL || shelldata==NULL || joints==NULL) return NULL;
+    if (geometry_id==NULL || shelldata==NULL || skin_joint==NULL) return NULL;
 
     Buffer geometry_name = dup_Buffer(shelldata->alt_name);
     if (geometry_name.buf==NULL) geometry_name = make_Buffer_str(geometry_id+1);
@@ -210,7 +210,7 @@ char*  ColladaXML::addController(const char* geometry_id, MeshObjectData* shelld
     tXML* bind_shape_tag = add_xml_node(skin_tag, "bind_shape_matrix");
     for (int i=1; i<=4; i++) {
         for (int j=1; j<=4; j++) {
-            append_xml_content_node(bind_shape_tag, dtostr(joints->bind_shape.matrix.element(i, j)));
+            append_xml_content_node(bind_shape_tag, dtostr(skin_joint->bind_shape.element(i, j)));
         }
     }
 
@@ -223,16 +223,16 @@ char*  ColladaXML::addController(const char* geometry_id, MeshObjectData* shelld
     tXML* joint_tag = add_xml_node(skin_tag, "source");
     add_xml_attr_str(joint_tag, "id", _tochar(joint_id.buf + 1));
 
-    int joints_num = joints->joint_names.get_size();
+    int num_joints = skin_joint->joint_names.get_size();
     tXML* joint_name_tag = add_xml_node(joint_tag, "Name_array");
     add_xml_attr_str(joint_name_tag, "id", _tochar(joint_name_id.buf + 1));
-    add_xml_attr_int(joint_name_tag, "count", joints_num);
+    add_xml_attr_int(joint_name_tag, "count", num_joints);
 
-    for (int jnt=0; jnt<joints_num; jnt++) {
-        const char* joint_name = (const char*)joints->joint_names.get_value(jnt);
+    for (int jnt=0; jnt<num_joints; jnt++) {
+        const char* joint_name = (const char*)skin_joint->joint_names.get_value(jnt);
         append_xml_content_node(joint_name_tag, joint_name);
     }
-    addSimpleTechniqueAccessor(joint_tag, _tochar(joint_name_id.buf), joints_num, 1, "JOINT", "name");
+    addSimpleTechniqueAccessor(joint_tag, _tochar(joint_name_id.buf), num_joints, 1, "JOINT", "name");
 
     // source INVERSE_BIND_MATRIX
     Buffer invbind_id = make_Buffer_str("#SOURCE_INVBIND_");
@@ -245,23 +245,23 @@ char*  ColladaXML::addController(const char* geometry_id, MeshObjectData* shelld
 
     tXML* invbind_float_tag = add_xml_node(invbind_tag, "float_array");
     add_xml_attr_str(invbind_float_tag, "id", _tochar(invbind_float_id.buf + 1));
-    add_xml_attr_int(invbind_float_tag, "count", joints_num*16);
+    add_xml_attr_int(invbind_float_tag, "count", num_joints*16);
 
-    for (int jnt=0; jnt<joints_num; jnt++) {
+    for (int jnt=0; jnt<num_joints; jnt++) {
         for (int i=1; i<=4; i++) {
             for (int j=1; j<=4; j++) {
-                append_xml_content_node(invbind_float_tag, dtostr(joints->inverse_bind[jnt].matrix.element(i, j)));
+                append_xml_content_node(invbind_float_tag, dtostr(skin_joint->inverse_bind[jnt].element(i, j)));
             }
         }
     }
-    addSimpleTechniqueAccessor(invbind_tag, _tochar(invbind_float_id.buf), joints_num, 16, "TRANSFORM", "float4x4");
+    addSimpleTechniqueAccessor(invbind_tag, _tochar(invbind_float_id.buf), num_joints, 16, "TRANSFORM", "float4x4");
 
     // source WEIGHT
-    int vec_len = sizeof(Vector<int>)*shelldata->ttl_vertex*joints_num;
+    int vec_len = sizeof(Vector<int>)*shelldata->ttl_vertex*num_joints;
     Vector<int>* weight_index = (Vector<int>*)malloc(vec_len);
     if (weight_index==NULL) return NULL;
     memset(weight_index, 0, vec_len);
-    char* weight_id = addWeightSource(skin_tag, shelldata, weight_index, joints_num);
+    char* weight_id = addWeightSource(skin_tag, shelldata, weight_index, num_joints);
 
     // joints
     tXML* joints_tag = add_xml_node(skin_tag, "joints");
@@ -293,7 +293,7 @@ char*  ColladaXML::addController(const char* geometry_id, MeshObjectData* shelld
     int vnum = 0;
     int prev_vertex = -1;
     //
-    for (int i=0; i<shelldata->ttl_vertex*joints_num; i++) {
+    for (int i=0; i<shelldata->ttl_vertex*num_joints; i++) {
         if (weight_index[i].z==TRUE) {
             if (prev_vertex==-1) prev_vertex = weight_index[i].x;               // vertex number
             append_xml_content_node(vindex_tag, itostr(weight_index[i].y));     // joint number
@@ -480,7 +480,7 @@ char*  ColladaXML::addTexcrdSource(tXML* tag, MeshObjectData* shelldata)
                 // PLANAR Texture
                 if (facet->material_param.mapping==MATERIAL_MAPPING_PLANAR) {
                     Vector<double> scale(1.0, 1.0, 1.0);
-                    if (shelldata->affineTrans!=NULL) scale = shelldata->affineTrans->scale;
+                    if (shelldata->affineTrans!=NULL) scale = shelldata->affineTrans->getScale();
                     facet->generatePlanarUVMap(scale, uvmap);
                 }
                 facet->execAffineTransUVMap(uvmap, facet->num_texcrd);
@@ -504,14 +504,14 @@ char*  ColladaXML::addTexcrdSource(tXML* tag, MeshObjectData* shelldata)
 
 
 /**
-char*  ColladaXML::addWeightSource(tXML* tag, MeshObjectData* shelldata, Vector<int>* weight_index, int joints_num)
+char*  ColladaXML::addWeightSource(tXML* tag, MeshObjectData* shelldata, Vector<int>* weight_index, int num_joints)
 
 @retval  weight_index[].x: vertex No.
 @retval  weight_index[].y: joint No.
 @retval  weight_index[].z: FALSE->データなし, TRUE->データあり
 @return  source_id
 */
-char*  ColladaXML::addWeightSource(tXML* tag, MeshObjectData* shelldata, Vector<int>* weight_index, int joints_num)
+char*  ColladaXML::addWeightSource(tXML* tag, MeshObjectData* shelldata, Vector<int>* weight_index, int num_joints)
 {
     if (tag==NULL || shelldata==NULL || weight_index==NULL) return NULL;
 
@@ -540,10 +540,10 @@ char*  ColladaXML::addWeightSource(tXML* tag, MeshObjectData* shelldata, Vector<
                 }
 
                 if (total!=0) {
-                    for (int j=0; j<joints_num; j++) {
-                        weight_index[joints_num*vnum + j].x = i;
-                        weight_index[joints_num*vnum + j].y = j;
-                        weight_index[joints_num*vnum + j].z = FALSE;
+                    for (int j=0; j<num_joints; j++) {
+                        weight_index[num_joints*vnum + j].x = i;
+                        weight_index[num_joints*vnum + j].y = j;
+                        weight_index[num_joints*vnum + j].z = FALSE;
 
                         int weight_value = 0;
                         if (j<jnum) weight_value = weight[i].get_value(j);
@@ -551,15 +551,15 @@ char*  ColladaXML::addWeightSource(tXML* tag, MeshObjectData* shelldata, Vector<
                         if (weight_value!=0) {
                             double value = weight_value/(double)total;
                             append_xml_content_node(source_array_tag, dtostr(value));
-                            weight_index[vnum*joints_num + j].z = TRUE;
+                            weight_index[vnum*num_joints + j].z = TRUE;
                             count++;
                         }
                     }
                 }
                 else {
-                    weight_index[vnum*joints_num].x = i;
-                    weight_index[vnum*joints_num].y = 0;
-                    weight_index[vnum*joints_num].z = TRUE;
+                    weight_index[vnum*num_joints].x = i;
+                    weight_index[vnum*num_joints].y = 0;
+                    weight_index[vnum*num_joints].z = TRUE;
                     append_xml_content_node(source_array_tag, "0.000000");
                     count++;
                 }
@@ -951,9 +951,9 @@ void  ColladaXML::addExtraBumpmap(tXML* profile_tag, const char* bump_id)
 
 
 /**
- Scene への配置（位置，サイズ，回転，コライダー, Joints）
+ Scene への配置（位置，サイズ，回転，コライダー, Joints_data）
 */
-void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObjectData* shelldata, bool collider, SkinJointData* joints)
+void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObjectData* shelldata, bool collider, SkinJointData* skin_joint)
 {
     if ((geometry_id==NULL && controller_id==NULL) || shelldata==NULL) return;
 
@@ -966,7 +966,7 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
         //
         if (affineTrans==NULL) {
             affineTrans = new AffineTrans<double>();
-            affineTrans->setShift(affine.shift);
+            affineTrans->setShift(affine.getShift());
         }
     }
     else affine.init();
@@ -979,9 +979,9 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
         buf[0] = '"';
 
         int pelvis_num = -1;
-        int joints_num = joints->joint_names.get_size();
-        for (int jnt=0; jnt<joints_num; jnt++) {
-            const char* joint_name = (const char*)joints->joint_names.get_value(jnt);
+        int num_joints = skin_joint->joint_names.get_size();
+        for (int jnt=0; jnt<num_joints; jnt++) {
+            const char* joint_name = (const char*)skin_joint->joint_names.get_value(jnt);
             if (joint_name!=NULL) {
                 int len = (int)strlen(joint_name);
                 memcpy(buf + 1, joint_name, len);
@@ -993,8 +993,8 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
                     tXML* matrix_tag = node_tag->next;
                     for (int i=1; i<=4; i++) {
                         for (int j=1; j<=4; j++) {
-                            double element = joints->alt_inverse_bind[jnt].matrix.element(i, j);
-                            if (i==1 && j==1) set_xml_content_node(matrix_tag, dtostr(element));
+                            double element = skin_joint->alt_inverse_bind[jnt].element(i, j);
+                            if (i==1 && j==1) set_xml_content_node(matrix_tag, dtostr(element));                // 最初にタグを生成// 最初にタグを生成
                             else           append_xml_content_node(matrix_tag, dtostr(element));
                         }
                     }
@@ -1004,9 +1004,9 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
                 }
                 // Pelvis の座標
                 if (!strcasecmp(joint_name, "mPelvis")) {
-                    pelvis.x = joints->alt_inverse_bind[jnt].matrix.element(1, 4);
-                    pelvis.y = joints->alt_inverse_bind[jnt].matrix.element(2, 4);
-                    pelvis.z = joints->alt_inverse_bind[jnt].matrix.element(3, 4);
+                    pelvis.x = skin_joint->alt_inverse_bind[jnt].element(1, 4);
+                    pelvis.y = skin_joint->alt_inverse_bind[jnt].element(2, 4);
+                    pelvis.z = skin_joint->alt_inverse_bind[jnt].element(3, 4);
                     pelvis_num = jnt;
                 }
             }
@@ -1020,12 +1020,12 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
         //**********************************************************************************
         // jointの位置合わせ用変換行列を計算
         if (pelvis_num >= 0) {
-            AffineTrans<double> joint_space = joints->inverse_bind[pelvis_num] * joints->bind_shape;
-            AffineTrans<double> joint_trans = joint_space.getInvAffine();
+            AffineTrans<double> joint_space = skin_joint->inverse_bind[pelvis_num] * skin_joint->bind_shape;
+            AffineTrans<double> joint_trans = joint_space.getInverseAffine();
 
-            Vector<double> shift = joint_trans.execRotateScale(pelvis);
-            joint_trans.shift = joint_trans.shift - shift;
-            skeleton = affine*joint_trans;      // Joint -> Real の Affine変換
+            Vector<double> shift = joint_trans.execRotationScale(pelvis);
+            joint_trans.setShift(joint_trans.getShift() - shift);
+            affineSkeleton = affine * joint_trans;      // Joint -> Real の Affine変換
             setJointLocationMatrix();
             //
             joint_space.free();
@@ -1062,12 +1062,12 @@ void  ColladaXML::addScene(const char* geometry_id, char* controller_id, MeshObj
     free_Buffer(&node_id);
 
     // 位置
-    if (no_offset) affine.shift = affine.shift - affineTrans->shift;
+    if (no_offset) affine.setShift(affine.getShift() - affineTrans->getShift());
     affine.computeMatrix();
     tXML* matrix_tag = add_xml_node(node_tag, "matrix");
     for (int i = 1; i <= 4; i++) {
         for (int j = 1; j <= 4; j++) {
-            append_xml_content_node(matrix_tag, dtostr(affine.matrix.element(i, j)));
+            append_xml_content_node(matrix_tag, dtostr(affine.element(i, j)));
         }
     }
 
@@ -1190,13 +1190,13 @@ void  ColladaXML::setJointLocationMatrix(void)
 
     tXML* avatar_tag = get_xml_node_str(collada_tag, "<library_visual_scenes><visual_scene><node><matrix>");
     if (avatar_tag!=NULL) {
-        if (no_offset) skeleton.shift = skeleton.shift - affineTrans->shift;
-        skeleton.computeMatrix();
+        if (no_offset) affineSkeleton.setShift(affineSkeleton.getShift() - affineTrans->getShift());
+        affineSkeleton.computeMatrix();
         //
         for (int i=1; i<=4; i++) {
             for (int j=1; j<=4; j++) {
-                double element = skeleton.matrix.element(i, j);
-                if (i==1 && j==1) set_xml_content_node(avatar_tag, dtostr(element));
+                double element = affineSkeleton.element(i, j);
+                if (i==1 && j==1) set_xml_content_node(avatar_tag, dtostr(element));        // 最初にタグを生成
                 else           append_xml_content_node(avatar_tag, dtostr(element));
             }
         }
@@ -1303,7 +1303,7 @@ void  ColladaXML::addCenterScene(void)
     tXML* matrix_tag = add_xml_node(node_tag, "matrix");
     for (int i=1; i<=4; i++) {
         for (int j=1; j<=4; j++) {
-            append_xml_content_node(matrix_tag, dtostr(affine.matrix.element(i, j)));
+            append_xml_content_node(matrix_tag, dtostr(affine.element(i, j)));
         }
     }
     affine.free();

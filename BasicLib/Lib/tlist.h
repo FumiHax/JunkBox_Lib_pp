@@ -57,6 +57,7 @@ struct  _tList {
     int                 depth;   ///< 深さ                            for tTree
     int                 num;     ///< 子ノードの数                    for tTree
     int                 ctrl;    ///< 制御用
+    int                 ctrl_alt;///< 制御用2
     int                 state;   ///< ノードの状態
 };
 
@@ -64,20 +65,24 @@ struct  _tList {
 /** @struct tList
 @code
 tList 構造体
-    tList_data  ldat    データ
+    tList_data  ldat     データ
 
-    tList*      next    子ノードへのポインタ
-    tList*      prev    親ノードへのポインタ
-    tList*      altp    他のノードへのポインタ
-    tList*      yngr    子（末っ子）ノードへのポインタ  for tTree
+    tList*      next     子ノードへのポインタ
+    tList*      prev     親ノードへのポインタ
+    tList*      altp     他のノードへのポインタ
+    tList*      yngr     子（末っ子）ノードへのポインタ  for tTree
 
-    tList*      esis    前の姉妹ノードへのポインタ      for tTree
-    tList*      ysis    次の姉妹ノードへのポインタ      for tTree
+    tList*      esis     前の姉妹ノードへのポインタ      for tTree
+    tList*      ysis     次の姉妹ノードへのポインタ      for tTree
 
-    int         depth   深さ                            for tTree
-    int         num     子ノードの数                    for tTree
-    int         ctrl    制御用                          for tTree
-    int         state   ノードの状態
+    int         depth    深さ                            for tTree
+    int         num      子ノードの数                    for tTree
+    int         ctrl     制御用（ライブラリ内部用）
+    int         ctrl_alt 制御用（ライブラリ外で使用可能）
+    int         state    ノードの状態
+    if (this->joints_name!=NULL) del_all_xml(&this->joints_name);
+    this->joints_name = NULL;
+
 @endcode
 */
 typedef  struct _tList  tList;
@@ -106,7 +111,7 @@ tList_data  make_tList_data_bystr(int id, int lv, const char*  key, const char* 
 #define     make_tList_data_str(k, v)       make_tList_data_bystr(0, 0, (char*)(k), (char*)(v), NULL, 0)    ///< make_tList_data_bystr()
 #define     make_tList_data_Buffer(k, v)    make_tList_data(0, 0, (k), (v), NULL, 0)                        ///< make_tList_data()
 
-void        free_tList_data(tList_data* ldat);      ///< ノードデータのバッファ部をクリアする．データ自身は削除しない．
+void        clear_tList_data(tList_data* ldat);     ///< ノードデータのバッファ部をクリアする．データ自身は削除しない．
 void        del_tList_data(tList_data** ldat);      ///< ノードデータを削除する．
 tList_data  dup_tList_data(tList_data ldat);        ///< ノードデータの複製を作成する
 
