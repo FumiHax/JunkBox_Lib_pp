@@ -434,7 +434,7 @@ void  GLTFData::addRootNode(AffineTrans<double>* affine)
         tJson* root_matrix  = json_append_array_key(nodes_root, "matrix");
         for (int j=1; j<=4; j++) {
             for (int i=1; i<=4; i++) {
-                json_append_array_real_val(root_matrix, this->affineRoot.element(i, j));
+                json_append_array_real_val(root_matrix, (float)this->affineRoot.element(i, j));
             }
         }
     }
@@ -579,9 +579,9 @@ void  GLTFData::addSkeletonNodes(SkinJointData* skin_joint, AffineTrans<double>*
 
         skin_joint->alt_inverse_bind[jnt].computeComponents();
         tJson* shift = json_append_array_key(skltn, "translation");
-        json_append_array_real_val(shift, skin_joint->alt_inverse_bind[jnt].getShiftX());
-        json_append_array_real_val(shift, skin_joint->alt_inverse_bind[jnt].getShiftY());
-        json_append_array_real_val(shift, skin_joint->alt_inverse_bind[jnt].getShiftZ());
+        json_append_array_real_val(shift, (float)skin_joint->alt_inverse_bind[jnt].getShiftX());
+        json_append_array_real_val(shift, (float)skin_joint->alt_inverse_bind[jnt].getShiftY());
+        json_append_array_real_val(shift, (float)skin_joint->alt_inverse_bind[jnt].getShiftZ());
 
         this->node_no++;
         jl = jl->next;
@@ -1422,8 +1422,8 @@ void  GLTFData::createShellGeometryData(MeshFacetNode* facet, int shell_indexes,
         for (int i=0; i<facet->num_vertex; i++) {
             shell_node->vv[vertex_offset + i]   = facet->vertex_value[i] * mag_fac;
             shell_node->vn[vertex_offset + i]   = facet->normal_value[i];
-            shell_node->vu[vertex_offset + i].u = facet->texcrd_value[i].u;
-            shell_node->vu[vertex_offset + i].v = 1.0f - facet->texcrd_value[i].v;
+            shell_node->vu[vertex_offset + i].u = (float)facet->texcrd_value[i].u;
+            shell_node->vu[vertex_offset + i].v = 1.0f - (float)facet->texcrd_value[i].v;
         }
 
         if (this->has_joints) {
