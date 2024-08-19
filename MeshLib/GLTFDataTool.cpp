@@ -381,7 +381,7 @@ void  GLTFData::addShell(MeshObjectData* shelldata, bool collider, SkinJointData
         else {
             this->createBinDataSeqSoA(facet, shell_indexes, shell_vertexes);
         }
-        if (this->has_joints) this->createInverseBindMatrix(skin_joint);
+        if (this->has_joints) this->createBinDataIBM(skin_joint);
     }
     else {
         // データを一旦 GLTFShellNodeに保存．最後に closeSolid() で一気に BINデータを作成
@@ -1703,7 +1703,7 @@ void  GLTFData::addAccessorsIBM(void)
 }
 
 
-void  GLTFData::createInverseBindMatrix(SkinJointData* skin_joint)
+void  GLTFData::createBinDataIBM(SkinJointData* skin_joint)
 {
     if (skin_joint==NULL) return;
 
@@ -1871,7 +1871,7 @@ void  GLTFData::output_glb(char* fn, char* out_dirn, char* ptm_dirn, char* tex_d
     bin_chunk.data   = (uByte*)bin_buffer.buf;
     memcpy((void*)&(bin_chunk.type), (void*)JBXL_GLB_TYPE_BIN, 4);
     // 
-    header.length  = sizeof(glbFileHeader) + json_chunk.length + bin_chunk.length + sizeof(uDWord)*4;
+    header.length = sizeof(glbFileHeader) + json_chunk.length + bin_chunk.length + sizeof(uDWord)*4;
 
     // output
     FILE* fp = fopen((char*)out_path.buf, "wb");
@@ -1892,7 +1892,10 @@ void  GLTFData::output_glb(char* fn, char* out_dirn, char* ptm_dirn, char* tex_d
             if (tp!=NULL) {
                 uByte* tex_buf = (uByte*)malloc(tex_info->length);
                 if (tex_buf!=NULL) {
-                    fread(tex_buf, 1, tex_info->length, tp);
+                    int ret = fread(tex_buf, 1, tex_info->length, tp);
+                    if (ret<=0) {
+                        PRINT_MESG("GLTFData::output_glb: File read Error! (%s)\n",  (char*)out_path.buf);
+                    }
                     fwrite((void*)tex_buf, tex_info->length, 1, fp);
                     for (uDWord i=0; i<tex_info->pad; i++) fwrite((void*)"\0", 1, 1, fp);
                     ::free(tex_buf);
