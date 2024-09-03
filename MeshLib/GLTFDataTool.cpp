@@ -241,6 +241,10 @@ AffineTrans<double>  GLTFData::getAffineBaseTrans4Engine(void)
         trans.element(3, 2, -1.0);    // y -> -z
         trans.element(2, 3,  1.0);    // z -> y
     }
+    else {  // UE
+        for (int i=1; i<=4; i++) trans.element(i, i, 100.0);
+    }
+
     trans.computeComponents();
 
     return trans;
