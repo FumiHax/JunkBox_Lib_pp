@@ -226,24 +226,21 @@ void  GLTFData::initGLTF(void)
 //
 
 /**
-AffineTrans<double>  GLTFData::getAffineTrans4Engine(AffineTrans<double> affine)
+AffineTrans<double>  GLTFData::getAffineBaseTrans4Engine(void)
 
-使用するエンジンに合わせて，FACET毎の Affine変換のパラメータを変更する．
+// ×使用するエンジンに合わせて.... (UNITY と UE で同じ? GLTFの規格のせい?)
+
+FACET毎の Affine変換のパラメータを変更する．
 */
 AffineTrans<double>  GLTFData::getAffineBaseTrans4Engine(void)
 {
     AffineTrans<double> trans;
     for (int i=1; i<=4; i++) trans.element(i, i, 1.0);
     //
-    if (this->engine==JBXL_3D_ENGINE_UNITY) {
-        trans.element(2, 2,  0.0);
-        trans.element(3, 3,  0.0);
-        trans.element(3, 2, -1.0);    // y -> -z
-        trans.element(2, 3,  1.0);    // z -> y
-    }
-    else {  // UE
-        for (int i=1; i<=4; i++) trans.element(i, i, 100.0);
-    }
+    trans.element(2, 2,  0.0);
+    trans.element(3, 3,  0.0);
+    trans.element(3, 2, -1.0);    // y -> -z
+    trans.element(2, 3,  1.0);    // z -> y
 
     trans.computeComponents();
 
@@ -473,7 +470,9 @@ void  GLTFData::addNodes(AffineTrans<double>* affine)
         snprintf(buf, LBUF-1, JBXL_GLTF_NODES_SKIN, this->skin_no);
         json_insert_parse(mesh, buf);
     }
-    else {
+
+    //else {
+    if (!this->has_joints || this->engine==JBXL_3D_ENGINE_UE) {     // UE の Bug？
         // affine translarion
         tJson* matrix = json_append_array_key(mesh, "matrix");
         if (affine!=NULL) {
