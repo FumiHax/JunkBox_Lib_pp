@@ -1927,19 +1927,11 @@ void  rm_dir_rcsv(const char* dirn)
     tList* lp = get_dir_files_rcsv(dirn);
     tList* lt = lp;
     while (lt!=NULL) {
-#ifdef WIN32
-        if (lt->ldat.lv==1) _rmdir((char*)lt->ldat.val.buf);
-#else
         if (lt->ldat.lv==1) rmdir((char*)lt->ldat.val.buf);
-#endif
         else unlink((char*)lt->ldat.val.buf);
         lt = lt->next;
     }
-#ifdef WIN32
-    _rmdir(dirn);
-#else
-    rm(dirn);
-#endif
+    rmdir(dirn);
     //
     del_tList(&lp);
     return;
