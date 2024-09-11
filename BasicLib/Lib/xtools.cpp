@@ -1837,11 +1837,11 @@ tList*  get_dir_files(const char* dirn)
         do {
             if (strcmp(".", FindFileData.cFileName) && strcmp("..", FindFileData.cFileName)) { 
                 int fkind = 0;  // other file
-                if (FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) fkind = 1;    // directory
+                if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) fkind = 1;    // directory
                 tmp = dup_Buffer(pth);
                 cat_s2Buffer(FindFileData.cFileName, &tmp);
                 ln = add_tList_node_str(ln, NULL, tmp.buf);
-                if (ln!=NULL) ln->ldat.lv = kfind;
+                if (ln!=NULL) ln->ldat.lv = fkind;
                 if (lp==NULL) lp = ln;
                 free_Buffer(&tmp);
             }
@@ -1927,11 +1927,19 @@ void  rm_dir_rcsv(const char* dirn)
     tList* lp = get_dir_files_rcsv(dirn);
     tList* lt = lp;
     while (lt!=NULL) {
+#ifdef WIN32
+        if (lt->ldat.lv==1) _rmdir((char*)lt->ldat.val.buf);
+#else
         if (lt->ldat.lv==1) rmdir((char*)lt->ldat.val.buf);
+#endif
         else unlink((char*)lt->ldat.val.buf);
         lt = lt->next;
     }
-    rmdir(dirn);
+#ifdef WIN32
+    _rmdir(dirn);
+#else
+    rm(dirn);
+#endif
     //
     del_tList(&lp);
     return;
