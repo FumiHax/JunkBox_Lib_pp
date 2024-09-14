@@ -2,7 +2,7 @@
 #define  __JBXL_CPP_GLTF_TOOL_H_
 
 /**
-  Wavefront GLTF ファイル用ツール
+  glTF/glb ファイル用ツール
 
 */
 
@@ -29,8 +29,8 @@ namespace jbxl {
 #define  JBXL_GLTF_BIN_SOA       2
 
 
-#define  JBXL_GLTF_COPYRIGHT     "From OpenSimulator"
-#define  JBXL_GLTF_GENERATOR     "JBXL glTF Tool Library (C) 2024 v1.0 by Fumi.Iseki"
+#define  JBXL_GLTF_COPYRIGHT     "glTF/glb"
+#define  JBXL_GLTF_GENERATOR     "JBXL glTF/glb Tool Library (C) 2024 v1.0 by Fumi.Iseki and Austin Tate"
 #define  JBXL_GLTF_VERSION       "2.0"
 
 // accessors
@@ -189,6 +189,7 @@ public:
     int     engine;
 
     bool    has_joints;
+    bool    has_skeleton_node;
     tList*  joints_list;
 
     tList*  image_list;
@@ -216,6 +217,7 @@ public:
 
     unsigned int  num_joints;
     unsigned int  node_offset;
+    unsigned int  joint_offset;
 
     tJson*  json_data;
     tJson*  scenes;
@@ -284,9 +286,6 @@ public:
     void    createBinDataIBM(SkinJointData* skin_joint, AffineTrans<double>* ue_trans=NULL);
 
     // output
-    //void    outputFile (const char* fn, const char* out_dirn, const char* ptm_dirn, const char* tex_dirn, const char* bin_dirn);
-    //void    output_gltf(char* fn, char* out_dirn, char* ptm_dirn, char* tex_dirn, char* bin_dirn);
-    //void    output_glb (char* fn, char* out_dirn, char* ptm_dirn, char* tex_dirn, char* bin_dirn);
     void    outputFile (const char* fn, const char* out_dirn, const char* tex_dirn, const char* bin_dirn);
     void    output_gltf(char* fn, char* out_dirn, char* tex_dirn, char* bin_dirn);
     void    output_glb (char* fn, char* out_dirn, char* tex_dirn, char* bin_dirn);
