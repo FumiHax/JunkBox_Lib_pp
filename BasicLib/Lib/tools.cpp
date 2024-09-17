@@ -2494,14 +2494,14 @@ unsigned long int  write_file(const char* fname, unsigned char* buf, long unsign
 @param   size 書き込むデータのサイズ．
 @return  実際に書き込んだデータサイズ
 */
-unsigned long int  write_file(const char* fname, unsigned char* buf, long unsigned int size)
+long unsigned int  write_file(const char* fname, unsigned char* buf, long unsigned int size)
 {
     if (size==0) return 0;
 
-    FILE* fp  = fopen(fname, "wb");
+    FILE* fp = fopen(fname, "wb");
     if (fp==NULL) return 0;
 
-    size = (long int)fwrite(buf, size, 1, fp);
+    size = (long unsigned int)fwrite(buf, size, 1, fp);
     fclose(fp);
 
     return size;
