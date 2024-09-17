@@ -21,6 +21,8 @@ void  jbxl_add_all_states(void)
     jbxl_add_state(JBXL_FILE_EXIST_ERROR, "JBXL_FILE_EXIST_ERROR", "ファイルが存在しない（シンボリックリンクもダメ）");
     jbxl_add_state(JBXL_FILE_MAKE_ERROR, "JBXL_FILE_MAKE_ERROR", "ファイル作成エラー");
     jbxl_add_state(JBXL_FILE_DESTOPEN_ERROR, "JBXL_FILE_DESTOPEN_ERROR", "ディスティネーションファイルのオープン失敗");
+    jbxl_add_state(JBXL_DIR_OPEN_ERROR, "JBXL_DIR_OPEN_ERROR", "ディレクトリオープンエラー");
+    jbxl_add_state(JBXL_DIR_MAKE_ERROR, "JBXL_DIR_MAKE_ERROR", "ディレクトリ作成エラー");
     jbxl_add_state(JBXL_TOOLS_ERROR, "JBXL_TOOLS_ERROR", "Tools ライブラリのエラー");
     jbxl_add_state(JBXL_TOOLS_BUF_ERROR, "JBXL_TOOLS_BUF_ERROR", "バッファ（データ格納）部の領域がない");
     jbxl_add_state(JBXL_TOOLS_BUFSZ_ERROR, "JBXL_TOOLS_BUFSZ_ERROR", "バッファ（データ格納）部の大きさが足りない");
