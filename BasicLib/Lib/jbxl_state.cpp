@@ -18,7 +18,7 @@ void  jbxl_add_all_states(void)
     jbxl_add_state(JBXL_FILE_READ_ERROR, "JBXL_FILE_READ_ERROR", "ファイル読み込みエラー");
     jbxl_add_state(JBXL_FILE_WRITE_ERROR, "JBXL_FILE_WRITE_ERROR", "ファイル書き込みエラー");
     jbxl_add_state(JBXL_FILE_CLOSE_ERROR, "JBXL_FILE_CLOSE_ERROR", "ファイルのクローズエラー");
-    jbxl_add_state(JBXL_FILE_EXIST_ERROR, "JBXL_FILE_EXIST_ERROR", "ファイルが存在しない（シンボリックリンクもダメ）");
+    jbxl_add_state(JBXL_FILE_EXIST_ERROR, "JBXL_FILE_EXIST_ERROR", "ファイルが存在しない（シンボリックリンクもダメ）．または既に存在する．");
     jbxl_add_state(JBXL_FILE_MAKE_ERROR, "JBXL_FILE_MAKE_ERROR", "ファイル作成エラー");
     jbxl_add_state(JBXL_FILE_DESTOPEN_ERROR, "JBXL_FILE_DESTOPEN_ERROR", "ディスティネーションファイルのオープン失敗");
     jbxl_add_state(JBXL_DIR_OPEN_ERROR, "JBXL_DIR_OPEN_ERROR", "ディレクトリオープンエラー");
