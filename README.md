@@ -62,11 +62,11 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 #### Jpeg (GraphLib/JpegTool.h)
 * **libjpeg.lib**
 
-#### Zlib (ExtendLib/xLib/gz_tool.h)
+#### zlib (ExtendLib/xLib/gz_tool.h)
 * Release: **zlib.lib**
 * Debug: **zlibd.lib**
  
-#### Png (GraphLib/PngTool.h) Static Link
+#### png (GraphLib/PngTool.h) Static Link
 * Release: **libpng16_static.lib**
 * Debug: **libpng16_staticd.lib**
 
