@@ -38,7 +38,7 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * zlib-1.3
 
 ### Development Environment (OpenJpeg, Jpeg, Zlib, tar32/64)
-* [JunkBox_Lib++_devel_env.zip](https://blackjack.nsl.tuis.ac.jp/Download/Release/JunkBox_Lib++_devel_env.zip)
+* [JunkBox_Lib++_devel_env.zip](https://blackjack.nsl.tuis.ac.jp/Download/Release/JunkBox_Lib++_devel_env_1.10.zip)
 
 ## Compile
 * double click **JunkBox_Lib++_2022.vcxproj**
@@ -59,6 +59,10 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
 * Release: **zlib.lib**
 * Debug: **zlibd.lib**
  
+#### Png (GraphLib/PngTool.h) Static Link
+* Release: **libpng16_static.lib**
+* Debug: **libpng16_staticd.lib**
+
 #### OpenCV (GraphLib/OpenCVTool.h)
 * Release: **opencv_core242.libb**, **opencv_imgproc242.lib**, **opencv_objdetect242.lib**
 * Debug: **opencv_core242d.libb**, **opencv_imgproc242d.lib**, **opencv_objdetect242d.lib**
