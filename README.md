@@ -25,19 +25,26 @@ git clone https://github.com/JunkBox-Library/JunkBox_Libpp.git JubkBox_Lib++
   * https://www.ijg.org/files
   * [how to compile](https://github.com/JunkBox-Library/JunkBox_Libpp/wiki/libjpeg)
 
-### Zlib
+### zlib
 * **zlib-1.3.tar.gz** (source code)
    * https://www.zlib.net/
    * compile using cmake-gui and VS Community
 
+### libpng
+* **libpng-1.6.43.tar.gz** (source code)
+  * http://www.libpng.org/pub/png/libpng.html
+  * https://sourceforge.net/projects/libpng/files/libpng16/1.6.43/
+  * compile using cmake-gui and VS Community
+ 
 ### Location of the folders (default)
 * jpeg-9e
 * JunkBox_Lib++
 * openjpeg-v2.5.0-windows-x64
 * openjpeg-v2.5.0-windows-x86
 * zlib-1.3
+* lpng16
 
-### Development Environment (OpenJpeg, Jpeg, Zlib, tar32/64)
+### Development Environment (OpenJpeg, Jpeg, zlib, libpng)
 * [JunkBox_Lib++_devel_env.zip](https://blackjack.nsl.tuis.ac.jp/Download/Release/JunkBox_Lib++_devel_env_1.10.zip)
 
 ## Compile
